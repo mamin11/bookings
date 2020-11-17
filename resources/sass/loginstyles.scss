@@ -1,0 +1,148 @@
+.login-page-photo {
+    // background: $dark-bg;
+    background-color: #ffffff;
+    padding: 0px 0;
+    margin: 0;
+    height: 100vh;
+    max-width: 100%;
+}
+
+@media (max-width: 576px) {
+    .login-page-photo .image-holder {
+        // display: table-cell;
+        width: auto;
+        background-size: cover;
+        display: none !important;
+    }
+}
+
+.login-page-photo .image-holder {
+    display: table-cell;
+    width: auto;
+    background: url('/img/laptop.jpg');
+    background-size: cover;
+}
+
+.login-page-photo .form-container {
+    display: table;
+    // max-width: 900px;
+    width: 100%;
+    height: 100vh;
+    margin: 0 auto;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.login-page-photo #login-register {
+    display: table-cell;
+    width: 400px;
+    background-color: #ffffff;
+    padding: 40px 60px !important;
+    color: #505e6c;
+}
+
+@media (max-width:991px) {
+    .login-page-photo #login-register {
+        padding: 40px;
+    }
+}
+
+.login-page-photo form h2 {
+    font-size: 24px;
+    line-height: 1.5;
+    margin-bottom: 30px;
+}
+
+.login-page-photo form .form-control {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #dfe7f1;
+    border-radius: 0;
+    box-shadow: none;
+    outline: none;
+    color: inherit;
+    text-indent: 6px;
+    height: 40px;
+}
+
+.login-page-photo form .form-check {
+    font-size: 13px;
+    line-height: 20px;
+}
+
+.login-page-photo form .btn-primary {
+    background: #1c1b1c;
+    border: none;
+    border-radius: 4px;
+    padding: 11px;
+    box-shadow: none;
+    margin-top: 35px;
+    text-shadow: none;
+    color: #ffffff;
+    outline: none !important;
+}
+
+.login-page-photo form .btn-primary:hover,
+.login-page-photo form .btn-primary:active {
+    background: #2b2b2b;
+}
+
+.login-page-photo form .btn-primary:active {
+    transform: translateY(1px);
+}
+
+.login-page-photo form .btn-danger {
+    background: #ed1212;
+    border: none;
+    border-radius: 4px;
+    padding: 11px;
+    box-shadow: none;
+    margin-top: 35px;
+    text-shadow: none;
+    color: #ffffff;
+    outline: none !important;
+}
+
+.login-page-photo form .btn-danger:hover,
+.login-page-photo form .btn-danger:active {
+    background: #9f1d1d;
+}
+
+.login-page-photo form .btn-danger:active {
+    transform: translateY(1px);
+}
+
+.login-page-photo form .already {
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    color: #6f7a85;
+    opacity: 0.9;
+    text-decoration: none;
+}
+
+.login-register-links {
+    color: $font-color-dark;
+    margin-right: 1%;
+    padding: 10px 7px;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: $font-size-large;
+}
+
+.login-register-links:hover {
+    text-decoration: none;
+    color: $font-color-dark;
+    cursor: default;
+}
+
+.link-active {
+    color: rgb(50, 133, 169);
+    border-color: rgb(50, 133, 169);
+    cursor: default;
+}
+
+.cursor-pointer:hover {
+    cursor: pointer;
+}
