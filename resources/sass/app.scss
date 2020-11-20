@@ -4,7 +4,16 @@
 // Variables
 @import 'variables';
 
+//import general styles
+@import 'general';
+
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
 @import 'loginstyles';
+
+@import 'dashboard';
+
+@import 'sidenav';
+
+@import 'bookingComponent';

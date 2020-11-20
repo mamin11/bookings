@@ -1,0 +1,41 @@
+#dashboard-main-component {
+    background-color: $app-gray;
+    z-index: 400;
+}
+
+#dark-overlay {
+    height: 100vh;
+    background-color: black;
+}
+
+.icons-font-size {
+    font-size: 0.5rem;
+    color: $app-black;
+}
+
+.icons-font-size:hover {
+    font-size: 0.55rem;
+}
+
+.top-icon-style {
+    color: $app-black;
+}
+
+.top-icon-style:hover {
+        color: $app-blue;
+}
+
+#top-dash-nav {
+    z-index: 500;
+    height: 5vh;
+}
+
+#main {
+    min-height: 95vh;
+}
+
+@media screen and (max-height: 450px) {
+    #navbarSupportedContent {
+        display: none;
+    }
+}

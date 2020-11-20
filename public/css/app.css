@@ -1,5 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 /*!
  * Bootstrap v4.5.3 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
@@ -10907,26 +10912,34 @@ a.text-dark:focus {
   background-color: #ffffff;
   padding: 0px 0;
   margin: 0;
-  height: 100vh;
+  height: auto;
+  max-width: 100%;
+}
+
+.login-page-photo2 {
+  background-color: #ffffff;
+  padding: 0px 0;
+  margin: 0;
+  height: 80vh;
   max-width: 100%;
 }
 
 @media (max-width: 576px) {
-  .login-page-photo .image-holder {
+  .image-holder {
     width: auto;
     background-size: cover;
     display: none !important;
   }
 }
 
-.login-page-photo .image-holder {
+.image-holder {
   display: table-cell;
   width: auto;
   background: url("/img/laptop.jpg");
   background-size: cover;
 }
 
-.login-page-photo .form-container {
+.form-container {
   display: table;
   width: 100%;
   height: 100vh;
@@ -10934,7 +10947,15 @@ a.text-dark:focus {
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
 }
 
-.login-page-photo #login-register {
+.form-container2 {
+  display: table;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+#login-register {
   display: table-cell;
   width: 400px;
   background-color: #ffffff;
@@ -10943,18 +10964,18 @@ a.text-dark:focus {
 }
 
 @media (max-width: 991px) {
-  .login-page-photo #login-register {
+  #login-register {
     padding: 40px;
   }
 }
 
-.login-page-photo form h2 {
+form h2 {
   font-size: 24px;
   line-height: 1.5;
   margin-bottom: 30px;
 }
 
-.login-page-photo form .form-control {
+form .form-control {
   background: transparent;
   border: none;
   border-bottom: 1px solid #dfe7f1;
@@ -10966,12 +10987,12 @@ a.text-dark:focus {
   height: 40px;
 }
 
-.login-page-photo form .form-check {
+form .form-check {
   font-size: 13px;
   line-height: 20px;
 }
 
-.login-page-photo form .btn-primary {
+form .btn-primary {
   background: #1c1b1c;
   border: none;
   border-radius: 4px;
@@ -10983,16 +11004,16 @@ a.text-dark:focus {
   outline: none !important;
 }
 
-.login-page-photo form .btn-primary:hover,
-.login-page-photo form .btn-primary:active {
+form .btn-primary:hover,
+form .btn-primary:active {
   background: #2b2b2b;
 }
 
-.login-page-photo form .btn-primary:active {
+form .btn-primary:active {
   transform: translateY(1px);
 }
 
-.login-page-photo form .btn-danger {
+form .btn-danger {
   background: #ed1212;
   border: none;
   border-radius: 4px;
@@ -11004,16 +11025,16 @@ a.text-dark:focus {
   outline: none !important;
 }
 
-.login-page-photo form .btn-danger:hover,
-.login-page-photo form .btn-danger:active {
+form .btn-danger:hover,
+form .btn-danger:active {
   background: #9f1d1d;
 }
 
-.login-page-photo form .btn-danger:active {
+form .btn-danger:active {
   transform: translateY(1px);
 }
 
-.login-page-photo form .already {
+form .already {
   display: block;
   text-align: center;
   font-size: 12px;
@@ -11039,6 +11060,23 @@ a.text-dark:focus {
   cursor: default;
 }
 
+.login-register-links-sm {
+  color: #373737;
+  margin-right: 1%;
+  padding: 10px 7px;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.login-register-links-sm:hover {
+  text-decoration: none;
+  color: #373737;
+  cursor: default;
+}
+
 .link-active {
   color: #3285a9;
   border-color: #3285a9;
@@ -11047,5 +11085,265 @@ a.text-dark:focus {
 
 .cursor-pointer:hover {
   cursor: pointer;
+}
+
+#dashboard-main-component {
+  background-color: #E7E8E9;
+  z-index: 400;
+}
+
+#dark-overlay {
+  height: 100vh;
+  background-color: black;
+}
+
+.icons-font-size {
+  font-size: 0.5rem;
+  color: #0F0F0F;
+}
+
+.icons-font-size:hover {
+  font-size: 0.55rem;
+}
+
+.top-icon-style {
+  color: #0F0F0F;
+}
+
+.top-icon-style:hover {
+  color: #5C67B5;
+}
+
+#top-dash-nav {
+  z-index: 500;
+  height: 5vh;
+}
+
+#main {
+  min-height: 95vh;
+}
+
+@media screen and (max-height: 450px) {
+  #navbarSupportedContent {
+    display: none;
+  }
+}
+
+/* The side navigation menu */
+
+.sidenav {
+  height: 100%;
+  /* 100% Full-height */
+  width: 100px;
+  /* 0 width - change this with JavaScript */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Stay on top */
+  top: 0;
+  /* Stay at the top */
+  right: 0;
+  background-color: #2b2b2b;
+  /* bg color*/
+  overflow-x: hidden;
+  /* Disable horizontal scroll */
+  padding-top: 50px;
+  /* Place content --px from the top */
+  transition: 0.8s;
+  /* 0.8 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+
+.sidenav a {
+  padding: 30px 10px 8px 32px;
+  text-decoration: none;
+  font-size: 10px;
+  color: #96D1FF;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a span {
+  animation: fadeIn 2s;
+  -webkit-animation: fadeIn 2s;
+}
+
+.hideText span {
+  display: none;
+}
+
+.menu-active {
+  background-color: #96D1FF;
+  width: 100%;
+  height: 100px;
+}
+
+.menu-active i,
+.menu-active span {
+  color: #FFFFFF;
+}
+
+/* When you mouse over the navigation links, change their color */
+
+.sidenav a:hover {
+  color: #96D1FF;
+}
+
+/* Position and style the close button (top right corner) */
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+
+#main {
+  transition: margin-right 0.8s;
+  padding: 0px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+
+@media screen and (max-height: 450px) {
+  .sidenav {
+    padding-top: 15px;
+  }
+
+  .sidenav a {
+    font-size: 18px;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.booking-component {
+  padding: 0;
+  min-height: 95vh;
+  width: 495px;
+  margin: 0 auto;
+  z-index: 500;
+}
+
+.booking-component .booking-component-head {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 185px;
+  background-image: linear-gradient(to right, #93A39A, #110948);
+}
+
+.booking-component .booking-component-head .booking-component-head-title {
+  font-size: 25px;
+  color: #E89D74;
+  margin: auto;
+}
+
+.booking-component .booking-component-head .pagination-circles-all {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.booking-component .booking-component-head .pagination-circles-all .pagination-circle {
+  width: 10px;
+  height: 10px;
+  border: 2px solid #777;
+  background-color: #777;
+  border-radius: 100%;
+  margin: 25px 10px;
+}
+
+.booking-component .booking-component-head .pagination-circles-all .active-circle {
+  border: 2px solid #E89D74;
+  background-color: #E89D74;
+}
+
+#form-slider {
+  /* slider css */
+  /* Hide default HTML checkbox */
+  /* The slider */
+  /* Rounded sliders */
+}
+
+#form-slider .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+#form-slider .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+#form-slider .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+}
+
+#form-slider .slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+}
+
+#form-slider input:checked + .slider {
+  background-color: #2196F3;
+}
+
+#form-slider input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+#form-slider input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+#form-slider .slider.round {
+  border-radius: 34px;
+}
+
+#form-slider .slider.round:before {
+  border-radius: 50%;
+}
+
+.close-btn {
+  font-size: 2.5rem;
 }
 

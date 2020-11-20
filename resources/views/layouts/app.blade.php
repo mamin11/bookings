@@ -16,20 +16,26 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    <!-- css animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @livewireStyles
 
     @livewireScripts
-    {{-- <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false"></script> --}}
+    {{-- needed for upgrade to laravel 8 --}}
+    {{-- <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false"></script> --}} 
 </head>
 <body>
     <div id="app">
         {{-- @include('layouts.nav') --}}
         @yield('content')
-
-
-
-        </div>
+        
+        
+        
+    </div>
+    @include('sweetalert::alert')
+    <script src="https://kit.fontawesome.com/fb165c77d4.js" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -15,12 +15,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('/', function () {
+        return view('home');
+    });
+    
+    //this login route handles both the login and register. Uses livewire component
+    Route::livewire('/login', 'login')->name('login');
 });
 
-Route::livewire('/login', 'login');
-Route::livewire('/register', 'register');
+//add 'prefix' => 'admin', before below middleware to define route group for admin. eg admin/dashboard
+Route::group([ 'middleware' => 'auth'], function () {
+    Route::livewire('/logout', 'logout')->name('logout');
+    
+});
+Route::livewire('/dashboard', 'dashboard')->name('dashboard');
 
 
 

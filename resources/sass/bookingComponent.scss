@@ -1,0 +1,113 @@
+.booking-component {
+    padding: 0;
+    min-height: 95vh;
+    width: 495px;
+    margin: 0 auto;
+    z-index: 500;
+
+    .booking-component-head {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 185px;
+        background-image: linear-gradient(to right, #93A39A , #110948);
+
+            .booking-component-head-title {
+                // padding-top: 85px;
+                font-size: 25px;
+                color: $app-brown;
+                margin: auto;
+            }
+
+                .pagination-circles-all {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+
+                    .pagination-circle {
+                            width: 10px;
+                            height: 10px;  
+                            border: 2px solid #777;
+                            background-color: #777;
+                            border-radius: 100%;
+                            margin: 25px 10px;
+                    }
+                    .active-circle {
+                        border: 2px solid $app-brown;
+                        background-color: $app-brown;
+                    }
+            }
+    }
+    .booking-component-body {
+
+    }
+}
+
+#form-slider{
+    /* slider css */
+    .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    }
+
+    /* The slider */
+    .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    }
+
+    .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    }
+
+    input:checked + .slider {
+    background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+    border-radius: 34px;
+    }
+
+    .slider.round:before {
+    border-radius: 50%;
+    }
+}
+
+.close-btn {
+    font-size: 2.5rem;
+}
