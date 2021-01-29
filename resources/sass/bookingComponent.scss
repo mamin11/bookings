@@ -1,3 +1,4 @@
+/* start - booking component - add booking */
 .booking-component {
     padding: 0;
     min-height: 95vh;
@@ -42,6 +43,100 @@
 
     }
 }
+/* end booking add*/
+
+
+/* view bookings left side component - with upcoming, past, canceled list*/
+/* booking-left-center-container - wraps left and center divs */
+.booking-left-center-container{
+    display: flex;
+    flex-direction: row;
+
+        .booking-component-view {
+            padding: 0;
+            min-height: 95vh;
+            width: 465px;
+            margin: 0;
+            z-index: 500;
+
+            .booking-component-head {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                height: 185px;
+                background-image: linear-gradient(to right, #93A39A , #110948);
+                
+                .booking-component-head-title {
+                    // padding-top: 85px;
+                    font-size: 25px;
+                    color: $app-brown;
+                    margin: auto;
+                }
+                
+
+                        .bookings-list-filter {
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: center;
+                            padding: 10px 0;
+                            background-image: linear-gradient(to right, #3b3d3c , #0f083a);
+
+                            .list-filter-item {
+                                    padding: 0 20px;
+                                    color: $app-white;
+                            }
+                            .active-filter {
+                                border-bottom: 2px solid $app-brown;
+                                color: $app-brown;
+
+                            }
+                    }
+            }
+            .booking-component-body {
+
+            }
+        }
+}
+
+.booking-component-view-center{
+    padding: 0;
+    min-height: 95vh;
+    width: 100%;
+    margin: 0;
+    z-index: 500;
+    background-color: $app-gray;
+
+    .booking-center-head {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 45px;
+        background-color: rgb(214, 212, 212);
+
+        .bookings-list-filter {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            // padding: 10px 0;
+            // background-image: linear-gradient(to right, #3b3d3c , #0f083a);
+
+            .list-filter-item {
+                    padding: 0 20px;
+                    color: $app-black;
+                    font-weight: 800;
+
+            }
+            .active-filter {
+                border-bottom: 2px solid $app-brown;
+                color: $app-brown;
+
+            }
+    }
+
+    } 
+}
+/* end of bookings view */ 
+
 
 #form-slider{
     /* slider css */

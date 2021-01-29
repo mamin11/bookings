@@ -11114,13 +11114,163 @@ form .already {
   color: #5C67B5;
 }
 
+/* dashboard grid display for the nav,sidebar and main content area */
+
+#app {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 1fr 1fr 1fr 0.6fr;
+  grid-template-rows: 0.2fr 3fr;
+  grid-template-areas: "nav nav nav sidebar" "main main main sidebar";
+  grid-gap: 0.2rem;
+}
+
+/*  sidebar styles start */
+
+#mySidenav {
+  grid-area: sidebar;
+  background: #3a5461;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 20px;
+  transition: all 0.5s;
+  margin: 0;
+}
+
+.sidebar__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #f3f4f6;
+  margin-bottom: 30px;
+  /* color: #E85B6B; */
+}
+
+.sidebar__img {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar__title > div > img {
+  width: 75px;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.sidebar__title > div > h1 {
+  font-size: 18px;
+  display: inline;
+}
+
+.sidebar__title > i {
+  font-size: 18px;
+  display: none;
+}
+
+.sidebar__menu > h2 {
+  color: #3ea175;
+  font-size: 16px;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  padding: 0 10px;
+  font-weight: 700;
+}
+
+.sidebar__link {
+  color: #f3f4f6;
+  padding: 10px;
+  border-radius: 3px;
+  margin-bottom: 5px;
+}
+
+.active_menu_link {
+  background: rgba(62, 161, 117, 0.3);
+  color: #3ea175;
+}
+
+.active_menu_link a {
+  color: #3ea175 !important;
+}
+
+.sidebar__link > a {
+  text-decoration: none;
+  color: #a5aaad;
+  font-weight: 700;
+}
+
+.sidebar__link > i {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.sidebar__logout {
+  margin-top: 20px;
+  padding: 10px;
+  color: #e65061;
+}
+
+.sidebar__logout > a {
+  text-decoration: none;
+  color: #e65061;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.sidebar__logout > i {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.sidebar_responsive {
+  display: inline !important;
+  z-index: 9999 !important;
+  right: 0 !important;
+  position: absolute;
+}
+
+.sidebar_hidden {
+  width: 0vw !important;
+  display: none !important;
+}
+
+/* sidebar styles end */
+
 #top-dash-nav {
-  z-index: 500;
-  height: 5vh;
+  grid-area: nav;
+  background: #ffffff;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px 0 30px;
+  /* border-bottom: 1px solid lightgray; */
 }
 
 #main {
-  min-height: 95vh;
+  grid-area: main;
+  background: #f3f4f6;
+  overflow-y: auto;
+}
+
+@media only screen and (max-width: 768px) {
+  #app {
+    grid-template-columns: 1fr;
+    /* grid-template-rows: 0.2fr 2.2fr; */
+    grid-template-rows: 0.2fr 3fr;
+    grid-template-areas: "nav" "main";
+  }
+
+  #mySidenav {
+    display: none;
+  }
+
+  .sidebar__title > i {
+    display: inline;
+  }
+
+  .nav_icon {
+    display: inline;
+  }
 }
 
 @media screen and (max-height: 450px) {
@@ -11129,115 +11279,7 @@ form .already {
   }
 }
 
-/* The side navigation menu */
-
-.sidenav {
-  height: 100%;
-  /* 100% Full-height */
-  width: 100px;
-  /* 0 width - change this with JavaScript */
-  position: fixed;
-  /* Stay in place */
-  z-index: 1;
-  /* Stay on top */
-  top: 0;
-  /* Stay at the top */
-  right: 0;
-  background-color: #2b2b2b;
-  /* bg color*/
-  overflow-x: hidden;
-  /* Disable horizontal scroll */
-  padding-top: 50px;
-  /* Place content --px from the top */
-  transition: 0.8s;
-  /* 0.8 second transition effect to slide in the sidenav */
-}
-
-/* The navigation menu links */
-
-.sidenav a {
-  padding: 30px 10px 8px 32px;
-  text-decoration: none;
-  font-size: 10px;
-  color: #96D1FF;
-  display: block;
-  transition: 0.3s;
-}
-
-.sidenav a span {
-  animation: fadeIn 2s;
-  -webkit-animation: fadeIn 2s;
-}
-
-.hideText span {
-  display: none;
-}
-
-.menu-active {
-  background-color: #96D1FF;
-  width: 100%;
-  height: 100px;
-}
-
-.menu-active i,
-.menu-active span {
-  color: #FFFFFF;
-}
-
-/* When you mouse over the navigation links, change their color */
-
-.sidenav a:hover {
-  color: #96D1FF;
-}
-
-/* Position and style the close button (top right corner) */
-
-.sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
-}
-
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-
-#main {
-  transition: margin-right 0.8s;
-  padding: 0px;
-}
-
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-
-@media screen and (max-height: 450px) {
-  .sidenav {
-    padding-top: 15px;
-  }
-
-  .sidenav a {
-    font-size: 18px;
-  }
-}
-
-@-webkit-keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
+/* start - booking component - add booking */
 
 .booking-component {
   padding: 0;
@@ -11280,6 +11322,93 @@ form .already {
   border: 2px solid #E89D74;
   background-color: #E89D74;
 }
+
+/* end booking add*/
+
+/* view bookings left side component - with upcoming, past, canceled list*/
+
+/* booking-left-center-container - wraps left and center divs */
+
+.booking-left-center-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.booking-left-center-container .booking-component-view {
+  padding: 0;
+  min-height: 95vh;
+  width: 465px;
+  margin: 0;
+  z-index: 500;
+}
+
+.booking-left-center-container .booking-component-view .booking-component-head {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 185px;
+  background-image: linear-gradient(to right, #93A39A, #110948);
+}
+
+.booking-left-center-container .booking-component-view .booking-component-head .booking-component-head-title {
+  font-size: 25px;
+  color: #E89D74;
+  margin: auto;
+}
+
+.booking-left-center-container .booking-component-view .booking-component-head .bookings-list-filter {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 10px 0;
+  background-image: linear-gradient(to right, #3b3d3c, #0f083a);
+}
+
+.booking-left-center-container .booking-component-view .booking-component-head .bookings-list-filter .list-filter-item {
+  padding: 0 20px;
+  color: #FFFFFF;
+}
+
+.booking-left-center-container .booking-component-view .booking-component-head .bookings-list-filter .active-filter {
+  border-bottom: 2px solid #E89D74;
+  color: #E89D74;
+}
+
+.booking-component-view-center {
+  padding: 0;
+  min-height: 95vh;
+  width: 100%;
+  margin: 0;
+  z-index: 500;
+  background-color: #E7E8E9;
+}
+
+.booking-component-view-center .booking-center-head {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 45px;
+  background-color: #d6d4d4;
+}
+
+.booking-component-view-center .booking-center-head .bookings-list-filter {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.booking-component-view-center .booking-center-head .bookings-list-filter .list-filter-item {
+  padding: 0 20px;
+  color: #0F0F0F;
+  font-weight: 800;
+}
+
+.booking-component-view-center .booking-center-head .bookings-list-filter .active-filter {
+  border-bottom: 2px solid #E89D74;
+  color: #E89D74;
+}
+
+/* end of bookings view */
 
 #form-slider {
   /* slider css */

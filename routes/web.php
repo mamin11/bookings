@@ -21,7 +21,9 @@ Route::group(['middleware' => 'guest'], function () {
     });
     
     //this login route handles both the login and register. Uses livewire component
-    Route::livewire('/login', 'login')->name('login');
+    Route::livewire('/login', 'login')->name('login')
+    ->layout('layouts.app')
+    ->section('content');
 });
 
 //add 'prefix' => 'admin', before below middleware to define route group for admin. eg admin/dashboard
@@ -29,7 +31,23 @@ Route::group([ 'middleware' => 'auth'], function () {
     Route::livewire('/logout', 'logout')->name('logout');
     
 });
-Route::livewire('/dashboard', 'dashboard')->name('dashboard');
+
+
+Route::group(['prefix' => 'bookings'], function () {
+    Route::livewire('/add', 'booking-component')
+    ->name('addBooking')
+    ->layout('layouts.dashboard')
+    ->section('content');
+
+    Route::livewire('/view', 'bookings.view')
+    ->name('viewBookings')
+    ->layout('layouts.dashboard')
+    ->section('content');
+    
+});
+Route::livewire('/dashboard', 'dashboard')
+->layout('layouts.dashboard')
+->name('dashboard');
 
 
 

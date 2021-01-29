@@ -6,13 +6,13 @@ use Livewire\Component;
 
 class DashboardTopNav extends Component
 {
-    public $showBookingComponent = false;
+    // public $showBookingComponent = false;
 
-    public function openComponent()
-    {
-        @dd('heeeeererererre');
-        $this->showBookingComponent = true;
-    }
+    // public function openComponent()
+    // {
+    //     //@dd('heeeeererererre');
+    //     $this->showBookingComponent = true;
+    // }
 
     public function render()
     {

@@ -16,6 +16,14 @@ class BookingComponent extends Component
 
     public $data = [];
 
+    //event listener
+    protected $listeners = ['bookingClose'];
+
+    public function bookingClose()
+    {
+        $this->showBookingComponent = !$this->showBookingComponent;
+    }
+
 
     public function toggleComponent($comp)
     {

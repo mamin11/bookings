@@ -1,4 +1,4 @@
-
+<div>
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-m" id="top-dash-nav">
     <div class="container-fluid">
         <button class="navbar-toggler" onclick="checkToggle()" type="button" data-toggle="collapse" data-target="#navbarSupportedContentREMOVED" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -85,19 +85,21 @@
     
     <!-- the main content goes here -->
     <div id="main">
-        <button wire:click.prevent="openComponent" type="button" class="btn btn-primary">
+        {{-- <button wire:click="openComponent" class="btn btn-primary">
             <i class="fas fa-plus"></i>
-            ADD BOOKING</button>
+            ADD BOOKING</button> --}}
 
-            @if ($showBookingComponent)
-                @livewire('booking-component')                            
-            @endif
+            <div>
+                {{-- @if ($showBookingComponent) --}}
+                    @livewire('booking-component')                            
+                {{-- @endif --}}
+            </div>
             <div></div>
     </div>
 
 
 
-
+</div>
 
 
 

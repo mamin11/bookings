@@ -1,6 +1,6 @@
 @if ($showBookingComponent)
 <div>
-    <div class="booking-component card shadow bg-white rounded">
+    <div class="booking-component card shadow-lg bg-white rounded">
         <div class="booking-component-head ">
 
             <button wire:click="closeComponent"  class="close p-4 position-absolute top-0 right-0" >
