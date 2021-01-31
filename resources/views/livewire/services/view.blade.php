@@ -58,8 +58,8 @@
                                                                         </div>
                                                                     </div>
                                                                     
-                                                                    @error('serviceForm.name')
-                                                                        <span class="invalid-feedback" role="alert">
+                                                                    @error('updateServiceForm.name')
+                                                                        <span class="error" role="alert">
                                                                             <strong>{{ $message }}</strong>
                                                                         </span>
                                                                     @enderror
@@ -72,8 +72,8 @@
                                                                     </div>
                 
                                                                     
-                                                                    @error('serviceForm.price')
-                                                                        <span class="invalid-feedback" role="alert">
+                                                                    @error('updateServiceForm.price')
+                                                                        <span class="error" role="alert">
                                                                             <strong>{{ $message }}</strong>
                                                                         </span>
                                                                     @enderror
@@ -112,7 +112,7 @@
                                                 </div>
                                                 
                                                 @error('serviceForm.name')
-                                                    <span class="invalid-feedback" role="alert">
+                                                    <span class="error" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
@@ -138,7 +138,7 @@
 
                                                 
                                                 @error('serviceForm.price')
-                                                    <span class="invalid-feedback" role="alert">
+                                                    <span class="error" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror

@@ -25,18 +25,29 @@ class View extends Component
     public $updatingService;
     public $showUpdateForm = false;
 
+    //custom validation messages
+    private $customMessages = [
+        'required' => 'Please enter a value',
+        'unique' => 'This already exists in the database',
+        'string' => 'This needs to be a string',
+        'integer' => 'This needs to be a number',
+    ];
+
     public function addService() {
-        //validate
-        $this->validate([
-            'serviceForm.name' => 'required|String',
+        //rules
+        $rules = [
+            'serviceForm.name' => 'required|String|unique:services,name',
             'serviceForm.price' => 'required|Integer'
-        ]);
+        ];
+
+        //validate
+        $validatedData = $this->validate($rules, $this->customMessages);
 
         //add to db
-            Service::create([
-                'name' => $this->serviceForm['name'],
-                'price' => $this->serviceForm['price']
-            ]);
+        Service::create([
+            'name' => $this->serviceForm['name'],
+            'price' => $this->serviceForm['price']
+        ]);
 
         //flash messages
         session()->flash('Successfully added');
@@ -65,11 +76,15 @@ class View extends Component
         }
         
         public function updateConfirm(){
-            //validate
-            $this->validate([
-                'updateServiceForm.name' => 'required|String',
+            //rules
+            $rules = [
+                'updateServiceForm.name' => 'required|String|unique:services,name',
                 'updateServiceForm.price' => 'required|Integer'
-            ]);
+            ];
+
+            //validate
+            $validatedData = $this->validate($rules, $this->customMessages);
+
             //update
             $this->updatingService->name = $this->updateServiceForm['name'];
             $this->updatingService->price = $this->updateServiceForm['price'];
