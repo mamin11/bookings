@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 
+//booking component is shown when /bookings/add is visited
 class BookingComponent extends Component
 {
     public $formComponents = [

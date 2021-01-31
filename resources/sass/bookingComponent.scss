@@ -1,7 +1,7 @@
 /* start - booking component - add booking */
 .booking-component {
     padding: 0;
-    min-height: 95vh;
+    // min-height: 95vh;
     width: 495px;
     margin: 0 auto;
     z-index: 500;
@@ -51,14 +51,17 @@
 .booking-left-center-container{
     display: flex;
     flex-direction: row;
+    margin: 0 !important;
 
         .booking-component-view {
             padding: 0;
-            min-height: 95vh;
+            // min-height: 90vh;
+            height: 91vh;
+            overflow-y: scroll;
             width: 465px;
             margin: 0;
             z-index: 500;
-
+            
             .booking-component-head {
                 display: flex;
                 flex-direction: column;
@@ -73,34 +76,40 @@
                     margin: auto;
                 }
                 
-
+                
                         .bookings-list-filter {
                             display: flex;
                             flex-direction: row;
                             justify-content: center;
                             padding: 10px 0;
                             background-image: linear-gradient(to right, #3b3d3c , #0f083a);
-
+                            
                             .list-filter-item {
-                                    padding: 0 20px;
-                                    color: $app-white;
+                                padding: 0 20px;
+                                color: $app-white;
                             }
                             .active-filter {
                                 border-bottom: 2px solid $app-brown;
                                 color: $app-brown;
-
+                                
                             }
+                        }
                     }
-            }
-            .booking-component-body {
+                    .booking-component-body {
+                        // overflow: hidden;
+                        // min-height: 100%;
+                        margin: 0;
 
+                        .list-group {
+                            // overflow: scroll;
+                        }
             }
         }
 }
 
 .booking-component-view-center{
     padding: 0;
-    min-height: 95vh;
+    // min-height: 95vh;
     width: 100%;
     margin: 0;
     z-index: 500;

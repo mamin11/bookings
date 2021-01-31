@@ -11283,7 +11283,6 @@ form .already {
 
 .booking-component {
   padding: 0;
-  min-height: 95vh;
   width: 495px;
   margin: 0 auto;
   z-index: 500;
@@ -11332,11 +11331,13 @@ form .already {
 .booking-left-center-container {
   display: flex;
   flex-direction: row;
+  margin: 0 !important;
 }
 
 .booking-left-center-container .booking-component-view {
   padding: 0;
-  min-height: 95vh;
+  height: 91vh;
+  overflow-y: scroll;
   width: 465px;
   margin: 0;
   z-index: 500;
@@ -11374,9 +11375,12 @@ form .already {
   color: #E89D74;
 }
 
+.booking-left-center-container .booking-component-view .booking-component-body {
+  margin: 0;
+}
+
 .booking-component-view-center {
   padding: 0;
-  min-height: 95vh;
   width: 100%;
   margin: 0;
   z-index: 500;

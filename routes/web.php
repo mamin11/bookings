@@ -32,7 +32,7 @@ Route::group([ 'middleware' => 'auth'], function () {
     
 });
 
-
+//booking routes
 Route::group(['prefix' => 'bookings'], function () {
     Route::livewire('/add', 'booking-component')
     ->name('addBooking')
@@ -45,6 +45,22 @@ Route::group(['prefix' => 'bookings'], function () {
     ->section('content');
     
 });
+
+//services routes
+Route::group(['prefix' => 'services'], function () {
+    Route::livewire('/add', 'services.add')
+    ->name('addService')
+    ->layout('layouts.dashboard')
+    ->section('content');
+
+    Route::livewire('/view', 'services.view')
+    ->name('viewServices')
+    ->layout('layouts.dashboard')
+    ->section('content');
+    
+});
+
+//dashboard routes
 Route::livewire('/dashboard', 'dashboard')
 ->layout('layouts.dashboard')
 ->name('dashboard');

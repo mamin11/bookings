@@ -22,7 +22,7 @@
 
         <div class="sidebar-link-item ">
             <i class="fas fa-2x fa-shopping-cart pr-4"></i>
-            <a href="#" class="hideText icon-span">Services</a>
+            <a href="/services/view" class="hideText icon-span">Services</a>
         </div>
 
         <div class="sidebar-link-item ">
@@ -43,6 +43,21 @@
         <div class="sidebar-link-item ">
             <i class="fas fa-2x fa-toolbox pr-4"></i>
             <a href="#" class="hideText icon-span">Settings</a>
+        </div>
+
+        <div class="sidebar-link-item ">
+            <i class="fas fa-2x fa-store pr-4"></i>
+            <a href="#" class=" icon-span">Orders</a>
+        </div>
+
+        <div class="sidebar-link-item ">
+            <i class="fab fa-2x fa-product-hunt pr-4"></i>
+            <a href="#" class=" icon-span">Products</a>
+        </div>
+
+        <div class="sidebar-link-item ">
+            <i class="fas fa-2x fa-envelope-open-text pr-4"></i>
+            <a href="#" class=" icon-span">Messages</a>
         </div>
 
         <div class="sidebar-link-item ">
