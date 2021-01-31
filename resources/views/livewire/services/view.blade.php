@@ -49,7 +49,7 @@
                                                     <hr>
                                                                 <div class="form-group">
                                                                     <label for="updateServiceInput" class="col-10 col-form-label form-control">Update Service
-                                                                        <i class="fas fa-sync-alt" wire:click="hideUpdateForm"  style="color: black; padding-right: 10px; float: right;"></i>    
+                                                                        <i class="fas fa-sync-alt cursor-pointer" wire:click="hideUpdateForm"  style="color: black; padding-right: 10px; float: right;"></i>    
                                                                     </label><br>
                                                                     
                                                                     <div class="form-group row">

@@ -48,11 +48,6 @@ Route::group(['prefix' => 'bookings'], function () {
 
 //services routes
 Route::group(['prefix' => 'services'], function () {
-    Route::livewire('/add', 'services.add')
-    ->name('addService')
-    ->layout('layouts.dashboard')
-    ->section('content');
-
     Route::livewire('/view', 'services.view')
     ->name('viewServices')
     ->layout('layouts.dashboard')
