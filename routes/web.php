@@ -55,6 +55,15 @@ Route::group(['prefix' => 'services'], function () {
     
 });
 
+//customers routes
+Route::group(['prefix' => 'customers'], function () {
+    Route::livewire('/view', 'customers.view')
+    ->name('viewCustomers')
+    ->layout('layouts.dashboard')
+    ->section('content');
+    
+});
+
 //dashboard routes
 Route::livewire('/dashboard', 'dashboard')
 ->layout('layouts.dashboard')

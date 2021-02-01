@@ -2,9 +2,10 @@
 
 namespace App;
 
+use App\Address;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'address_id',
     ];
 
     /**
@@ -36,4 +37,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $guarded = [];
+    public $timestamps = false;
+    protected $primaryKey = 'user_id';
+
+    public function getAddress(){
+        return Address::where('address_id', $this->addrress_id)->first();
+    }
 }
