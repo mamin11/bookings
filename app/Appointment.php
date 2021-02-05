@@ -2,6 +2,7 @@
 
 namespace App;
 
+use DateTime;
 use App\Service;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +13,10 @@ class Appointment extends Model
     protected $primaryKey = 'appointment_id';
 
     public function getDuration() {
-        return ($this->end_at - $this->start_at);
+        $diff = strtotime($this->end_at) - strtotime($this->start_at);
+        $diffH = gmdate('H:i:s ',$diff);
+        $h = explode(':', $diffH)[0];
+        return $h;
     }
 
     public function getServicePrice() {

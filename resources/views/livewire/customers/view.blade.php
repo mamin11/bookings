@@ -164,7 +164,7 @@
                                                                             @if(count($updatingCustomerBookings) > 0)
                                                                                 @foreach ($updatingCustomerBookings as $item)
                                                                                     @foreach($item->getBookings() as $booking)
-                                                                                        <li id="item1" href="#" class="list-group-item">{{$booking->start_at}}</li>
+                                                                                        <li id="item1" href="#" class="list-group-item">Time: {{$booking->start_at}}-{{$booking->end_at}} <br> Total Price: £{{$booking->getPrice()}} (£{{$booking->getServicePrice()}}/hr)</li>
                                                                                     @endforeach
                                                                                 @endforeach
                                                                             @else        
