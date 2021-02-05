@@ -5,10 +5,12 @@ namespace App\Http\Livewire\Customers;
 use App\Address;
 use App\Customer;
 use Livewire\Component;
+use App\User_appointment;
 use Illuminate\Support\Facades\Hash;
 
 class View extends Component
 {
+    //holds data when adding customer
     public $customerForm = [
         'name' => '',
         'email' => '',
@@ -19,6 +21,8 @@ class View extends Component
         'country' => '',
         'post_code' => ''
     ];
+    
+    //holds data about updating customer
     public $updateCustomerForm = [
         'name' => '',
         'email' => '',
@@ -30,15 +34,29 @@ class View extends Component
         'post_code' => ''
     ];
 
+    //holds data about customers booking details which wire:modeled to booking details section
+    public $bookingDetails = [
+        'start' => '',
+        'end' => '',
+        'price' => '',
+        'service' => ''
+    ];
+
     public $confirmingID;
     public $updatingCustomer;
     public $updatingCustomerAddress;
+    public $updatingCustomerBookings;
     public $newCustomerAddress;
+
     public $showUpdateForm = false;
+
+    //two variables to toggle between customer details and customer bookings
+    public $showBookings = false;
+    public $showDetails = true;
 
     //custom validation messages
     private $customMessages = [
-        'required' => 'Please enter a value',
+        'required' => 'Stop playing man. Fill in the form',
         'unique' => 'This already exists in the database',
         'string' => 'This needs to be a string',
         'integer' => 'This needs to be a number',
@@ -105,9 +123,12 @@ class View extends Component
     }
 
     public function updateCustomer($customer_id){
+        $this->showUpdateForm = true;
+        $this->showDetails = true;
+        $this->showBookings = false;
         $this->updatingCustomer = Customer::where('customer_id',$customer_id)->first();
         $this->updatingCustomerAddress = Address::where('address_id',$this->updatingCustomer->address_id)->first();
-        $this->showUpdateForm = true;
+        $this->updatingCustomerBookings = User_appointment::where('customer_id', $this->updatingCustomer->customer_id)->get();
 
         //update customer fields
         $this->updateCustomerForm['name'] = $this->updatingCustomer->name;
@@ -158,11 +179,22 @@ class View extends Component
         $this->showUpdateForm = false;
     }
 
+    public function showBookings() {
+        $this->showBookings = true;
+        $this->showDetails = false;
+    }
+    
+    public function showDetails() {
+        $this->showDetails = true;
+        $this->showBookings = false;
+    }
+
     public function render()
     {
         $customers = Customer::all();
         return view('livewire.customers.view', [
-            'customers' => $customers
+            'customers' => $customers,
+            'updatingCustomerBookings' => $this->updatingCustomerBookings
         ]);
     }
 }

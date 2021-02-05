@@ -74,7 +74,7 @@
                                                     <label for="example-datetime-local-input" class="col-10 col-form-label form-control">Select Date and Time</label><br>
                                                     <div class="form-group row">
                                                         <div class="col-10">
-                                                            <input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="example-datetime-local-input">
+                                                            <input class="form-control" type="datetime-local" value="" id="example-datetime-local-input">
                                                         </div>
                                                     </div>                                                    
                                                     @error('register_form.password')
