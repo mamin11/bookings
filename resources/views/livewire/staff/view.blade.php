@@ -86,10 +86,15 @@
                                                                             </span>
                                                                         @enderror
                                                                         
-                                                                        
+                                                                        {{-- pre-select staff role if in database ****************************** --}}
                                                                         <div class="form-group row">
                                                                             <div class="col-10">
-                                                                                <input class="form-control @error('updateStaffForm.role') is-invalid @enderror" type="text" wire:model.lazy="updateStaffForm.role" name="updateRole" placeholder="role"  value="{{  $updateStaffForm['role'] ? $updateStaffForm['role'] : '' }}" required  >
+                                                                                <select class="form-control @error('updateStaffForm.role') is-invalid @enderror" type="text" wire:model.lazy="updateStaffForm.role" name="role" placeholder="role" value="{{ $updateStaffForm['role'] ? $updateStaffForm['role'] : '' }}" required >
+                                                                                    <option value="">Select role</option>
+                                                                                    @foreach($roles as $role)
+                                                                                        <option value="{{$role->role_id}}">{{$role->name}}</option>
+                                                                                    @endforeach
+                                                                                </select>
                                                                             </div>
                                                                         </div>
                     
@@ -174,12 +179,14 @@
 
                                                                     @endif
 
+                                                                {{-- pre-check staff services in the database loop all the services and check againt updating staff services --}}
                                                                     @if($showServices)
                                                                         <ul class="list-group list-group">
                                                                             @if(count($updatingStaffServices) > 0)
                                                                                 @foreach ($updatingStaffServices as $item)
                                                                                     @foreach($item->getServices() as $service)
-                                                                                        <li id="item1" class="list-group-item">{{$service->name}} </li>
+                                                                                    <input class="form-check-input" type="checkbox" value="{{$service->service_id}}" id="{{$service->name}}">
+                                                                                    <label class="form-check-label" for="{{$service->name}}">{{$service->name}}</label>
                                                                                     @endforeach
                                                                                 @endforeach
                                                                             @else        
@@ -340,13 +347,14 @@
                                                 
                                             </div>
                                             
+                                            {{-- staff sepecialities tab starts here --}}
                                             @elseif($addStaffServices)
                                             
                                             @foreach($services as $service)
                                             <div class="form-group row">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate">
-                                                    <label class="form-check-label" for="flexCheckIndeterminate">{{$service->name}}</label>
+                                                    <input class="form-check-input" type="checkbox" value="{{$service->service_id}}" id="{{$service->name}}">
+                                                    <label class="form-check-label" for="{{$service->name}}">{{$service->name}}</label>
                                                 </div>
                                             </div>
                                             @endforeach
@@ -360,6 +368,8 @@
                                             <div class="form-group">
                                                 <button type="submit" wire:click.prevent="addStaff" class="btn btn-primary rounded-pill btn-block">{{__('Complete') }}</button>
                                             </div> 
+
+                                            {{-- staff specialities ends here --}}
 
                                             @endif
                                             
