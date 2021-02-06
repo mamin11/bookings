@@ -6,24 +6,24 @@
                 <div class="booking-component-head ">
         
         
-                    <h1 class="text-center booking-component-head-title">View Customers !</h1>
+                    <h1 class="text-center booking-component-head-title">Your Staff !</h1>
         
         
                 </div>
         
-                <!-- ****************** customer component body starts ************************* -->
+                <!-- ****************** staff component body starts ************************* -->
                     <div class="booking-component-body ">
                         <ul class="list-group list-group">
-                            @foreach ($customers as $item)
+                            @foreach ($staff as $item)
                                 <li id="item1" href="#" class="list-group-item">{{$item->name}}
                                     <div class="pull-right">
                                     <span id="badge" class="badge" style="float:left;">{{$item->email}}</span>
-                                    @if($confirmingID === $item->customer_id)
-                                        <span id="badge" class="badge cursor-pointer" wire:click="deleteCustomer({{$item->customer_id}})" style="color: red; float: right;">Sure?</span>
+                                    @if($confirmingID === $item->user_id)
+                                        <span id="badge" class="badge cursor-pointer" wire:click="deleteStaff({{$item->user_id}})" style="color: red; float: right;">Sure?</span>
                                     @else
-                                        <i class="fa fa-trash cursor-pointer" wire:click="confirmDelete({{$item->customer_id}})" style="color: red; float: right;"></i>
+                                        <i class="fa fa-trash cursor-pointer" wire:click="confirmDelete({{$item->user_id}})" style="color: red; float: right;"></i>
                                     @endif
-                                        <i class="fa fa-pen cursor-pointer" wire:click="updateCustomer({{$item->customer_id}})"  style="color: black; padding-right: 10px; float: right;"></i>
+                                        <i class="fa fa-pen cursor-pointer" wire:click="updateStaff({{$item->user_id}})"  style="color: black; padding-right: 10px; float: right;"></i>
                                     </div>
                                 </li>
                             @endforeach
@@ -32,12 +32,13 @@
                     
                     
             </div>
-                <!-- ****************** customer component body starts ************************* -->
+                <!-- ****************** staff component body starts ************************* -->
         
         <div class="booking-component-view-center">
+
                             {{-- show update form if update button is clicked else show empty form --}}
                             @if($showUpdateForm)
-                            {{-- ********** start of update customer form ********* --}}
+                            {{-- ********** start of update staff form ********* --}}
                             <div id="login-register" style="background-color: #E7E8E9 !important;">
                                                 <form >
                                                     @csrf
@@ -52,8 +53,8 @@
                                                                     
                                                                     
                                                                     <div class="form-group">
-                                                                        <a wire:click="showDetails()" class="login-register-links-sm cursor-pointer @if($showDetails) link-active @endif d-inline-block">Update Customer</a>
-                                                                        <a wire:click="showBookings()" class="login-register-links-sm cursor-pointer @if($showBookings) link-active @endif  d-inline-block">Booking Details</a>
+                                                                        <a wire:click="showDetails()" class="login-register-links-sm cursor-pointer @if($showDetails) link-active @endif d-inline-block">Update Staff</a>
+                                                                        <a wire:click="showServices()" class="login-register-links-sm cursor-pointer @if($showServices) link-active @endif  d-inline-block">Staff Services</a>
                                                                     </div>
                                                                     <hr>
                                                                     <br>
@@ -61,11 +62,11 @@
                                                                     @if($showDetails)
                                                                         <div class="form-group row">
                                                                             <div class="col-10">
-                                                                                <input class="form-control @error('updateCustomerForm.name') is-invalid @enderror" type="text" wire:model.lazy="updateCustomerForm.name" name="updateName" placeholder="name"  id="updateCustomerInput" value="{{ $updateCustomerForm['name'] ?  $updateCustomerForm['name'] : '' }}" required  autofocus>
+                                                                                <input class="form-control @error('updateStaffForm.name') is-invalid @enderror" type="text" wire:model.lazy="updateStaffForm.name" name="updateName" placeholder="name"  id="updateCustomerInput" value="{{ $updateStaffForm['name'] ?  $updateStaffForm['name'] : '' }}" required  autofocus>
                                                                             </div>
                                                                         </div>
                                                                         
-                                                                        @error('updateCustomerForm.name')
+                                                                        @error('updateStaffForm.name')
                                                                             <span class="error" role="alert">
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
@@ -74,12 +75,26 @@
                                                                         
                                                                         <div class="form-group row">
                                                                             <div class="col-10">
-                                                                                <input class="form-control @error('updateCustomerForm.email') is-invalid @enderror" type="email" wire:model.lazy="updateCustomerForm.email" name="updateEmail" placeholder="email"  value="{{  $updateCustomerForm['email'] ? $updateCustomerForm['email'] : '' }}" required  >
+                                                                                <input class="form-control @error('updateStaffForm.email') is-invalid @enderror" type="email" wire:model.lazy="updateStaffForm.email" name="updateEmail" placeholder="email"  value="{{  $updateStaffForm['email'] ? $updateStaffForm['email'] : '' }}" required  >
                                                                             </div>
                                                                         </div>
                     
                                                                         
-                                                                        @error('updateCustomerForm.email')
+                                                                        @error('updateStaffForm.email')
+                                                                            <span class="error" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
+                                                                        
+                                                                        
+                                                                        <div class="form-group row">
+                                                                            <div class="col-10">
+                                                                                <input class="form-control @error('updateStaffForm.role') is-invalid @enderror" type="text" wire:model.lazy="updateStaffForm.role" name="updateRole" placeholder="role"  value="{{  $updateStaffForm['role'] ? $updateStaffForm['role'] : '' }}" required  >
+                                                                            </div>
+                                                                        </div>
+                    
+                                                                        
+                                                                        @error('updateStaffForm.role')
                                                                             <span class="error" role="alert">
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
@@ -87,12 +102,12 @@
 
                                                                         <div class="form-group row">
                                                                             <div class="col-10">
-                                                                                <input class="form-control @error('updateCustomerForm.date_of_birth') is-invalid @enderror" type="date" wire:model.lazy="updateCustomerForm.date_of_birth" name="date_of_birth" placeholder="date of birth"  value="{{  $updateCustomerForm['date_of_birth'] ? $updateCustomerForm['date_of_birth'] : '' }}" required  >
+                                                                                <input class="form-control @error('updateStaffForm.date_of_birth') is-invalid @enderror" type="date" wire:model.lazy="updateStaffForm.date_of_birth" name="date_of_birth" placeholder="date of birth"  value="{{  $updateStaffForm['date_of_birth'] ? $updateStaffForm['date_of_birth'] : '' }}" required  >
                                                                             </div>
                                                                         </div>
                         
                                                                         
-                                                                        @error('updateCustomerForm.date_of_birth')
+                                                                        @error('updateStaffForm.date_of_birth')
                                                                             <span class="error" role="alert">
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
@@ -100,12 +115,12 @@
                         
                                                                         <div class="form-group row">
                                                                             <div class="col-10">
-                                                                                <input class="form-control @error('updateCustomerForm.address') is-invalid @enderror" type="text" wire:model.lazy="updateCustomerForm.address" name="address" placeholder="Address"  value="{{  $updateCustomerForm['address'] ? $updateCustomerForm['address'] : '' }}" required  >
+                                                                                <input class="form-control @error('updateStaffForm.address') is-invalid @enderror" type="text" wire:model.lazy="updateStaffForm.address" name="address" placeholder="Address"  value="{{  $updateStaffForm['address'] ? $updateStaffForm['address'] : '' }}" required  >
                                                                             </div>
                                                                         </div>
                         
                                                                         
-                                                                        @error('updateCustomerForm.address')
+                                                                        @error('updateStaffForm.address')
                                                                             <span class="error" role="alert">
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
@@ -113,12 +128,12 @@
                         
                                                                         <div class="form-group row">
                                                                             <div class="col-10">
-                                                                                <input class="form-control @error('updateCustomerForm.city') is-invalid @enderror" type="text" wire:model.lazy="updateCustomerForm.city" name="city" placeholder="City"  value="{{  $updateCustomerForm['city'] ? $updateCustomerForm['city'] : '' }}" required  >
+                                                                                <input class="form-control @error('updateStaffForm.city') is-invalid @enderror" type="text" wire:model.lazy="updateStaffForm.city" name="city" placeholder="City"  value="{{  $updateStaffForm['city'] ? $updateStaffForm['city'] : '' }}" required  >
                                                                             </div>
                                                                         </div>
                         
                                                                         
-                                                                        @error('updateCustomerForm.city')
+                                                                        @error('updateStaffForm.city')
                                                                             <span class="error" role="alert">
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
@@ -126,12 +141,12 @@
                         
                                                                         <div class="form-group row">
                                                                             <div class="col-10">
-                                                                                <input class="form-control @error('updateCustomerForm.country') is-invalid @enderror" type="text" wire:model.lazy="updateCustomerForm.country" name="country" placeholder="Country"  value="{{  $updateCustomerForm['country'] ? $updateCustomerForm['country'] : '' }}" required  >
+                                                                                <input class="form-control @error('updateStaffForm.country') is-invalid @enderror" type="text" wire:model.lazy="updateStaffForm.country" name="country" placeholder="Country"  value="{{  $updateStaffForm['country'] ? $updateStaffForm['country'] : '' }}" required  >
                                                                             </div>
                                                                         </div>
                         
                                                                         
-                                                                        @error('updateCustomerForm.country')
+                                                                        @error('updateStaffForm.country')
                                                                             <span class="error" role="alert">
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
@@ -139,12 +154,12 @@
                         
                                                                         <div class="form-group row">
                                                                             <div class="col-10">
-                                                                                <input class="form-control @error('updateCustomerForm.post_code') is-invalid @enderror" type="text" wire:model.lazy="updateCustomerForm.post_code" name="post_code" placeholder="Post code"  value="{{  $updateCustomerForm['post_code'] ? $updateCustomerForm['post_code'] : '' }}" required  >
+                                                                                <input class="form-control @error('updateStaffForm.post_code') is-invalid @enderror" type="text" wire:model.lazy="updateStaffForm.post_code" name="post_code" placeholder="Post code"  value="{{  $updateStaffForm['post_code'] ? $updateStaffForm['post_code'] : '' }}" required  >
                                                                             </div>
                                                                         </div>
                         
                                                                         
-                                                                        @error('updateCustomerForm.post_code')
+                                                                        @error('updateStaffForm.post_code')
                                                                             <span class="error" role="alert">
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
@@ -159,16 +174,16 @@
 
                                                                     @endif
 
-                                                                    @if($showBookings)
+                                                                    @if($showServices)
                                                                         <ul class="list-group list-group">
-                                                                            @if(count($updatingCustomerBookings) > 0)
-                                                                                @foreach ($updatingCustomerBookings as $item)
-                                                                                    @foreach($item->getBookings() as $booking)
-                                                                                        <li id="item1" class="list-group-item">Time: {{$booking->start_at}}-{{$booking->end_at}} <br> Total Price: £{{$booking->getPrice()}} (£{{$booking->getServicePrice()}}/hr)</li>
+                                                                            @if(count($updatingStaffServices) > 0)
+                                                                                @foreach ($updatingStaffServices as $item)
+                                                                                    @foreach($item->getServices() as $service)
+                                                                                        <li id="item1" class="list-group-item">{{$service->name}} </li>
                                                                                     @endforeach
                                                                                 @endforeach
                                                                             @else        
-                                                                                    <li id="item1" class="list-group-item">No bookings</li>
+                                                                                    <li id="item1" class="list-group-item">No Services</li>
                                                                             @endif
                                                                         </ul>
                                                                     @endif
@@ -176,7 +191,7 @@
                                                 </form>
                             </div>
 
-                            {{-- *********** end of update customer form ************* --}}
+                            {{-- *********** end of update staff form ************* --}}
 
                         @else
                         <div id="login-register" style="background-color: #E7E8E9 !important;">
@@ -189,22 +204,22 @@
 
                                 <hr>
                 
-                                    {{-- ************ start customer-details form  ************* --}}
+                                    {{-- ************ start staff-details form  ************* --}}
                             
                                             <div class="form-group">
 
                                                 <div class="form-group">
-                                                    <a class="login-register-links-sm cursor-pointer d-inline-block">Add Customer</a>
+                                                    <a class="login-register-links-sm cursor-pointer d-inline-block">Add Staff</a>
                                                 </div>
                                                 <hr>
                                                 
                                                 <div class="form-group row">
                                                     <div class="col-10">
-                                                        <input class="form-control @error('customerForm.name') is-invalid @enderror" type="text" wire:model.lazy="customerForm.name" name="name" placeholder="name"  id="addCustomerInput" value="{{ old('name') }}" required  autofocus>
+                                                        <input class="form-control @error('staffForm.name') is-invalid @enderror" type="text" wire:model.lazy="staffForm.name" name="name" placeholder="name"  id="addCustomerInput" value="{{ old('name') }}" required  autofocus>
                                                     </div>
                                                 </div>
                                                 
-                                                @error('customerForm.name')
+                                                @error('staffForm.name')
                                                     <span class="error" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -213,12 +228,12 @@
                                                 
                                                 <div class="form-group row">
                                                     <div class="col-10">
-                                                        <input class="form-control @error('customerForm.email') is-invalid @enderror" type="email" wire:model.lazy="customerForm.email" name="email" placeholder="email"  value="{{ old('email') }}" required  >
+                                                        <input class="form-control @error('staffForm.email') is-invalid @enderror" type="email" wire:model.lazy="staffForm.email" name="email" placeholder="email"  value="{{ old('email') }}" required  >
                                                     </div>
                                                 </div>
 
                                                 
-                                                @error('customerForm.email')
+                                                @error('staffForm.email')
                                                     <span class="error" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -226,12 +241,12 @@
                                                 
                                                 <div class="form-group row">
                                                     <div class="col-10">
-                                                        <input class="form-control @error('customerForm.password') is-invalid @enderror" type="text" wire:model.lazy="customerForm.password" name="password" placeholder="password"  value="{{ old('password') }}" required  >
+                                                        <input class="form-control @error('staffForm.password') is-invalid @enderror" type="text" wire:model.lazy="staffForm.password" name="password" placeholder="password"  value="{{ old('password') }}" required  >
                                                     </div>
                                                 </div>
 
                                                 
-                                                @error('customerForm.password')
+                                                @error('staffForm.password')
                                                     <span class="error" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -239,12 +254,30 @@
                                                 
                                                 <div class="form-group row">
                                                     <div class="col-10">
-                                                        <input class="form-control @error('customerForm.date_of_birth') is-invalid @enderror" type="date" wire:model.lazy="customerForm.date_of_birth" name="Date_of_birth" placeholder="date of birth"  value="{{ old('date_of_brith') }}" required  >
+                                                        <select class="form-control @error('staffForm.role') is-invalid @enderror" type="text" wire:model.lazy="staffForm.role" name="role" placeholder="role" value="{{ old('role') }}" required >
+                                                            <option value="service name">Select role</option>
+                                                                @foreach($roles as $role)
+                                                                    <option value="{{$role->role_id}}">{{$role->name}}</option>
+                                                                @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
 
                                                 
-                                                @error('customerForm.date_of_birth')
+                                                @error('staffForm.role')
+                                                    <span class="error" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                                
+                                                <div class="form-group row">
+                                                    <div class="col-10">
+                                                        <input class="form-control @error('staffForm.date_of_birth') is-invalid @enderror" type="date" wire:model.lazy="staffForm.date_of_birth" name="Date_of_birth" placeholder="date of birth"  value="{{ old('date_of_brith') }}" required  >
+                                                    </div>
+                                                </div>
+
+                                                
+                                                @error('staffForm.date_of_birth')
                                                     <span class="error" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -252,12 +285,12 @@
 
                                                 <div class="form-group row">
                                                     <div class="col-10">
-                                                        <input class="form-control @error('customerForm.address') is-invalid @enderror" type="text" wire:model.lazy="customerForm.address" name="address" placeholder="Address"  value="{{ old('address') }}" required  >
+                                                        <input class="form-control @error('staffForm.address') is-invalid @enderror" type="text" wire:model.lazy="staffForm.address" name="address" placeholder="Address"  value="{{ old('address') }}" required  >
                                                     </div>
                                                 </div>
 
                                                 
-                                                @error('customerForm.address')
+                                                @error('staffForm.address')
                                                     <span class="error" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -265,12 +298,12 @@
 
                                                 <div class="form-group row">
                                                     <div class="col-10">
-                                                        <input class="form-control @error('customerForm.city') is-invalid @enderror" type="text" wire:model.lazy="customerForm.city" name="city" placeholder="City"  value="{{ old('city') }}" required  >
+                                                        <input class="form-control @error('staffForm.city') is-invalid @enderror" type="text" wire:model.lazy="staffForm.city" name="city" placeholder="City"  value="{{ old('city') }}" required  >
                                                     </div>
                                                 </div>
 
                                                 
-                                                @error('customerForm.city')
+                                                @error('staffForm.city')
                                                     <span class="error" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -278,12 +311,12 @@
 
                                                 <div class="form-group row">
                                                     <div class="col-10">
-                                                        <input class="form-control @error('customerForm.country') is-invalid @enderror" type="text" wire:model.lazy="customerForm.country" name="country" placeholder="Country"  value="{{ old('country') }}" required  >
+                                                        <input class="form-control @error('staffForm.country') is-invalid @enderror" type="text" wire:model.lazy="staffForm.country" name="country" placeholder="Country"  value="{{ old('country') }}" required  >
                                                     </div>
                                                 </div>
 
                                                 
-                                                @error('customerForm.country')
+                                                @error('staffForm.country')
                                                     <span class="error" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -291,12 +324,12 @@
 
                                                 <div class="form-group row">
                                                     <div class="col-10">
-                                                        <input class="form-control @error('customerForm.post_code') is-invalid @enderror" type="text" wire:model.lazy="customerForm.post_code" name="post_code" placeholder="Post code"  value="{{ old('post_code') }}" required  >
+                                                        <input class="form-control @error('staffForm.post_code') is-invalid @enderror" type="text" wire:model.lazy="staffForm.post_code" name="post_code" placeholder="Post code"  value="{{ old('post_code') }}" required  >
                                                     </div>
                                                 </div>
 
                                                 
-                                                @error('customerForm.country')
+                                                @error('staffForm.country')
                                                     <span class="error" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -305,11 +338,11 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <button type="submit" wire:click.prevent="addCustomer" class="btn btn-primary rounded-pill btn-block">{{__('Add') }}</button>
+                                                <button type="submit" wire:click.prevent="addStaff" class="btn btn-primary rounded-pill btn-block">{{__('Add') }}</button>
                                             </div> 
                                             
                 
-                                    {{-- ************ end customer-details form  ************* --}}
+                                    {{-- ************ end staff-details form  ************* --}}
                             </form>
                         </div>
                         @endif

@@ -12,7 +12,7 @@
 
         <div class="sidebar-link-item ">
             <i class="fas fa-2x fa-user-friends pr-4"></i>
-            <a href="#" class="hideText icon-span">Customers</a>
+            <a href="/customers/view" class="hideText icon-span">Customers</a>
         </div>
 
         <div class="sidebar-link-item ">
@@ -37,7 +37,7 @@
 
         <div class="sidebar-link-item ">
             <i class="fas fa-2x fa-id-badge pr-4"></i>
-            <a href="#" class="hideText icon-span">Staff</a>
+            <a href="/staff/view" class="hideText icon-span">Staff</a>
         </div>
 
         <div class="sidebar-link-item ">

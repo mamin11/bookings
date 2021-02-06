@@ -34,14 +34,6 @@ class View extends Component
         'post_code' => ''
     ];
 
-    //holds data about customers booking details which wire:modeled to booking details section
-    public $bookingDetails = [
-        'start' => '',
-        'end' => '',
-        'price' => '',
-        'service' => ''
-    ];
-
     public $confirmingID;
     public $updatingCustomer;
     public $updatingCustomerAddress;
@@ -134,10 +126,10 @@ class View extends Component
         $this->updateCustomerForm['name'] = $this->updatingCustomer->name;
         $this->updateCustomerForm['email'] = $this->updatingCustomer->email;
         $this->updateCustomerForm['date_of_birth'] = $this->updatingCustomer->date_of_birth;
-        $this->updateCustomerForm['address'] = $this->updatingCustomerAddress->address;
-        $this->updateCustomerForm['city'] = $this->updatingCustomerAddress->city;
-        $this->updateCustomerForm['country'] = $this->updatingCustomerAddress->country;
-        $this->updateCustomerForm['post_code'] = $this->updatingCustomerAddress->post_code;
+        $this->updateCustomerForm['address'] = $this->updatingCustomerAddress ? $this->updatingCustomerAddress->address : '';
+        $this->updateCustomerForm['city'] = $this->updatingCustomerAddress ? $this->updatingCustomerAddress->city : '';
+        $this->updateCustomerForm['country'] = $this->updatingCustomerAddress ? $this->updatingCustomerAddress->country : '';
+        $this->updateCustomerForm['post_code'] = $this->updatingCustomerAddress ? $this->updatingCustomerAddress->post_code : '';
 
         }
         
