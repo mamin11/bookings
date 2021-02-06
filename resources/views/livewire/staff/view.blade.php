@@ -207,12 +207,15 @@
                                     {{-- ************ start staff-details form  ************* --}}
                             
                                             <div class="form-group">
-
+                                                
                                                 <div class="form-group">
-                                                    <a class="login-register-links-sm cursor-pointer d-inline-block">Add Staff</a>
+                                                    <a wire:click="addStaffDetails()" class="login-register-links-sm cursor-pointer @if($addStaffDetails) link-active @endif d-inline-block">Staff Details</a>
+                                                    <a wire:click="addStaffServices()" class="login-register-links-sm cursor-pointer @if($addStaffServices) link-active @endif  d-inline-block">Speciality Services</a>
                                                 </div>
                                                 <hr>
+                                                <br>
                                                 
+                                                @if($addStaffDetails)
                                                 <div class="form-group row">
                                                     <div class="col-10">
                                                         <input class="form-control @error('staffForm.name') is-invalid @enderror" type="text" wire:model.lazy="staffForm.name" name="name" placeholder="name"  id="addCustomerInput" value="{{ old('name') }}" required  autofocus>
@@ -336,10 +339,29 @@
                                                 @enderror
                                                 
                                             </div>
+                                            
+                                            @elseif($addStaffServices)
+                                            
+                                            @foreach($services as $service)
+                                            <div class="form-group row">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate">
+                                                    <label class="form-check-label" for="flexCheckIndeterminate">{{$service->name}}</label>
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                                    
+                                            @error('staffForm.services')
+                                            <span class="error" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
 
                                             <div class="form-group">
-                                                <button type="submit" wire:click.prevent="addStaff" class="btn btn-primary rounded-pill btn-block">{{__('Add') }}</button>
+                                                <button type="submit" wire:click.prevent="addStaff" class="btn btn-primary rounded-pill btn-block">{{__('Complete') }}</button>
                                             </div> 
+
+                                            @endif
                                             
                 
                                     {{-- ************ end staff-details form  ************* --}}

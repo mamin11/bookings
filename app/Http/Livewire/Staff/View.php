@@ -19,6 +19,7 @@ class View extends Component
         'email' => '',
         'password' => '',
         'role' => '',
+        'services' => '',
         'date_of_birth' => '',
         'address' => '',
         'city' => '',
@@ -46,11 +47,17 @@ class View extends Component
     public $updatingStaffRole;
     public $newStaffAddress;
 
+    public $staffServices = [];
+
     public $showUpdateForm = false;
 
     //two variables to toggle between staff details and staff services
     public $showDetails = false;
     public $showServices = false;
+
+    //to toggle staff details and speciality tabs when adding staff
+    public $addStaffDetails = true;
+    public $addStaffServices = false;
 
     //custom validation messages
     private $customMessages = [
@@ -61,6 +68,17 @@ class View extends Component
         'email' => 'This must be a valid email address'
     ];
 
+    public function addStaffDetails() {
+        $this->addStaffDetails = true;
+        $this->addStaffServices = false;
+    }
+    
+    public function addStaffServices() {
+        $this->addStaffServices = true;
+        $this->addStaffDetails = false;
+
+    }
+
     public function addStaff() {
         //rules
         $rules = [
@@ -68,6 +86,7 @@ class View extends Component
             'staffForm.email' => 'required|unique:customers,email',
             'staffForm.password' => 'required',
             'staffForm.role' => 'required|integer',
+            'staffForm.services' => 'required',
             'staffForm.date_of_birth' => 'required',
             'staffForm.address' => 'required',
             'staffForm.city' => 'required|string',
