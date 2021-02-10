@@ -90,9 +90,8 @@
                                                                         <div class="form-group row">
                                                                             <div class="col-10">
                                                                                 <select class="form-control @error('updateStaffForm.role') is-invalid @enderror" type="text" wire:model.lazy="updateStaffForm.role" name="role" placeholder="role" value="{{ $updateStaffForm['role'] ? $updateStaffForm['role'] : '' }}" required >
-                                                                                    <option value="">Select role</option>
                                                                                     @foreach($roles as $role)
-                                                                                        <option value="{{$role->role_id}}">{{$role->name}}</option>
+                                                                                        <option {{$role->role_id == $updateStaffForm['role'] ? 'selected="selected"' : ''}} value="{{$role->role_id}}">{{$role->name}}</option>
                                                                                     @endforeach
                                                                                 </select>
                                                                             </div>
@@ -181,19 +180,26 @@
 
                                                                 {{-- pre-check staff services in the database loop all the services and check againt updating staff services --}}
                                                                     @if($showServices)
-                                                                        <ul class="list-group list-group">
-                                                                            @if(count($updatingStaffServices) > 0)
-                                                                                @foreach ($updatingStaffServices as $item)
-                                                                                    @foreach($item->getServices() as $service)
-                                                                                    <input class="form-check-input" type="checkbox" value="{{$service->service_id}}" id="{{$service->name}}">
-                                                                                    <label class="form-check-label" for="{{$service->name}}">{{$service->name}}</label>
-                                                                                    @endforeach
-                                                                                @endforeach
-                                                                            @else        
-                                                                                    <li id="item1" class="list-group-item">No Services</li>
-                                                                            @endif
-                                                                        </ul>
+                                                                        @foreach($services as $service)
+                                                                            <div class="form-check">
+                                                                                <input class="form-check-input" type="checkbox" value="{{$service->service_id}}" id="{{$service->name}}">
+                                                                                <label class="form-check-label" for="{{$service->name}}">{{$service->name}}</label>
+                                                                            </div>
+                                                                        @endforeach
                                                                     @endif
+
+                                                                    {{-- <ul class="list-group list-group">
+                                                                        @if(count($updatingStaffServices) > 0)
+                                                                            @foreach ($services as $service)
+                                                                                @foreach($updatingStaffServices->getServices() as $staffService)
+                                                                                <input class="form-check-input" {{$staffService->service_id == $service->service_id ? 'checked' : ''}} type="checkbox" value="{{$service->service_id}}" id="{{$service->name}}">
+                                                                                <label class="form-check-label" for="{{$service->name}}">{{$service->name}}</label>
+                                                                                @endforeach
+                                                                            @endforeach
+                                                                        @else        
+                                                                                <li id="item1" class="list-group-item">No Services</li>
+                                                                        @endif
+                                                                    </ul> --}}
 
                                                 </form>
                             </div>

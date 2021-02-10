@@ -122,6 +122,7 @@ class View extends Component
             ]);
 
         //add specialities (services)
+        //loop the user services and create
         User_speciality::create([
 
         ]);
