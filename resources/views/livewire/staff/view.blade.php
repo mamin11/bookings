@@ -182,10 +182,16 @@
                                                                     @if($showServices)
                                                                         @foreach($services as $service)
                                                                             <div class="form-check">
-                                                                                <input class="form-check-input" {{ array_key_exists($service->service_id, $updateStaffForm['services'] ) ? 'checked="checked"' : '' }} name="services[]" type="checkbox" value="{{$service->service_id}}" id="{{$service->name}}">
+                                                                                <input class="form-check-input" {{ array_key_exists($service->service_id, $updateStaffForm['services'] ) ? 'checked="checked"' : '' }} wire:model.lazy="updateStaffForm.services" name="services[]" type="checkbox" value="{{$service->service_id}}" id="{{$service->name}}">
                                                                                 <label class="form-check-label" for="{{$service->name}}">{{$service->name}}</label>
                                                                             </div>
                                                                         @endforeach
+
+                                                                        @error('updateStaffForm.services')
+                                                                            <span class="error" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
                                                                     @endif
 
                                                                     {{-- <ul class="list-group list-group">
@@ -288,7 +294,7 @@
                                                 
                                                 <div class="form-group row">
                                                     <div class="col-10">
-                                                        <input class="form-control @error('staffForm.date_of_birth') is-invalid @enderror" type="date" wire:model.lazy="staffForm.date_of_birth" name="Date_of_birth" placeholder="date of birth"  value="{{ old('date_of_brith') }}" required  >
+                                                        <input class="form-control @error('staffForm.date_of_birth') is-invalid @enderror" type="date" wire:model.lazy="staffForm.date_of_birth" name="date_of_birth" placeholder="date of birth"  value="{{ old('date_of_brith') }}" required  >
                                                     </div>
                                                 </div>
 
@@ -357,19 +363,19 @@
                                             @elseif($addStaffServices)
                                             
                                             @foreach($services as $service)
-                                            <div class="form-group row">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="{{$service->service_id}}" id="{{$service->name}}">
-                                                    <label class="form-check-label" for="{{$service->name}}">{{$service->name}}</label>
+                                                <div class="form-group row">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input  @error('staffForm.services') is-invalid @enderror" type="checkbox" wire:model.lazy="staffForm.services" name="services[]" value="{{$service->service_id}}" id="{{$service->name}}">
+                                                        <label class="form-check-label" for="{{$service->name}}">{{$service->name}}</label>
+                                                    </div>
                                                 </div>
-                                            </div>
                                             @endforeach
                                                     
-                                            @error('staffForm.services')
-                                            <span class="error" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                                @error('staffForm.services')
+                                                <span class="error" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
 
                                             <div class="form-group">
                                                 <button type="submit" wire:click.prevent="addStaff" class="btn btn-primary rounded-pill btn-block">{{__('Complete') }}</button>

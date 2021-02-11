@@ -62,11 +62,12 @@ class View extends Component
 
     //custom validation messages
     private $customMessages = [
-        'required' => 'Stop playing man. Fill in the form',
+        'required' => 'This field must be filled in',
         'unique' => 'This already exists in the database',
         'string' => 'This needs to be a string',
         'integer' => 'This needs to be a number',
-        'email' => 'This must be a valid email address'
+        'email' => 'This must be a valid email address',
+        'min' => 'You must select at least one item'
     ];
 
     public function addStaffDetails() {
@@ -87,7 +88,7 @@ class View extends Component
             'staffForm.email' => 'required|unique:customers,email',
             'staffForm.password' => 'required',
             'staffForm.role' => 'required|integer',
-            'staffForm.services' => 'required',
+            'staffForm.services' => 'required|array',
             'staffForm.date_of_birth' => 'required',
             'staffForm.address' => 'required',
             'staffForm.city' => 'required|string',
@@ -116,16 +117,19 @@ class View extends Component
         ]);
 
         //add role
-            User_role::create([
-                'role_id' => $this->staffForm['role'],
-                'user_id' => $staff->user_id
-            ]);
+        User_role::create([
+            'role_id' => $this->staffForm['role'],
+            'user_id' => $staff->user_id
+        ]);
 
         //add specialities (services)
         //loop the user services and create
-        User_speciality::create([
-
-        ]);
+        foreach($this->staffForm['services'] as $key => $value) {
+            User_speciality::create([
+                'user_id' => $staff->user_id,
+                'service_id' => $value
+            ]);
+        }
 
         //flash messages
         session()->flash('Successfully added');
@@ -148,6 +152,10 @@ class View extends Component
 
         //delete the staff
         User::destroy($user_id);
+
+        //delete the role ***************************************
+
+        //delete the staff services *****************************
 
         //refresh page
         return redirect()->route('viewStaff');
