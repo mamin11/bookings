@@ -145,17 +145,20 @@ class View extends Component
     }
     
     public function deleteStaff($user_id){
+        //find the staff
         $staff = User::where('user_id', $user_id)->first();
 
         //delete the staff address 
         Address::destroy($staff->address_id);
 
+        //delete the role 
+        User_role::where('user_id', $staff->user_id)->delete();
+
+        //delete the staff services 
+        User_speciality::where('user_id', $staff->user_id)->delete();
+
         //delete the staff
         User::destroy($user_id);
-
-        //delete the role ***************************************
-
-        //delete the staff services *****************************
 
         //refresh page
         return redirect()->route('viewStaff');
@@ -260,7 +263,7 @@ class View extends Component
     {
         $staff = User::all();
         $services = Service::all();
-        $roles = Role::all();
+        $roles = Role::all()->take(2);
         return view('livewire.staff.view', [
             'staff' => $staff,
             'services' => $services,
