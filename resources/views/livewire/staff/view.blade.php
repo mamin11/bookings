@@ -182,7 +182,7 @@
                                                                     @if($showServices)
                                                                         @foreach($services as $service)
                                                                             <div class="form-check">
-                                                                                <input class="form-check-input" type="checkbox" value="{{$service->service_id}}" id="{{$service->name}}">
+                                                                                <input class="form-check-input" {{ array_key_exists($service->service_id, $updateStaffForm['services'] ) ? 'checked="checked"' : '' }} name="services[]" type="checkbox" value="{{$service->service_id}}" id="{{$service->name}}">
                                                                                 <label class="form-check-label" for="{{$service->name}}">{{$service->name}}</label>
                                                                             </div>
                                                                         @endforeach

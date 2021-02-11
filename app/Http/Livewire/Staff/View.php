@@ -166,10 +166,22 @@ class View extends Component
         $this->updatingStaffRole = User_role::where('user_id',$this->updatingStaff->user_id)->first();
         $this->updatingStaffServices = User_speciality::where('user_id', $this->updatingStaff->user_id)->get();
 
+        
         //update staff fields
         $this->updateStaffForm['name'] = $this->updatingStaff->name;
         $this->updateStaffForm['email'] = $this->updatingStaff->email;
         $this->updateStaffForm['role'] = $this->updatingStaffRole ? $this->updatingStaffRole->role_id : '';
+        //get the ids of the staff services and push to array
+        if(count($this->updatingStaffServices) > 0){
+            foreach($this->updatingStaffServices as $items) {
+                foreach($items->getServices() as $item) {
+                    array_push($this->updateStaffForm['services'], $item->service_id);
+                }
+            }
+        } else {
+            //if the staff doesn't have services, return empty array. This also to reset the services array when viewing a different user to the previous.
+            $this->updateStaffForm['services'] = [];
+        }
         $this->updateStaffForm['city'] = $this->updatingStaffAddress ? $this->updatingStaffAddress->city : '';
         $this->updateStaffForm['address'] = $this->updatingStaffAddress ? $this->updatingStaffAddress->address : '';
         $this->updateStaffForm['city'] = $this->updatingStaffAddress ? $this->updatingStaffAddress->city : '';
@@ -183,6 +195,8 @@ class View extends Component
             $rules = [
                 'updateStaffForm.name' => 'required',
                 'updateStaffForm.email' => 'required',
+                'updateStaffForm.role' => 'required',
+                'updateStaffForm.services' => 'required',
                 'updateStaffForm.date_of_birth' => 'required',
                 'updateStaffForm.address' => 'required',
                 'updateStaffForm.city' => 'required|string',
