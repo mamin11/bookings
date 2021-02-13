@@ -86,7 +86,6 @@
                                                                             </span>
                                                                         @enderror
                                                                         
-                                                                        {{-- pre-select staff role if in database ****************************** --}}
                                                                         <div class="form-group row">
                                                                             <div class="col-10">
                                                                                 <select class="form-control @error('updateStaffForm.role') is-invalid @enderror" type="text" wire:model.lazy="updateStaffForm.role" name="role" placeholder="role" value="{{ $updateStaffForm['role'] ? $updateStaffForm['role'] : '' }}" required >
@@ -170,20 +169,17 @@
                                                                         @enderror
                                                                         
                                                                     </div>
-                        
-                    
-                                                                    <div class="form-group">
-                                                                        <button type="submit" wire:click.prevent="updateConfirm" class="btn btn-primary rounded-pill btn-block">{{__('Update') }}</button>
-                                                                    </div> 
 
                                                                     @endif
 
                                                                 {{-- pre-check staff services in the database loop all the services and check againt updating staff services --}}
                                                                     @if($showServices)
+                                                                    <p class="text-center">GREENS WERE PREVIOUSLY ASSIGNED. DONT FORGET TO RE-CHECK THEM IF NEEDED</p>
                                                                         @foreach($services as $service)
                                                                             <div class="form-check">
-                                                                                <input class="form-check-input" {{ array_key_exists($service->service_id, $updateStaffForm['services'] ) ? 'checked="checked"' : '' }} wire:model.lazy="updateStaffForm.services" name="services[]" type="checkbox" value="{{$service->service_id}}" id="{{$service->name}}">
-                                                                                <label class="form-check-label" for="{{$service->name}}">{{$service->name}}</label>
+                                                                                <input class="form-check-input "  wire:model.defer="updateStaffForm.services" name="services[]" type="checkbox" value="{{$service->service_id}}" id="{{$service->service_id}}">
+                                                                                {{-- <input class="form-check-input" {{ in_array( $service->service_id, $staffServices ) ? 'checked' : '' }} wire:model.defer="updateStaffForm.services.{{$loop->index}}" name="services[]" type="checkbox" value="{{$service->service_id}}" id="{{$service->service_id}}"> --}}
+                                                                                <label class="form-check-label {{ in_array( $service->service_id, $staffServices ) ? 'bg-success' : '' }}" for="{{$service->service_id}}">{{$service->name}}</label>
                                                                             </div>
                                                                         @endforeach
 
@@ -192,6 +188,10 @@
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
                                                                         @enderror
+
+                                                                        <div class="form-group">
+                                                                            <button type="submit" wire:click.prevent="updateConfirm" class="btn btn-primary rounded-pill btn-block">{{__('Update') }}</button>
+                                                                        </div> 
                                                                     @endif
 
                                                                     {{-- <ul class="list-group list-group">

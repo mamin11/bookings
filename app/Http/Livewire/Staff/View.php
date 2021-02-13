@@ -67,7 +67,7 @@ class View extends Component
         'string' => 'This needs to be a string',
         'integer' => 'This needs to be a number',
         'email' => 'This must be a valid email address',
-        'min' => 'You must select at least one item'
+        'min' => 'You must select at least :min from the checkbox'
     ];
 
     public function addStaffDetails() {
@@ -171,6 +171,14 @@ class View extends Component
         $this->showUpdateForm = true;
         $this->showDetails = false;
         $this->showServices = false;
+        $this->staffServices = [];
+
+        // $servCount = Service::all();
+
+        // //defining the size of updateForm.services to be equal to total number of services
+        // for($i = 0; $i < count($servCount); $i++) {
+        //     $this->updateStaffForm['services'][$i] = $this->updateStaffForm['services'][$i];
+        // }
 
         $this->updatingStaff = User::where('user_id',$user_id)->first();
         $this->updatingStaffAddress = Address::where('address_id',$this->updatingStaff->address_id)->first();
@@ -181,33 +189,46 @@ class View extends Component
         //update staff fields
         $this->updateStaffForm['name'] = $this->updatingStaff->name;
         $this->updateStaffForm['email'] = $this->updatingStaff->email;
+        $this->updateStaffForm['date_of_birth'] = $this->updatingStaff->date_of_birth;
         $this->updateStaffForm['role'] = $this->updatingStaffRole ? $this->updatingStaffRole->role_id : '';
         //get the ids of the staff services and push to array
         if(count($this->updatingStaffServices) > 0){
             foreach($this->updatingStaffServices as $items) {
                 foreach($items->getServices() as $item) {
-                    array_push($this->updateStaffForm['services'], $item->service_id);
+                    array_push($this->staffServices, $item->service_id);
+                    // $this->staffServices[] = $item->service_id;
+                    // array_push($this->updateStaffForm['services'], $item->service_id);
                 }
             }
         } else {
             //if the staff doesn't have services, return empty array. This also to reset the services array when viewing a different user to the previous.
-            $this->updateStaffForm['services'] = [];
+            // $this->updateStaffForm['services'] = [];
+            $this->staffServices = [];
         }
+
+        // foreach($this->updateStaffForm['services'] as $key => $value) {
+        //     $this->updateStaffForm['services'][$loop->index] = $value;
+        // }
+
         $this->updateStaffForm['city'] = $this->updatingStaffAddress ? $this->updatingStaffAddress->city : '';
         $this->updateStaffForm['address'] = $this->updatingStaffAddress ? $this->updatingStaffAddress->address : '';
         $this->updateStaffForm['city'] = $this->updatingStaffAddress ? $this->updatingStaffAddress->city : '';
         $this->updateStaffForm['country'] = $this->updatingStaffAddress ? $this->updatingStaffAddress->country : '';
         $this->updateStaffForm['post_code'] = $this->updatingStaffAddress ? $this->updatingStaffAddress->post_code : '';
 
+        // @dd($this->staffServices);
         }
         
         public function updateConfirm(){
+            // @dd($this->updateStaffForm['services']);
+            // @dd($this->staffServices);
+
             //rules
             $rules = [
                 'updateStaffForm.name' => 'required',
                 'updateStaffForm.email' => 'required',
                 'updateStaffForm.role' => 'required',
-                'updateStaffForm.services' => 'required',
+                'updateStaffForm.services' => 'array|min:1',
                 'updateStaffForm.date_of_birth' => 'required',
                 'updateStaffForm.address' => 'required',
                 'updateStaffForm.city' => 'required|string',
@@ -217,6 +238,8 @@ class View extends Component
 
             //validate
             $validatedData = $this->validate($rules, $this->customMessages);
+
+            // @dd();
 
             //update the address first
             $this->updatingStaffAddress->address = $this->updateStaffForm['address'];
@@ -228,6 +251,30 @@ class View extends Component
             $this->updatingStaffRole->role_id =  $this->updateStaffForm['role'];
 
             //update the specialities/services *********************************
+            //loop the services array from form and compare to those in db
+            //if service from form is not in db, create it else do nothing
+            //if service is db is not in form, delete it, else do nothing
+            //$this->staffServices - holds the updating staff service ids in db
+            //$this->updateStaffForm['services'] - holds the updating staff service ids from the form
+
+            //remove the unwanted service ids from db first
+            foreach ($this->staffServices as $sDB) {
+                if(! in_array($sDB, $this->updateStaffForm['services'] ) ) {
+                    //delete the staff service
+                    User_speciality::where('service_id', $sDB)->delete();
+                }
+            }
+
+            //create if service is not already in db
+            foreach ($this->updateStaffForm['services'] as $s) {
+                if(! in_array($s, $this->staffServices ) ) {
+                    //create the staff service
+                    User_speciality::create([
+                        'user_id' => $this->updatingStaff->user_id,
+                        'service_id' => $s
+                    ]);
+                }
+            }
             
             //update the staff details
             $this->updatingStaff->name = $this->updateStaffForm['name'];
@@ -237,7 +284,7 @@ class View extends Component
             //save the record
             $this->updatingStaffAddress->save();
             $this->updatingStaffRole->save();
-            //save the specialities ************************************
+            // $this->updatingStaffServices->save();
 
             $this->updatingStaff->save();
 
@@ -264,11 +311,12 @@ class View extends Component
         $staff = User::all();
         $services = Service::all();
         $roles = Role::all()->take(2);
+
         return view('livewire.staff.view', [
             'staff' => $staff,
             'services' => $services,
             'roles' => $roles,
-            'updatingStaffServices' => $this->updatingStaffServices
+            'updatingStaffServices' => $this->updatingStaffServices,
         ]);
     }
 }
