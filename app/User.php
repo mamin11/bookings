@@ -50,4 +50,11 @@ class User extends Authenticatable
     public function getRole() {
         return Role::where('role_id', $this->role_id)->first();
     }
+
+    public static function search($search) {
+        return empty($search) ? static::query()
+        : static::where('name', 'like', '%'.$search.'%')
+        ->orWhere('email', 'like', '%'.$search.'%')
+        ->orWhere('user_id', 'like', '%'.$search.'%');
+    }
 }
