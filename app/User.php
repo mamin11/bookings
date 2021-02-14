@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Role;
 use App\Address;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -17,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'address_id', 'date_of_birth',
+        'name', 'email', 'password', 'address_id', 'date_of_birth', 'role_id',
     ];
 
     /**
@@ -39,10 +40,14 @@ class User extends Authenticatable
     ];
 
     protected $guarded = [];
-    public $timestamps = false;
+    public $timestamps = true;
     protected $primaryKey = 'user_id';
 
     public function getAddress(){
         return Address::where('address_id', $this->addrress_id)->first();
+    }
+
+    public function getRole() {
+        return Role::where('role_id', $this->role_id)->first();
     }
 }

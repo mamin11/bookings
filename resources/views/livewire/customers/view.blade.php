@@ -14,19 +14,23 @@
                 <!-- ****************** customer component body starts ************************* -->
                     <div class="booking-component-body ">
                         <ul class="list-group list-group">
-                            @foreach ($customers as $item)
-                                <li id="item1" href="#" class="list-group-item">{{$item->name}}
-                                    <div class="pull-right">
-                                    <span id="badge" class="badge" style="float:left;">{{$item->email}}</span>
-                                    @if($confirmingID === $item->customer_id)
-                                        <span id="badge" class="badge cursor-pointer" wire:click="deleteCustomer({{$item->customer_id}})" style="color: red; float: right;">Sure?</span>
-                                    @else
-                                        <i class="fa fa-trash cursor-pointer" wire:click="confirmDelete({{$item->customer_id}})" style="color: red; float: right;"></i>
-                                    @endif
-                                        <i class="fa fa-pen cursor-pointer" wire:click="updateCustomer({{$item->customer_id}})"  style="color: black; padding-right: 10px; float: right;"></i>
-                                    </div>
-                                </li>
-                            @endforeach
+                            @if(count($customers))
+                                @foreach ($customers as $item)
+                                    <li id="item1" href="#" class="list-group-item">{{$item->name}}
+                                        <div class="pull-right">
+                                        <span id="badge" class="badge" style="float:left;">{{$item->email}}</span>
+                                        @if($confirmingID === $item->user_id)
+                                            <span id="badge" class="badge cursor-pointer" wire:click="deleteCustomer({{$item->user_id}})" style="color: red; float: right;">Sure?</span>
+                                        @else
+                                            <i class="fa fa-trash cursor-pointer" wire:click="confirmDelete({{$item->user_id}})" style="color: red; float: right;"></i>
+                                        @endif
+                                            <i class="fa fa-pen cursor-pointer" wire:click="updateCustomer({{$item->user_id}})"  style="color: black; padding-right: 10px; float: right;"></i>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            @else
+                                <span id="badge" class="badge" style="float:center;">No customers</span>
+                            @endif
                         </ul>
                     </div>
                     
@@ -100,6 +104,7 @@
                         
                                                                         <div class="form-group row">
                                                                             <div class="col-10">
+                                                                                <input class="form-control" type="hidden" wire:model.lazy="updateCustomerForm.role" name="role"  value="{{  $updateCustomerForm['role'] ? $updateCustomerForm['role'] : '' }}"  >
                                                                                 <input class="form-control @error('updateCustomerForm.address') is-invalid @enderror" type="text" wire:model.lazy="updateCustomerForm.address" name="address" placeholder="Address"  value="{{  $updateCustomerForm['address'] ? $updateCustomerForm['address'] : '' }}" required  >
                                                                             </div>
                                                                         </div>
@@ -252,6 +257,7 @@
 
                                                 <div class="form-group row">
                                                     <div class="col-10">
+                                                        <input class="form-control" type="hidden" wire:model.lazy="customerForm.role" name="role"  value="{{  $customerForm['role'] ? $customerForm['role'] : '' }}"  >
                                                         <input class="form-control @error('customerForm.address') is-invalid @enderror" type="text" wire:model.lazy="customerForm.address" name="address" placeholder="Address"  value="{{ old('address') }}" required  >
                                                     </div>
                                                 </div>

@@ -3,9 +3,10 @@
 namespace App\Http\Livewire\Customers;
 
 use App\Address;
-use App\Customer;
+use App\User;
 use Livewire\Component;
 use App\User_appointment;
+use App\Role;
 use Illuminate\Support\Facades\Hash;
 
 class View extends Component
@@ -16,6 +17,7 @@ class View extends Component
         'email' => '',
         'password' => '',
         'date_of_birth' => '',
+        'role' => 3,
         'address' => '',
         'city' => '',
         'country' => '',
@@ -28,6 +30,7 @@ class View extends Component
         'email' => '',
         'password' => '',
         'date_of_birth' => '',
+        'role' => 3,
         'address' => '',
         'city' => '',
         'country' => '',
@@ -48,7 +51,7 @@ class View extends Component
 
     //custom validation messages
     private $customMessages = [
-        'required' => 'Stop playing man. Fill in the form',
+        'required' => 'This field must be filled in',
         'unique' => 'This already exists in the database',
         'string' => 'This needs to be a string',
         'integer' => 'This needs to be a number',
@@ -59,10 +62,11 @@ class View extends Component
         //rules
         $rules = [
             'customerForm.name' => 'required',
-            'customerForm.email' => 'required|unique:customers,email',
+            'customerForm.email' => 'required|unique:users,email',
             'customerForm.password' => 'required',
             'customerForm.date_of_birth' => 'required',
             'customerForm.address' => 'required',
+            'customerForm.role' => 'required|integer',
             'customerForm.city' => 'required|string',
             'customerForm.country' => 'required|string',
             'customerForm.post_code' => 'required',
@@ -80,11 +84,12 @@ class View extends Component
         ]);
 
         //add customer to db
-        $customer = Customer::create([
+        $customer = User::create([
             'name' => $this->customerForm['name'],
             'email' => $this->customerForm['email'],
             'password' => Hash::make($this->customerForm['password']),
             'address_id' => $address_id,
+            'role_id' => $this->customerForm['role'],
             'date_of_birth' => $this->customerForm['date_of_birth'], 
         ]);
 
@@ -102,13 +107,13 @@ class View extends Component
     }
     
     public function deleteCustomer($customer_id){
-        $customer = Customer::where('customer_id', $customer_id)->first();
+        $customer = User::where('user_id', $customer_id)->first();
 
         //delete the customers address 
         Address::destroy($customer->address_id);
 
         //delete the customers
-        Customer::destroy($customer_id);
+        User::destroy($customer_id);
 
         //refresh page
         return redirect()->route('viewCustomers');
@@ -118,7 +123,7 @@ class View extends Component
         $this->showUpdateForm = true;
         $this->showDetails = true;
         $this->showBookings = false;
-        $this->updatingCustomer = Customer::where('customer_id',$customer_id)->first();
+        $this->updatingCustomer = User::where('user_id',$customer_id)->first();
         $this->updatingCustomerAddress = Address::where('address_id',$this->updatingCustomer->address_id)->first();
         $this->updatingCustomerBookings = User_appointment::where('customer_id', $this->updatingCustomer->customer_id)->get();
 
@@ -183,7 +188,8 @@ class View extends Component
 
     public function render()
     {
-        $customers = Customer::all();
+        //return all customers. Their role id is 3
+        $customers = User::where('role_id', 3)->get();
         return view('livewire.customers.view', [
             'customers' => $customers,
             'updatingCustomerBookings' => $this->updatingCustomerBookings

@@ -6,7 +6,7 @@ use App\Role;
 use App\User;
 use App\Address;
 use App\Service;
-use App\User_role;
+// use App\User_role;
 use Livewire\Component;
 use App\User_speciality;
 use Illuminate\Support\Facades\Hash;
@@ -85,7 +85,7 @@ class View extends Component
         //rules
         $rules = [
             'staffForm.name' => 'required',
-            'staffForm.email' => 'required|unique:customers,email',
+            'staffForm.email' => 'required|unique:users,email',
             'staffForm.password' => 'required',
             'staffForm.role' => 'required|integer',
             'staffForm.services' => 'required|array',
@@ -113,14 +113,15 @@ class View extends Component
             'email' => $this->staffForm['email'],
             'password' => Hash::make($this->staffForm['password']),
             'address_id' => $address_id,
+            'role_id' => $this->staffForm['role'],
             'date_of_birth' => $this->staffForm['date_of_birth'], 
         ]);
 
-        //add role
-        User_role::create([
-            'role_id' => $this->staffForm['role'],
-            'user_id' => $staff->user_id
-        ]);
+        // //add role
+        // User_role::create([
+        //     'role_id' => $this->staffForm['role'],
+        //     'user_id' => $staff->user_id
+        // ]);
 
         //add specialities (services)
         //loop the user services and create
@@ -152,7 +153,7 @@ class View extends Component
         Address::destroy($staff->address_id);
 
         //delete the role 
-        User_role::where('user_id', $staff->user_id)->delete();
+        // User_role::where('user_id', $staff->user_id)->delete();
 
         //delete the staff services 
         User_speciality::where('user_id', $staff->user_id)->delete();
@@ -182,7 +183,7 @@ class View extends Component
 
         $this->updatingStaff = User::where('user_id',$user_id)->first();
         $this->updatingStaffAddress = Address::where('address_id',$this->updatingStaff->address_id)->first();
-        $this->updatingStaffRole = User_role::where('user_id',$this->updatingStaff->user_id)->first();
+        // $this->updatingStaffRole = User_role::where('user_id',$this->updatingStaff->user_id)->first();
         $this->updatingStaffServices = User_speciality::where('user_id', $this->updatingStaff->user_id)->get();
 
         
@@ -190,7 +191,7 @@ class View extends Component
         $this->updateStaffForm['name'] = $this->updatingStaff->name;
         $this->updateStaffForm['email'] = $this->updatingStaff->email;
         $this->updateStaffForm['date_of_birth'] = $this->updatingStaff->date_of_birth;
-        $this->updateStaffForm['role'] = $this->updatingStaffRole ? $this->updatingStaffRole->role_id : '';
+        $this->updateStaffForm['role'] = $this->updatingStaff->role;
         //get the ids of the staff services and push to array
         if(count($this->updatingStaffServices) > 0){
             foreach($this->updatingStaffServices as $items) {
@@ -308,7 +309,7 @@ class View extends Component
 
     public function render()
     {
-        $staff = User::all();
+        $staff = User::where('role_id', 2)->get();
         $services = Service::all();
         $roles = Role::all()->take(2);
 

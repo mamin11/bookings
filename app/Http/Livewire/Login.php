@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use session;
 use App\User;
-use App\Customer;
+// use App\Customer;
 use Livewire\Component;
 // use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
@@ -81,7 +81,7 @@ class Login extends Component
             'register_form.password_confirmation' => 'required|min:6'
         ]);
 
-        Customer::create([
+        User::create([
             'name' => $this->register_form['name'],
             'email' => $this->register_form['email'],
             'password' => Hash::make($this->register_form['password']),

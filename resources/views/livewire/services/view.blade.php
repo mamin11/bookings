@@ -14,19 +14,24 @@
                 <!-- ****************** service component body starts ************************* -->
                     <div class="booking-component-body ">
                         <ul class="list-group list-group">
-                            @foreach ($services as $item)
-                                <li id="item1" href="#" class="list-group-item">{{$item->name}}
-                                    <div class="pull-right">
-                                    <span id="badge" class="badge" style="float:left;">{{$item->price}}/hr</span>
-                                    @if($confirmingID === $item->service_id)
-                                        <span id="badge" class="badge cursor-pointer" wire:click="deleteService({{$item->service_id}})" style="color: red; float: right;">Sure?</span>
-                                    @else
-                                        <i class="fa fa-trash cursor-pointer" wire:click="confirmDelete({{$item->service_id}})" style="color: red; float: right;"></i>
-                                    @endif
-                                        <i class="fa fa-pen cursor-pointer" wire:click="updateService({{$item->service_id}})"  style="color: black; padding-right: 10px; float: right;"></i>
-                                    </div>
-                                </li>
-                            @endforeach
+                            @if(count($services))
+                                @foreach ($services as $item)
+                                    <li id="item1" href="#" class="list-group-item">{{$item->name}}
+                                        <div class="pull-right">
+                                        <span id="badge" class="badge" style="float:left;">{{$item->price}}/hr</span>
+                                        @if($confirmingID === $item->service_id)
+                                            <span id="badge" class="badge cursor-pointer" wire:click="deleteService({{$item->service_id}})" style="color: red; float: right;">Sure?</span>
+                                        @else
+                                            <i class="fa fa-trash cursor-pointer" wire:click="confirmDelete({{$item->service_id}})" style="color: red; float: right;"></i>
+                                        @endif
+                                            <i class="fa fa-pen cursor-pointer" wire:click="updateService({{$item->service_id}})"  style="color: black; padding-right: 10px; float: right;"></i>
+                                        </div>
+                                    </li>
+                                @endforeach
+                                
+                            @else
+                            <span id="badge" class="badge" style="float:center;">Nothing found</span>
+                            @endif
                         </ul>
                     </div>
                     
