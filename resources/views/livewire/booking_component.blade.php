@@ -61,7 +61,7 @@
                                                 </div>
                                                     
                                                 <div class="form-group">
-                                                    <select class="form-control @error('register_form.name') is-invalid @enderror" type="text" wire:model.lazy="bookingForm.staff_id" name="staff_id"  required  >
+                                                    <select class="form-control @error('bookingForm.staff_id') is-invalid @enderror" type="text" wire:model.lazy="bookingForm.staff_id" name="staff_id"  required  >
                                                         <option>Select staff</option>
                                                         @if(count($staff))
                                                             @foreach($staff as $staff)
@@ -167,13 +167,16 @@
                                         
                                         @if ($formComponents['showConfirmationForm'])        
                                         {{-- ************ start confirmation form  ************* --}}
-                                            @if($confirmationData['service'] && $confirmationData['customer'] && $confirmationData['staff'])
-                                                <h1 id="badge" class="badge" style="float:left;">Booking Summary: ({{$confirmationData['customer'] ? $confirmationData['customer']['name'] : ''}})</h1>
-                                                <h1 id="badge" class="badge" style="float:right;">Price: {{$confirmationData['price'] ? $confirmationData['price'] : ''}}</h1><br>
-                                                <p id="badge" class="badge" style="float:left;">Service: {{$confirmationData['service'] ? $confirmationData['service']['name'] : ''}} {{"(".$bookingForm['duration']." hours)"}}</p>
-                                                <p id="badge" class="badge" style="float:right;">Date: {{$confirmationData['date'] ? $confirmationData['date'] : ''}}</p><br>
-                                                <p id="badge" class="badge" style="float:left;">Staff: {{$confirmationData['staff'] ? $confirmationData['staff']['name'] : ''}}</p>
-                                                <p id="badge" class="badge" style="float:right;">Time: {{$confirmationData['time'] ? $confirmationData['time'] : ''}}</p><br>                                            
+                                            @if($showConfirmationDetails)
+                                                <h1 class="badge" style="float:left;">Booking Summary: ({{$confirmationData['customer'] ? $confirmationData['customer']['name'] : ''}})</h1>
+                                                <h1 class="badge" style="float:right;">Price: {{$confirmationData['price'] ? $confirmationData['price'] : ''}}</h1><br>
+                                                <p class="badge" style="float:left;">Service: {{$confirmationData['service'] ? $confirmationData['service']['name'] : ''}} {{"(".$bookingForm['duration']." hours)"}}</p>
+                                                <p class="badge" style="float:right;">Date: {{$confirmationData['date'] ? $confirmationData['date'] : ''}}</p><br>
+                                                <p class="badge" style="float:left;">Staff: {{$confirmationData['staff'] ? $confirmationData['staff']['name'] : ''}}</p>
+                                                <p class="badge" style="float:right;">Time: {{$confirmationData['time'] ? $confirmationData['time'] : ''}}</p><br>
+                                            @else
+                                                <p class="badge" style="float:right;">Please fill the previous forms</p><br>
+
                                             @endif
 
 

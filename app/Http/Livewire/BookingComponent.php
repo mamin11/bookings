@@ -44,6 +44,8 @@ class BookingComponent extends Component
         'time' => '',
     ];
 
+    public $showConfirmationDetails = false;
+
     //event listener
     protected $listeners = ['bookingClose'];
 
@@ -93,13 +95,17 @@ class BookingComponent extends Component
         //set the data for confirmation page
         if($this->formComponents['showConfirmationForm'] == true) {
             // if($this->bookingForm['service_id']) {
-                $this->confirmationData['customer'] = $this->bookingForm['customer_id'] ? User::find( $this->bookingForm['customer_id'])->first() : '';
-                $this->confirmationData['staff'] = $this->bookingForm['staff_id'] ? User::find( $this->bookingForm['staff_id'])->first() : '';
+                $this->confirmationData['staff'] = $this->bookingForm['staff_id'] ? User::find( $this->bookingForm['staff_id']) : '';
+                $this->confirmationData['customer'] = $this->bookingForm['customer_id'] ? User::find( $this->bookingForm['customer_id']) : '';
                 $this->confirmationData['service'] = $this->bookingForm['service_id'] ? Service::find( $this->bookingForm['service_id']) : '';
                 $this->confirmationData['price'] = $this->bookingForm['duration'] ? $this->getPrice($this->confirmationData['service']['price'],$this->bookingForm['duration']) : '';
                 $this->confirmationData['date'] = $this->bookingForm['start_date'];
                 $this->confirmationData['time'] = $this->bookingForm['start_time'];
                 // $this->confirmationData['time'] = $this->getDuration($this->confirmationData['service']->start_at);
+
+                if(!empty($this->confirmationData['customer']) && !empty($this->confirmationData['staff']) && !empty($this->confirmationData['service'])) {
+                    $this->showConfirmationDetails = true;
+                }
         }
 
     }
