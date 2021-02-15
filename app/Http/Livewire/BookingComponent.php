@@ -41,7 +41,7 @@ class BookingComponent extends Component
         'staff' => '',
         'price' => '',
         'date' => '',
-        'time' => '',
+        'start_time' => '',
     ];
 
     public $showConfirmationDetails = false;
@@ -61,9 +61,13 @@ class BookingComponent extends Component
         return $h;
     }
 
-    public function getEndDate($start_date) {
-        return $start_date;
-        // return gmdate('TH:i:s ', $start_date);
+    public function getEndTime($start_date, $duration) {
+        $durationSeconds = $duration * 60 *60;
+        $timeStamp = strtotime($start_date);
+        $total = $durationSeconds + $timeStamp;
+        $endTime = date('H:i', $total);
+        
+        return $endTime;
     }
 
     public function getPrice($price, $duration) {
@@ -93,14 +97,16 @@ class BookingComponent extends Component
         }
 
         //set the data for confirmation page
-        if($this->formComponents['showConfirmationForm'] == true) {
+        if($this->formComponents['showConfirmationForm'] == true) 
+        {
             // if($this->bookingForm['service_id']) {
                 $this->confirmationData['staff'] = $this->bookingForm['staff_id'] ? User::find( $this->bookingForm['staff_id']) : '';
                 $this->confirmationData['customer'] = $this->bookingForm['customer_id'] ? User::find( $this->bookingForm['customer_id']) : '';
                 $this->confirmationData['service'] = $this->bookingForm['service_id'] ? Service::find( $this->bookingForm['service_id']) : '';
                 $this->confirmationData['price'] = $this->bookingForm['duration'] ? $this->getPrice($this->confirmationData['service']['price'],$this->bookingForm['duration']) : '';
                 $this->confirmationData['date'] = $this->bookingForm['start_date'];
-                $this->confirmationData['time'] = $this->bookingForm['start_time'];
+                $this->confirmationData['start_time'] = $this->bookingForm['start_time'];
+                $this->confirmationData['end_time'] = $this->getEndTime($this->confirmationData['start_time'], $this->bookingForm['duration']);
                 // $this->confirmationData['time'] = $this->getDuration($this->confirmationData['service']->start_at);
 
                 if(!empty($this->confirmationData['customer']) && !empty($this->confirmationData['staff']) && !empty($this->confirmationData['service'])) {

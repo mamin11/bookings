@@ -169,13 +169,14 @@
                                         {{-- ************ start confirmation form  ************* --}}
                                             @if($showConfirmationDetails)
                                                 <h1 class="badge" style="float:left;">Booking Summary: ({{$confirmationData['customer'] ? $confirmationData['customer']['name'] : ''}})</h1>
-                                                <h1 class="badge" style="float:right;">Price: {{$confirmationData['price'] ? $confirmationData['price'] : ''}}</h1><br>
+                                                <h1 class="badge" style="float:right;">Price: £{{$confirmationData['price'] ? $confirmationData['price'] : ''}}</h1><br>
                                                 <p class="badge" style="float:left;">Service: {{$confirmationData['service'] ? $confirmationData['service']['name'] : ''}} {{"(".$bookingForm['duration']." hours)"}}</p>
-                                                <p class="badge" style="float:right;">Date: {{$confirmationData['date'] ? $confirmationData['date'] : ''}}</p><br>
-                                                <p class="badge" style="float:left;">Staff: {{$confirmationData['staff'] ? $confirmationData['staff']['name'] : ''}}</p>
-                                                <p class="badge" style="float:right;">Time: {{$confirmationData['time'] ? $confirmationData['time'] : ''}}</p><br>
+                                                <p class="badge" style="float:right;">Date: {{$confirmationData['date'] ? $confirmationData['date'] : ''}}</p>
+                                                <p class="badge" style="float:left;">Staff: {{$confirmationData['staff'] ? $confirmationData['staff']['name'] : ''}}</p><br>
+                                                <p class="badge" style="float:left;">Start time: {{$confirmationData['start_time'] ? $confirmationData['start_time'] : ''}}</p>
+                                                <p class="badge" style="float:right;">End time: {{$confirmationData['end_time'] ? $confirmationData['end_time'] : ''}}</p><br>
                                             @else
-                                                <p class="badge" style="float:right;">Please fill the previous forms</p><br>
+                                                <p class="badge" style="float:center;">Please fill the previous forms</p><br>
 
                                             @endif
 
