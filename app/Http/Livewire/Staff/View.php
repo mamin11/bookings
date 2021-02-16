@@ -117,12 +117,6 @@ class View extends Component
             'date_of_birth' => $this->staffForm['date_of_birth'], 
         ]);
 
-        // //add role
-        // User_role::create([
-        //     'role_id' => $this->staffForm['role'],
-        //     'user_id' => $staff->user_id
-        // ]);
-
         //add specialities (services)
         //loop the user services and create
         foreach($this->staffForm['services'] as $key => $value) {

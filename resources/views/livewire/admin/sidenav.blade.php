@@ -12,7 +12,7 @@
 
         <div class="sidebar-link-item ">
             <i class="fas fa-2x fa-user-friends pr-4"></i>
-            <a href="/customers/view" class="hideText icon-span">Customers</a>
+            <a href="/customers" class="hideText icon-span">Customers</a>
         </div>
 
         <div class="sidebar-link-item ">
@@ -22,7 +22,7 @@
 
         <div class="sidebar-link-item ">
             <i class="fas fa-2x fa-shopping-cart pr-4"></i>
-            <a href="/services/view" class="hideText icon-span">Services</a>
+            <a href="/services" class="hideText icon-span">Services</a>
         </div>
 
         <div class="sidebar-link-item ">
@@ -37,7 +37,7 @@
 
         <div class="sidebar-link-item ">
             <i class="fas fa-2x fa-id-badge pr-4"></i>
-            <a href="/staff/view" class="hideText icon-span">Staff</a>
+            <a href="/staff" class="hideText icon-span">Staff</a>
         </div>
 
         <div class="sidebar-link-item ">

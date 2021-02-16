@@ -48,7 +48,7 @@ Route::group(['prefix' => 'bookings'], function () {
 
 //services routes
 Route::group(['prefix' => 'services'], function () {
-    Route::livewire('/view', 'services.view')
+    Route::livewire('/', 'services.view')
     ->name('viewServices')
     ->layout('layouts.dashboard')
     ->section('content');
@@ -57,7 +57,7 @@ Route::group(['prefix' => 'services'], function () {
 
 //customers routes
 Route::group(['prefix' => 'customers'], function () {
-    Route::livewire('/view', 'customers.view')
+    Route::livewire('/', 'customers.view')
     ->name('viewCustomers')
     ->layout('layouts.dashboard')
     ->section('content');
@@ -66,7 +66,7 @@ Route::group(['prefix' => 'customers'], function () {
 
 //staff routes
 Route::group(['prefix' => 'staff'], function () {
-    Route::livewire('/view', 'staff.view')
+    Route::livewire('/', 'staff.view')
     ->name('viewStaff')
     ->layout('layouts.dashboard')
     ->section('content');

@@ -53,7 +53,7 @@
                                                             <option disabled >No services Found</option>
                                                         @endif
                                                     </select>
-                                                    @error('register_form.name')
+                                                    @error('bookingForm.service_id')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -71,7 +71,7 @@
                                                             <option disabled >No staff Found</option>
                                                         @endif
                                                     </select>                                                    
-                                                    @error('register_form.email')
+                                                    @error('bookingForm.staff_id')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -79,55 +79,59 @@
                                                 </div>
                                 
                                                 <div class="form-group">
-                                                    <label for="start_date" class="col-10 col-form-label form-control">Select Date</label><br>
+                                                    <label for="datepicker" class="col-10 col-form-label form-control">Select Date</label><br>
                                                     <div class="form-group row">
                                                         <div class="col-10">
-                                                            <input class="form-control" name="start_at" wire:model.lazy="bookingForm.start_date" type="date" value="{{  $bookingForm['start_date'] ? $bookingForm['start_date'] : '' }}" id="start_date">
+                                                            <input class="form-control @error('bookingForm.start_date') is-invalid @enderror" name="start_at" wire:model.lazy="bookingForm.start_date" type="date" value="{{  $bookingForm['start_date'] ? $bookingForm['start_date'] : '' }}" id="datepicker">
                                                         </div>
+
+                                                        @error('bookingForm.start_date')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
                                                     </div>                                                    
-                                                    @error('bookingForm.start_date')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
                                                 </div>
 
                                                 <div class="form-group row">
                                                     <div class="col-10">
                                                         <input class="form-control @error('bookingForm.duration') is-invalid @enderror" type="number" wire:model.lazy="bookingForm.duration" name="duration" placeholder="How many hours"  value="{{  $bookingForm['duration'] ? $bookingForm['duration'] : '' }}" required  >
                                                     </div>
-                                                </div>
-                                
-                                                <div class="form-group">
-                                                    <label for="start_time" class="col-10 col-form-label form-control">Select Start Time</label><br>
-                                                    <div class="form-group row">
-                                                        <div class="col-10">
-                                                            <input class="form-control" name="start_time" wire:model.lazy="bookingForm.start_time" type="time" value="{{  $bookingForm['start_time'] ? $bookingForm['start_time'] : '' }}" id="start_time">
-                                                        </div>
-                                                    </div>                                                    
-                                                    @error('bookingForm.start_time')
+                                                    @error('bookingForm.duration')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                     @enderror
                                                 </div>
+                                
+                                                <div class="form-group">
+                                                    <label for="timepicker" id="timepickerlabel" class="col-10 col-form-label form-control">Select Start Time</label><br>
+                                                    <div class="form-group row">
+                                                        <div class="col-10">
+                                                            <input class="form-control @error('bookingForm.start_time') is-invalid @enderror" name="start_time" wire:model.lazy="bookingForm.start_time" type="time" value="{{  $bookingForm['start_time'] ? $bookingForm['start_time'] : '' }}" id="timepicker">
+                                                        </div>
+                                                        @error('bookingForm.start_time')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>                                                    
+                                                    {{-- <div class="form-group row">
+                                                    </div> --}}
+                                                </div>
                                                 
                                                 <div class="form-group">
-                                                    <div class="form-check" id="form-slider">
+                                                    <div class="form-check" >
                                                         <label class="form-check-label" for="inform-customer">
                                                             Inform the customer by sending them an <span>Email </span> and <span>SMS</span>. 
                                                         </label>
                                                         <label class="switch">
-                                                            <input type="checkbox" name="notifyCustomer" wire:model.lazy="bookingForm.notifyCustomer" value="{{  $bookingForm['notifyCustomer'] ? $bookingForm['notifyCustomer'] : '' }}">
+                                                            <input type="checkbox" name="notifyCustomer" wire:model="bookingForm.notifyCustomer" id="inform-customer" value="{{  $bookingForm['notifyCustomer'] ? $bookingForm['notifyCustomer'] : 0 }}">
                                                             <span class="slider round"></span>
                                                         </label>
                                                     </div>
                                                 </div>
                                             @endif
-                                
-                                                {{-- <div class="form-group">
-                                                    <button type="submit" wire:click.prevent="register" class="btn btn-primary rounded-pill btn-block">{{__('Submit') }}</button>
-                                                </div> --}}
                                                 
                     
                                         {{-- ************ end booking-details form  ************* --}}
@@ -146,7 +150,7 @@
                                                         @foreach($customers as $customer)
                                                             <div class="form-group row">
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input " type="radio" wire:model="bookingForm.customer_id" value="{{$customer->user_id}}" id="{{$customer->user_id}}">
+                                                                    <input class="form-check-input  @error('bookingForm.customer_id') is-invalid @enderror" type="radio" wire:model="bookingForm.customer_id" value="{{$customer->user_id}}" id="{{$customer->user_id}}">
                                                                     <label class="form-check-label" for="{{$customer->user_id}}">{{$customer->name}}</label>
                                                                 </div>
                                                             </div>
@@ -155,6 +159,12 @@
                                                     @else
                                                     <span id="badge" class="badge" style="float:center;">No customers found</span>
                                                     @endif
+
+                                                @error('bookingForm.customer_id')
+                                                    <span class="error" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                             @endif
                                             
                                                 @if($formComponents['showNewCustomerForm'])
@@ -168,23 +178,49 @@
                                         @if ($formComponents['showConfirmationForm'])        
                                         {{-- ************ start confirmation form  ************* --}}
                                             @if($showConfirmationDetails)
-                                                <h1 class="badge" style="float:left;">Booking Summary: ({{$confirmationData['customer'] ? $confirmationData['customer']['name'] : ''}})</h1>
-                                                <h1 class="badge" style="float:right;">Price: £{{$confirmationData['price'] ? $confirmationData['price'] : ''}}</h1><br>
-                                                <p class="badge" style="float:left;">Service: {{$confirmationData['service'] ? $confirmationData['service']['name'] : ''}} {{"(".$bookingForm['duration']." hours)"}}</p>
-                                                <p class="badge" style="float:right;">Date: {{$confirmationData['date'] ? $confirmationData['date'] : ''}}</p>
-                                                <p class="badge" style="float:left;">Staff: {{$confirmationData['staff'] ? $confirmationData['staff']['name'] : ''}}</p><br>
-                                                <p class="badge" style="float:left;">Start time: {{$confirmationData['start_time'] ? $confirmationData['start_time'] : ''}}</p>
-                                                <p class="badge" style="float:right;">End time: {{$confirmationData['end_time'] ? $confirmationData['end_time'] : ''}}</p><br>
+                                                <div class="form-group row">
+                                                    <div class="col-10">
+                                                        <h1 class="badge" style="float:left;">Booking Summary: ({{$confirmationData['customer'] ? $confirmationData['customer']['name'] : ''}})</h1>
+                                                        <h1 class="badge" style="float:right;">Price: £{{$confirmationData['price'] ? $confirmationData['price'] : ''}}</h1><br>
+                                                        <p class="badge" style="float:left;">Service: {{$confirmationData['service'] ? $confirmationData['service']['name'] : ''}} {{"(".$bookingForm['duration']." hours)"}}</p>
+                                                        <p class="badge" style="float:right;">Date: {{$confirmationData['date'] ? $confirmationData['date'] : ''}}</p>
+                                                        <p class="badge" style="float:left;">Staff: {{$confirmationData['staff'] ? $confirmationData['staff']['name'] : ''}}</p><br>
+                                                        <p class="badge" style="float:left;">Start time: {{$confirmationData['start_time'] ? $confirmationData['start_time'] : ''}}</p>
+                                                        <p class="badge" style="float:right;">End time: {{$confirmationData['end_time'] ? $confirmationData['end_time'] : ''}}</p><br>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="form-check" id="form-slider">
+                                                        <label class="form-check-label" for="addComment">
+                                                            Add Comments. 
+                                                        </label>
+                                                        <label class="switch">
+                                                            <input type="checkbox" name="addComment" wire:click="$toggle('showAddComment')">
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                    
+                                                    @if ($showAddComment)
+                                                        <div class="form-group row">
+                                                            <div class="col-10">
+                                                                <textarea class="form-control" name="bookingComment" rows="5" wire:model.lazy="bookingForm.comments" placeholder="Add a comment here "  value="{{ $bookingForm['comments'] ? '' : '' }}" id="bookingComment"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                        
+                                        {{-- button to create booking --}}
+                                        <div class="form-group">
+                                            <button type="submit" wire:click.prevent="createBooking" class="btn btn-primary rounded-pill btn-block">{{__('Add') }}</button>
+                                        </div>     
+
                                             @else
                                                 <p class="badge" style="float:center;">Please fill the previous forms</p><br>
 
                                             @endif
 
 
-                                        
-                                        <div class="form-group">
-                                            <button type="submit" wire:click.prevent="createBooking" class="btn btn-primary rounded-pill btn-block">{{__('Add') }}</button>
-                                        </div> 
                                         {{-- ************ end confirmation form  ************* --}}
                     
                                         @endif    
@@ -209,3 +245,4 @@
 {{-- <!-- show this empty div if component is closed --> --}}
 <div>
 </div>
+

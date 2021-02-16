@@ -4,7 +4,9 @@ namespace App\Http\Livewire;
 
 use App\User;
 use App\Service;
+use App\Appointment;
 use Livewire\Component;
+use App\User_appointment;
 use Livewire\WithPagination;
 
 //booking component is shown when /bookings/add is visited
@@ -22,7 +24,8 @@ class BookingComponent extends Component
         // 'end_time' => '',
         'duration' => '',
         'customer_id' => '',
-        'notifyCustomer' => ''
+        'notifyCustomer' => 0,
+        'comments' => '',
     ];
 
     public $formComponents = [
@@ -32,6 +35,8 @@ class BookingComponent extends Component
         'showNewCustomerForm' => false,
         'showExistingCustomerForm' => false,
     ];
+
+    public $showAddComment = false;
 
     public $showBookingComponent = true;
 
@@ -49,6 +54,16 @@ class BookingComponent extends Component
     //event listener
     protected $listeners = ['bookingClose'];
 
+    //custom validation messages
+    private $customMessages = [
+        'required' => 'This field must be filled in',
+        'unique' => 'This already exists in the database',
+        'string' => 'This needs to be a string',
+        'integer' => 'This needs to be a number',
+        'email' => 'This must be a valid email address',
+        'min' => 'You must select at least :min from the checkbox'
+    ];
+
     public function bookingClose()
     {
         $this->showBookingComponent = !$this->showBookingComponent;
@@ -62,7 +77,7 @@ class BookingComponent extends Component
     }
 
     public function getEndTime($start_date, $duration) {
-        $durationSeconds = $duration * 60 *60;
+        $durationSeconds = $duration > 1 ? $duration * 60 *60 : 0;
         $timeStamp = strtotime($start_date);
         $total = $durationSeconds + $timeStamp;
         $endTime = date('H:i', $total);
@@ -143,11 +158,46 @@ class BookingComponent extends Component
 
     public function createBooking() 
     {
-        // @dd($this->bookingForm['start_at']);
-        @dd($this->confirmationData);
-        // @dd($this->confirmationData['service']['price']);
-        // @dd($this->getPrice($this->confirmationData['service']['price'],$this->bookingForm['duration']));
-        // @dd($this->getEndDate($this->bookingForm['start_time']));
+        //validate
+        //rules
+        $rules = [
+            'bookingForm.staff_id' => 'required|integer',
+            'bookingForm.service_id' => 'required|integer',
+            'bookingForm.customer_id' => 'required|integer',
+            'bookingForm.start_date' => 'required',
+            'bookingForm.start_time' => 'required|unique:appointments,start_time',
+            'bookingForm.duration' => 'required|integer',
+        ];
+
+        //validate
+        $validatedData = $this->validate($rules, $this->customMessages);
+
+        //create apointment
+        $appointment_id = Appointment::insertGetId([
+            'start_at' => $this->confirmationData['date'],
+            'start_time' => $this->confirmationData['start_time'],
+            'end_at' => $this->confirmationData['end_time'],
+            'comments' => $this->showAddComment ? $this->bookingForm['comments'] : '',
+            'service_id' => $this->confirmationData['service']['service_id'],
+            'user_id' => $this->confirmationData['staff']['user_id']
+        ]);
+
+        //create user appointment
+        $user_appointment = User_appointment::create([
+            'appointment_id' => $appointment_id,
+            'customer_id' => $this->confirmationData['customer']['user_id']
+        ]);
+
+        //create invoice
+
+        //if notify customer, create notification
+
+        //flash messages
+        session()->flash('Successfully added');
+        session()->flash('alert-class', 'alert-success');
+
+        //redirect to refresh
+        return redirect()->route('viewBookings');
     }
     
     public function render()
