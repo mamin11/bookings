@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use App\Appointment;
 use Illuminate\Contracts\Validation\Rule;
 
 class validateAppointment implements Rule
@@ -25,7 +26,7 @@ class validateAppointment implements Rule
      */
     public function passes($attribute, $value)
     {
-        //
+        return Appointment::where('start_at', '<=', $value)->where('end_at', '>=', $value)->count() == 0;
     }
 
     /**
@@ -35,6 +36,6 @@ class validateAppointment implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+        return 'Appointment time overlaps with another :attribute';
     }
 }

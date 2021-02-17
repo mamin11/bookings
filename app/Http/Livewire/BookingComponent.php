@@ -8,6 +8,7 @@ use App\Appointment;
 use Livewire\Component;
 use App\User_appointment;
 use Livewire\WithPagination;
+use App\Rules\validateAppointment;
 
 //booking component is shown when /bookings/add is visited
 class BookingComponent extends Component
@@ -165,7 +166,8 @@ class BookingComponent extends Component
             'bookingForm.staff_id' => 'required|integer',
             'bookingForm.service_id' => 'required|integer',
             'bookingForm.customer_id' => 'required|integer',
-            'bookingForm.start_time' => 'required|unique:appointments,start_at',
+            'bookingForm.start_time' => ['required' , new validateAppointment()],
+            'confirmationData.end_time' => ['required' , new validateAppointment()],
             'bookingForm.duration' => 'required|integer',
         ];
 

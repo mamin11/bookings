@@ -103,6 +103,12 @@
 
                                                 @error('bookingForm.start_time')
                                                     <span class="error text-danger" role="alert">
+                                                        <strong>{{ $message }}</strong><br>
+                                                    </span>
+                                                @enderror
+
+                                                @error('confirmationData.end_time')
+                                                    <span class="error text-danger" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
