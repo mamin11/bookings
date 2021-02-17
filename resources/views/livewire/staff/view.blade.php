@@ -199,19 +199,6 @@
                                                                         </div> 
                                                                     @endif
 
-                                                                    {{-- <ul class="list-group list-group">
-                                                                        @if(count($updatingStaffServices) > 0)
-                                                                            @foreach ($services as $service)
-                                                                                @foreach($updatingStaffServices->getServices() as $staffService)
-                                                                                <input class="form-check-input" {{$staffService->service_id == $service->service_id ? 'checked' : ''}} type="checkbox" value="{{$service->service_id}}" id="{{$service->name}}">
-                                                                                <label class="form-check-label" for="{{$service->name}}">{{$service->name}}</label>
-                                                                                @endforeach
-                                                                            @endforeach
-                                                                        @else        
-                                                                                <li id="item1" class="list-group-item">No Services</li>
-                                                                        @endif
-                                                                    </ul> --}}
-
                                                 </form>
                             </div>
 

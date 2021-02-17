@@ -7,7 +7,7 @@
 
         <div class="sidebar-link-item ">
             <i class="fas fa-2x fa-clock pr-4"></i>
-            <a href="/bookings/add" class="hideText icon-span">Bookings</a>
+            <a href="/bookings/view" class="hideText icon-span">Bookings</a>
         </div>
 
         <div class="sidebar-link-item ">

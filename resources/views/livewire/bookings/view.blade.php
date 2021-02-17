@@ -10,34 +10,59 @@
         
                     {{-- options for upcoming, past and cancelled --}}
                     <div class="bookings-list-filter">
-                        <div class="list-filter-item ">Upcoming</div>
-                        <div class="list-filter-item active-filter">Past</div>
-                        <div class="list-filter-item">Cancelled</div>
+                        <div wire:click="toggleBookingComponents('upcoming')" class="list-filter-item @if($bookingViewOptions['upcoming']) active-filter @endif cursor-pointer">Upcoming</div>
+                        <div wire:click="toggleBookingComponents('past')" class="list-filter-item  @if($bookingViewOptions['past']) active-filter @endif  cursor-pointer">Past</div>
+                        <div wire:click="toggleBookingComponents('cancelled')" class="list-filter-item  @if($bookingViewOptions['cancelled']) active-filter @endif  cursor-pointer">Cancelled</div>
                     </div>
         
                 </div>
         
                 <!-- ****************** booking component body starts ************************* -->
+                @if($bookingViewOptions['upcoming'])
+
                     <div class="booking-component-body ">
                         <ul class="list-group list-group">
-                            <li class="list-group-item">Cras justo odio</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Morbi leo risus</li>
-                            <li class="list-group-item">Porta ac consectetur ac</li>
-                            <li class="list-group-item">Vestibulum at eros</li>
-                            <li class="list-group-item">Cras justo odio</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Morbi leo risus</li>
-                            <li class="list-group-item">Porta ac consectetur ac</li>
-                            {{-- <li class="list-group-item">Vestibulum at eros</li>
-                            <li class="list-group-item">Cras justo odio</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li> --}}
+                            @foreach($upcomingBookings as $booking)
+                            <li id="item1" href="#" class="list-group-item">Date: {{$booking->start_at}}
+                                <div class="pull-right">
+                                <span id="badge" class="badge" style="float:left;">Customer: {{$booking->getCustomer()->name}} ( {{ $booking->getService()->name }} )</span>
+                                </div>
+                            </li>
+                            @endforeach
                         </ul>
                     </div>
+
+                @endif
+                @if($bookingViewOptions['past'])
+
+                    <div class="booking-component-body ">
+                        <ul class="list-group list-group">
+                            @foreach($pastBookings as $booking)
+                            <li id="item1" href="#" class="list-group-item">Date: {{$booking->start_at}}
+                                <div class="pull-right">
+                                <span id="badge" class="badge" style="float:left;">Customer: {{$booking->getCustomer()->name}} ( {{ $booking->getService()->name }} )</span>
+                                </div>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+
+                @endif
+                @if($bookingViewOptions['cancelled'])
+
+                    <div class="booking-component-body ">
+                        <ul class="list-group list-group">
+                            @foreach($cancelledBookings as $booking)
+                            <li id="item1" href="#" class="list-group-item">Date: {{$booking->start_at}}
+                                <div class="pull-right">
+                                <span id="badge" class="badge" style="float:left;">Customer: {{$booking->getCustomer()->name}} ( {{ $booking->getService()->name }} )</span>
+                                </div>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+
+                @endif
                     
                     
             </div>
@@ -45,21 +70,22 @@
         
         <div class="booking-component-view-center">
 
-            {{-- <h1 class="text-center">
+            <h1 class="text-center">
                 <div class="d-flex justify-content-center p-4">
                     <a href="/bookings/add" class="btn btn-primary">
                         <i class="fas fa-plus"></i>
                         ADD BOOKING</a>
                 </div> 
-            </h1> --}}
+            </h1>
 
             <div class="booking-center-head ">
-
-                <div class="bookings-list-filter d-inline">
-                    <span class="list-filter-item ">Details</span>
-                    <span class="list-filter-item active-filter">Edit</span>
-                    <span class="list-filter-item">Delete</span>
+                
+                <div class="form-group">
+                    <a wire:click="toggleComponent('showBookingDetails')" class="login-register-links-sm cursor-pointer @if($formComponents['showBookingDetails']) link-active @endif d-inline-block">Booking Details</a>
+                    <a wire:click="toggleComponent('editBooking')" class="login-register-links-sm cursor-pointer @if($formComponents['editBooking']) link-active @endif  d-inline-block">Edit</a>
+                    <a wire:click="toggleComponent('deleteBooking')" class="login-register-links-sm cursor-pointer @if($formComponents['deleteBooking']) link-active @endif  d-inline-block">Delete</a>
                 </div>
+                <hr>
                 
             </div>
 
