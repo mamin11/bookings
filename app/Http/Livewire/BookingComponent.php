@@ -19,7 +19,7 @@ class BookingComponent extends Component
     public $bookingForm = [
         'service_id' => '',
         'staff_id' => '',
-        'start_date' => '',
+        // 'start_date' => '',
         'start_time' => '',
         // 'end_time' => '',
         'duration' => '',
@@ -57,7 +57,7 @@ class BookingComponent extends Component
     //custom validation messages
     private $customMessages = [
         'required' => 'This field must be filled in',
-        'unique' => 'This already exists in the database',
+        'unique' => 'There is another appointment starting at this time',
         'string' => 'This needs to be a string',
         'integer' => 'This needs to be a number',
         'email' => 'This must be a valid email address',
@@ -80,7 +80,8 @@ class BookingComponent extends Component
         $durationSeconds = $duration > 1 ? $duration * 60 *60 : 0;
         $timeStamp = strtotime($start_date);
         $total = $durationSeconds + $timeStamp;
-        $endTime = date('H:i', $total);
+        // $endTime = date('H:i', $total);
+        $endTime = date('Y-m-d H:i', $total);
         
         return $endTime;
     }
@@ -119,7 +120,7 @@ class BookingComponent extends Component
                 $this->confirmationData['customer'] = $this->bookingForm['customer_id'] ? User::find( $this->bookingForm['customer_id']) : '';
                 $this->confirmationData['service'] = $this->bookingForm['service_id'] ? Service::find( $this->bookingForm['service_id']) : '';
                 $this->confirmationData['price'] = $this->bookingForm['duration'] ? $this->getPrice($this->confirmationData['service']['price'],$this->bookingForm['duration']) : '';
-                $this->confirmationData['date'] = $this->bookingForm['start_date'];
+                // $this->confirmationData['date'] = $this->bookingForm['start_date'];
                 $this->confirmationData['start_time'] = $this->bookingForm['start_time'];
                 $this->confirmationData['end_time'] = $this->getEndTime($this->confirmationData['start_time'], $this->bookingForm['duration']);
                 // $this->confirmationData['time'] = $this->getDuration($this->confirmationData['service']->start_at);
@@ -164,8 +165,7 @@ class BookingComponent extends Component
             'bookingForm.staff_id' => 'required|integer',
             'bookingForm.service_id' => 'required|integer',
             'bookingForm.customer_id' => 'required|integer',
-            'bookingForm.start_date' => 'required',
-            'bookingForm.start_time' => 'required|unique:appointments,start_time',
+            'bookingForm.start_time' => 'required|unique:appointments,start_at',
             'bookingForm.duration' => 'required|integer',
         ];
 
@@ -174,8 +174,7 @@ class BookingComponent extends Component
 
         //create apointment
         $appointment_id = Appointment::insertGetId([
-            'start_at' => $this->confirmationData['date'],
-            'start_time' => $this->confirmationData['start_time'],
+            'start_at' => $this->confirmationData['start_time'],
             'end_at' => $this->confirmationData['end_time'],
             'comments' => $this->showAddComment ? $this->bookingForm['comments'] : '',
             'service_id' => $this->confirmationData['service']['service_id'],

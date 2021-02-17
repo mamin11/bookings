@@ -43,7 +43,7 @@
                                             @if ($formComponents['showBookingDetailForm'])
                                                 
                                                 <div class="form-group">
-                                                    <select class="form-control @error('bookingForm.service_id') is-invalid @enderror" type="text" wire:model.lazy="bookingForm.service_id" name="service_id"   required >
+                                                    <select class="form-control @error('bookingForm.service_id') is-invalid @enderror row" type="text" wire:model.lazy="bookingForm.service_id" name="service_id"   required >
                                                         <option >Select service</option>
                                                         @if(count($services))
                                                             @foreach($services as $service)
@@ -53,15 +53,16 @@
                                                             <option disabled >No services Found</option>
                                                         @endif
                                                     </select>
-                                                    @error('bookingForm.service_id')
-                                                    <span class="invalid-feedback" role="alert">
+                                                </div>
+
+                                                @error('bookingForm.service_id')
+                                                    <span class="error text-danger" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
-                                                    @enderror
-                                                </div>
+                                                @enderror
                                                     
                                                 <div class="form-group">
-                                                    <select class="form-control @error('bookingForm.staff_id') is-invalid @enderror" type="text" wire:model.lazy="bookingForm.staff_id" name="staff_id"  required  >
+                                                    <select class="form-control @error('bookingForm.staff_id') is-invalid @enderror row" type="text" wire:model.lazy="bookingForm.staff_id" name="staff_id"  required  >
                                                         <option>Select staff</option>
                                                         @if(count($staff))
                                                             @foreach($staff as $staff)
@@ -71,54 +72,40 @@
                                                             <option disabled >No staff Found</option>
                                                         @endif
                                                     </select>                                                    
-                                                    @error('bookingForm.staff_id')
-                                                    <span class="invalid-feedback" role="alert">
+                                                </div>
+
+                                                @error('bookingForm.staff_id')
+                                                    <span class="error text-danger" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
-                                                    @enderror
-                                                </div>
-                                
-                                                <div class="form-group">
-                                                    <label for="datepicker" class="col-10 col-form-label form-control">Select Date</label><br>
-                                                    <div class="form-group row">
-                                                        <div class="col-10">
-                                                            <input class="form-control @error('bookingForm.start_date') is-invalid @enderror" name="start_at" wire:model.lazy="bookingForm.start_date" type="date" value="{{  $bookingForm['start_date'] ? $bookingForm['start_date'] : '' }}" id="datepicker">
-                                                        </div>
+                                                @enderror
 
-                                                        @error('bookingForm.start_date')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>                                                    
-                                                </div>
-
-                                                <div class="form-group row">
+                                                <div class="form-group ">
                                                     <div class="col-10">
-                                                        <input class="form-control @error('bookingForm.duration') is-invalid @enderror" type="number" wire:model.lazy="bookingForm.duration" name="duration" placeholder="How many hours"  value="{{  $bookingForm['duration'] ? $bookingForm['duration'] : '' }}" required  >
+                                                        <input class="form-control @error('bookingForm.duration') is-invalid @enderror row" type="number" wire:model.lazy="bookingForm.duration" name="duration" placeholder="How many hours"  value="{{  $bookingForm['duration'] ? $bookingForm['duration'] : '' }}" required  >
                                                     </div>
-                                                    @error('bookingForm.duration')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
                                                 </div>
+
+                                                @error('bookingForm.duration')
+                                                    <span class="error text-danger" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                 
                                                 <div class="form-group">
                                                     <label for="timepicker" id="timepickerlabel" class="col-10 col-form-label form-control">Select Start Time</label><br>
-                                                    <div class="form-group row">
+                                                    <div class="form-group">
                                                         <div class="col-10">
-                                                            <input class="form-control @error('bookingForm.start_time') is-invalid @enderror" name="start_time" wire:model.lazy="bookingForm.start_time" type="time" value="{{  $bookingForm['start_time'] ? $bookingForm['start_time'] : '' }}" id="timepicker">
+                                                            <input class="form-control @error('bookingForm.start_time') is-invalid @enderror row" name="start_time" wire:model.lazy="bookingForm.start_time" type="datetime-local" value="{{  $bookingForm['start_time'] ? $bookingForm['start_time'] : '' }}" id="timepicker">
                                                         </div>
-                                                        @error('bookingForm.start_time')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
                                                     </div>                                                    
-                                                    {{-- <div class="form-group row">
-                                                    </div> --}}
                                                 </div>
+
+                                                @error('bookingForm.start_time')
+                                                    <span class="error text-danger" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                                 
                                                 <div class="form-group">
                                                     <div class="form-check" >
@@ -161,7 +148,7 @@
                                                     @endif
 
                                                 @error('bookingForm.customer_id')
-                                                    <span class="error" role="alert">
+                                                    <span class="error text-danger" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
@@ -183,8 +170,7 @@
                                                         <h1 class="badge" style="float:left;">Booking Summary: ({{$confirmationData['customer'] ? $confirmationData['customer']['name'] : ''}})</h1>
                                                         <h1 class="badge" style="float:right;">Price: £{{$confirmationData['price'] ? $confirmationData['price'] : ''}}</h1><br>
                                                         <p class="badge" style="float:left;">Service: {{$confirmationData['service'] ? $confirmationData['service']['name'] : ''}} {{"(".$bookingForm['duration']." hours)"}}</p>
-                                                        <p class="badge" style="float:right;">Date: {{$confirmationData['date'] ? $confirmationData['date'] : ''}}</p>
-                                                        <p class="badge" style="float:left;">Staff: {{$confirmationData['staff'] ? $confirmationData['staff']['name'] : ''}}</p><br>
+                                                        <p class="badge" style="float:right;">Staff: {{$confirmationData['staff'] ? $confirmationData['staff']['name'] : ''}}</p><br>
                                                         <p class="badge" style="float:left;">Start time: {{$confirmationData['start_time'] ? $confirmationData['start_time'] : ''}}</p>
                                                         <p class="badge" style="float:right;">End time: {{$confirmationData['end_time'] ? $confirmationData['end_time'] : ''}}</p><br>
                                                     </div>
@@ -209,6 +195,12 @@
                                                             </div>
                                                         </div>
                                                     @endif
+                                                
+                                        @if ($errors->any())
+                                            <span class="error text-danger" role="alert">
+                                                <strong>There is an error is previous forms</strong>
+                                            </span>
+                                        @endif
                                         
                                         {{-- button to create booking --}}
                                         <div class="form-group">

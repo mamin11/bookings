@@ -16,11 +16,10 @@ class CreateAppointmentsTable extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->increments('appointment_id');
             $table->dateTime('start_at');
-            $table->time('end_at');
+            $table->dateTime('end_at');
             $table->string('comments');
             $table->integer('service_id');
             $table->integer('user_id');
-            $table->time('start_time');
         });
     }
 
