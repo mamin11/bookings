@@ -23,9 +23,9 @@
                         <div class="booking-component-body ">
                             <ul class="list-group list-group">
                                 @foreach($upcomingBookings as $booking)
-                                <li id="{{$loop->index}}" href="#" class="list-group-item">Date: {{$booking->start_at}}
+                                <li id="{{$loop->index}}"  class="list-group-item">Date: {{$booking->start_at}}
                                     <div class="pull-right">
-                                    <span  class="badge" style="float:left;">Customer: {{$booking->getCustomer()->name}} ( {{ $booking->getService()->name }} )</span>
+                                    <span  class="badge " style="float:left;">Customer: {{$booking->getCustomer()->name}} ( {{ $booking->getService()->name }} )</span>
                                     </div>
                                 </li>
                                 @endforeach
@@ -41,7 +41,7 @@
                     <div class="booking-component-body ">
                         <ul class="list-group list-group">
                             @foreach($pastBookings as $booking)
-                            <li id="{{$loop->index}}" href="#" class="list-group-item">Date: {{$booking->start_at}}
+                            <li id="{{$loop->index}}" class="list-group-item">Date: {{$booking->start_at}}
                                 <div class="pull-right">
                                 <span  class="badge" style="float:left;">Customer: {{$booking->getCustomer()->name}} ( {{ $booking->getService()->name }} )</span>
                                 </div>
@@ -59,7 +59,7 @@
                     <div class="booking-component-body ">
                         <ul class="list-group list-group">
                             @foreach($cancelledBookings as $booking)
-                            <li id="{{$loop->index}}" href="#" class="list-group-item">Date: {{$booking->start_at}}
+                            <li id="{{$loop->index}}" href="#" class="list-group-item text-danger">Date: {{$booking->start_at}}
                                 <div class="pull-right">
                                 <span class="badge" style="float:left;">Customer: {{$booking->getCustomer()->name}} ( {{ $booking->getService()->name }} )</span>
                                 </div>

@@ -41,4 +41,5 @@ class Appointment extends Model
         $customer_id = User_appointment::where('appointment_id', $this->appointment_id)->first()->customer_id;
         return User::where('user_id', $customer_id)->first();
     }
+
 }

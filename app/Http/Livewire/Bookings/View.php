@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Bookings;
 
 use App\Appointment;
 use Livewire\Component;
+use App\User_appointment;
 
 class View extends Component
 {
@@ -69,27 +70,12 @@ class View extends Component
         }
     }
 
-    public function getBookings($type) {
-        $date = date("Y-m-d H:i:s");
-        if($type == 'upcoming'){
-            return Appointment::where('start_at', '>=', $date)->get();
-        }
-        if($type == 'past'){
-            return Appointment::where('start_at', '<=', $date)->get();
-        }
-        if($type == 'cancelled'){
-            // return [];
-            return Appointment::where('start_at', '=', $date)->get();
-        }
-
-    }
-
     public function render()
     {
         $date = date("Y-m-d H:i:s");
-        $this->upcomingBookings = Appointment::where('start_at', '>=', $date)->get();
-        $this->pastBookings = Appointment::where('start_at', '<=', $date)->get();
-        $this->cancelledBookings = [];
+        $this->upcomingBookings = Appointment::where('start_at', '>=', $date)->where('cancelled', 1)->get();
+        $this->pastBookings = Appointment::where('start_at', '<=', $date)->where('cancelled', 1)->get();
+        $this->cancelledBookings = Appointment::where('cancelled', 0)->get();
         return view('livewire.bookings.view', [
             'upcomingBookings' => $this->upcomingBookings,
             'pastBookings' => $this->pastBookings,

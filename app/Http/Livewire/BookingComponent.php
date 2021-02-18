@@ -186,7 +186,10 @@ class BookingComponent extends Component
         //create user appointment
         $user_appointment = User_appointment::create([
             'appointment_id' => $appointment_id,
-            'customer_id' => $this->confirmationData['customer']['user_id']
+            'customer_id' => $this->confirmationData['customer']['user_id'],
+            'total_price' => $this->confirmationData['price'],
+            'duration' => $this->bookingForm['duration'],
+            'cancelled' => 1,
         ]);
 
         //create invoice

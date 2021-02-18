@@ -119,7 +119,7 @@
                                                             Inform the customer by sending them an <span>Email </span> and <span>SMS</span>. 
                                                         </label>
                                                         <label class="switch">
-                                                            <input type="checkbox" name="notifyCustomer" wire:model="bookingForm.notifyCustomer" id="inform-customer" value="{{  $bookingForm['notifyCustomer'] ? $bookingForm['notifyCustomer'] : 0 }}">
+                                                            <input type="checkbox" name="notifyCustomer" wire:model="bookingForm.notifyCustomer" id="inform-customer" value="{{  $bookingForm['notifyCustomer'] ? $bookingForm['notifyCustomer'] : 1 }}">
                                                             <span class="slider round"></span>
                                                         </label>
                                                     </div>
