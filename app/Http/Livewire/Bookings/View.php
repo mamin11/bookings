@@ -9,9 +9,9 @@ class View extends Component
 {
 
     //load these from db and pass to view
-    //$upcomingBookings
-    //$pastBookings
-    //$cancelledBookings
+    public $upcomingBookings;
+    public $pastBookings;
+    public $cancelledBookings;
 
     public $formComponents = [
         'showBookingDetails' => false,
@@ -69,16 +69,31 @@ class View extends Component
         }
     }
 
+    public function getBookings($type) {
+        $date = date("Y-m-d H:i:s");
+        if($type == 'upcoming'){
+            return Appointment::where('start_at', '>=', $date)->get();
+        }
+        if($type == 'past'){
+            return Appointment::where('start_at', '<=', $date)->get();
+        }
+        if($type == 'cancelled'){
+            // return [];
+            return Appointment::where('start_at', '=', $date)->get();
+        }
+
+    }
+
     public function render()
     {
         $date = date("Y-m-d H:i:s");
-        $upcomingBookings = Appointment::where('start_at', '>=', $date)->get();
-        $pastBookings = Appointment::where('start_at', '<=', $date)->get();
-        $cancelledBookings = [];
+        $this->upcomingBookings = Appointment::where('start_at', '>=', $date)->get();
+        $this->pastBookings = Appointment::where('start_at', '<=', $date)->get();
+        $this->cancelledBookings = [];
         return view('livewire.bookings.view', [
-            'upcomingBookings' => $upcomingBookings,
-            'pastBookings' => $pastBookings,
-            'cancelledBookings' => $cancelledBookings,
+            'upcomingBookings' => $this->upcomingBookings,
+            'pastBookings' => $this->pastBookings,
+            'cancelledBookings' => $this->cancelledBookings,
         ]);
     }
 }

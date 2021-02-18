@@ -19,48 +19,58 @@
         
                 <!-- ****************** booking component body starts ************************* -->
                 @if($bookingViewOptions['upcoming'])
-
-                    <div class="booking-component-body ">
-                        <ul class="list-group list-group">
-                            @foreach($upcomingBookings as $booking)
-                            <li id="item1" href="#" class="list-group-item">Date: {{$booking->start_at}}
-                                <div class="pull-right">
-                                <span id="badge" class="badge" style="float:left;">Customer: {{$booking->getCustomer()->name}} ( {{ $booking->getService()->name }} )</span>
-                                </div>
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
-
+                    @if ($upcomingBookings)
+                        <div class="booking-component-body ">
+                            <ul class="list-group list-group">
+                                @foreach($upcomingBookings as $booking)
+                                <li id="{{$loop->index}}" href="#" class="list-group-item">Date: {{$booking->start_at}}
+                                    <div class="pull-right">
+                                    <span  class="badge" style="float:left;">Customer: {{$booking->getCustomer()->name}} ( {{ $booking->getService()->name }} )</span>
+                                    </div>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>                    
+                    @else
+                        <span  class="badge" style="float:center;">Nothing found</span>
+                    @endif
                 @endif
-                @if($bookingViewOptions['past'])
 
+                @if($bookingViewOptions['past'])
+                    @if ($pastBookings)
                     <div class="booking-component-body ">
                         <ul class="list-group list-group">
                             @foreach($pastBookings as $booking)
-                            <li id="item1" href="#" class="list-group-item">Date: {{$booking->start_at}}
+                            <li id="{{$loop->index}}" href="#" class="list-group-item">Date: {{$booking->start_at}}
                                 <div class="pull-right">
-                                <span id="badge" class="badge" style="float:left;">Customer: {{$booking->getCustomer()->name}} ( {{ $booking->getService()->name }} )</span>
+                                <span  class="badge" style="float:left;">Customer: {{$booking->getCustomer()->name}} ( {{ $booking->getService()->name }} )</span>
                                 </div>
                             </li>
                             @endforeach
                         </ul>
-                    </div>
-
+                    </div>                        
+                    @else
+                        <span  class="badge" style="float:center;">Nothing found</span>
+                    @endif
                 @endif
-                @if($bookingViewOptions['cancelled'])
 
+                @if($bookingViewOptions['cancelled'])
+                    @if ($cancelledBookings)
                     <div class="booking-component-body ">
                         <ul class="list-group list-group">
                             @foreach($cancelledBookings as $booking)
-                            <li id="item1" href="#" class="list-group-item">Date: {{$booking->start_at}}
+                            <li id="{{$loop->index}}" href="#" class="list-group-item">Date: {{$booking->start_at}}
                                 <div class="pull-right">
-                                <span id="badge" class="badge" style="float:left;">Customer: {{$booking->getCustomer()->name}} ( {{ $booking->getService()->name }} )</span>
+                                <span class="badge" style="float:left;">Customer: {{$booking->getCustomer()->name}} ( {{ $booking->getService()->name }} )</span>
                                 </div>
                             </li>
                             @endforeach
                         </ul>
-                    </div>
+                    </div>                        
+                    @else
+                        <span  class="badge" style="float:center;">Nothing found</span>
+                    @endif
+
 
                 @endif
                     
