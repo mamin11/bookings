@@ -19,7 +19,6 @@ class CreateUserAppointmentsTable extends Migration
             $table->integer('customer_id');
             $table->integer('total_price');
             $table->integer('duration');
-            $table->integer('cancelled');
         });
     }
 

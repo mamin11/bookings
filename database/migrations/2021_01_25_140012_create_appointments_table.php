@@ -20,6 +20,7 @@ class CreateAppointmentsTable extends Migration
             $table->string('comments');
             $table->integer('service_id');
             $table->integer('user_id');
+            $table->integer('cancelled');
         });
     }
 
