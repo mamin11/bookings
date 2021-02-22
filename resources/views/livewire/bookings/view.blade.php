@@ -19,7 +19,7 @@
         
                 <!-- ****************** booking component body starts ************************* -->
                 @if($bookingViewOptions['upcoming'])
-                    @if ($upcomingBookings)
+                    @if (count($upcomingBookings) > 0)
                         <div class="booking-component-body ">
                             <ul class="list-group list-group">
                                 @foreach($upcomingBookings as $booking)
@@ -37,7 +37,7 @@
                 @endif
 
                 @if($bookingViewOptions['past'])
-                    @if ($pastBookings)
+                    @if (count($pastBookings) > 0)
                     <div class="booking-component-body ">
                         <ul class="list-group list-group">
                             @foreach($pastBookings as $booking)
@@ -55,7 +55,7 @@
                 @endif
 
                 @if($bookingViewOptions['cancelled'])
-                    @if ($cancelledBookings)
+                    @if (count($cancelledBookings) > 0)
                     <div class="booking-component-body ">
                         <ul class="list-group list-group">
                             @foreach($cancelledBookings as $booking)
