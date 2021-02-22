@@ -4,10 +4,12 @@ namespace App\Http\Livewire;
 
 use App\User;
 use App\Service;
+use Carbon\Carbon;
 use App\Appointment;
 use Livewire\Component;
 use App\User_appointment;
 use Livewire\WithPagination;
+use Spatie\GoogleCalendar\Event;
 use App\Rules\validateAppointment;
 
 //booking component is shown when /bookings/add is visited
@@ -180,7 +182,8 @@ class BookingComponent extends Component
             'end_at' => $this->confirmationData['end_time'],
             'comments' => $this->showAddComment ? $this->bookingForm['comments'] : '',
             'service_id' => $this->confirmationData['service']['service_id'],
-            'user_id' => $this->confirmationData['staff']['user_id']
+            'user_id' => $this->confirmationData['staff']['user_id'],
+            'cancelled' => 1,
         ]);
 
         //create user appointment
@@ -189,12 +192,16 @@ class BookingComponent extends Component
             'customer_id' => $this->confirmationData['customer']['user_id'],
             'total_price' => $this->confirmationData['price'],
             'duration' => $this->bookingForm['duration'],
-            'cancelled' => 1,
         ]);
 
-        //create invoice
-
         //if notify customer, create notification
+
+        //add the booking to google calendar
+        Event::create([
+            'name' => 'A '. $this->confirmationData['service']['name'] . ' photograohy booking for customer: '.$this->confirmationData['customer']['name']. ' with staff: '.$this->confirmationData['staff']['name'],
+            'startDateTime' => Carbon::parse($this->confirmationData['start_time']),
+            'endDateTime' => Carbon::parse($this->confirmationData['end_time'])
+        ]);
 
         //flash messages
         session()->flash('Successfully added');
