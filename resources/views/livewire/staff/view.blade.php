@@ -16,15 +16,20 @@
                         <ul class="list-group list-group">
                             @if(count($staff))
                                 @foreach ($staff as $item)
-                                    <li id="item1" href="#" class="list-group-item">{{$item->name}}
+                                    <li id="item1" href="#" class="list-group-item">
+                                        <div class="pull-left">
+                                            <img src="{{asset('img/user-profile.png')}}" alt="user profile image" class="img-thumbnail" style="float:left; vertical-align: middle; width: 50px; height: 50px; border-radius: 50%;">
+                                            <span id="badge" class="badge" style="float:left;">{{$item->name}}</span><br>
+                                        </div>
+
                                         <div class="pull-right">
-                                        <span id="badge" class="badge" style="float:left;">{{$item->email}}</span>
-                                        @if($confirmingID === $item->user_id)
-                                            <span id="badge" class="badge cursor-pointer" wire:click="deleteStaff({{$item->user_id}})" style="color: red; float: right;">Sure?</span>
-                                        @else
-                                            <i class="fa fa-trash cursor-pointer" wire:click="confirmDelete({{$item->user_id}})" style="color: red; float: right;"></i>
-                                        @endif
-                                            <i class="fa fa-pen cursor-pointer" wire:click="updateStaff({{$item->user_id}})"  style="color: black; padding-right: 10px; float: right;"></i>
+                                            <span id="badge" class="badge" style="float:left;">{{$item->email}}</span>
+                                            @if($confirmingID === $item->user_id)
+                                                <span id="badge" class="badge cursor-pointer" wire:click="deleteStaff({{$item->user_id}})" style="color: red; float: right;">Sure?</span>
+                                            @else
+                                                <i class="fa fa-trash cursor-pointer" wire:click="confirmDelete({{$item->user_id}})" style="color: red; float: right;"></i>
+                                            @endif
+                                                <i class="fa fa-pen cursor-pointer" wire:click="updateStaff({{$item->user_id}})"  style="color: black; padding-right: 10px; float: right;"></i>
                                         </div>
                                     </li>
                                 @endforeach
