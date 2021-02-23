@@ -16,6 +16,7 @@ class View extends Component
     //holds data when adding staff
     public $staffForm = [
         'name' => '',
+        'image' => '',
         'email' => '',
         'password' => '',
         'role' => '',
@@ -30,6 +31,7 @@ class View extends Component
     //holds data about updating staff
     public $updateStaffForm = [
         'name' => '',
+        'image' => '',
         'email' => '',
         'password' => '',
         'role' => '',
@@ -67,7 +69,9 @@ class View extends Component
         'string' => 'This needs to be a string',
         'integer' => 'This needs to be a number',
         'email' => 'This must be a valid email address',
-        'min' => 'You must select at least :min from the checkbox'
+        'min' => 'You must select at least :min from the checkbox',
+        'image' => 'Please select an image',
+        'max' => 'This exceeds the maximum size allowed'
     ];
 
     public function addStaffDetails() {
@@ -85,6 +89,7 @@ class View extends Component
         //rules
         $rules = [
             'staffForm.name' => 'required',
+            'staffForm.image' => 'image|max:1024',
             'staffForm.email' => 'required|unique:users,email',
             'staffForm.password' => 'required',
             'staffForm.role' => 'required|integer',
@@ -125,6 +130,9 @@ class View extends Component
                 'service_id' => $value
             ]);
         }
+
+        //upload the image if there is one
+
 
         //flash messages
         session()->flash('Successfully added');
@@ -221,6 +229,7 @@ class View extends Component
             //rules
             $rules = [
                 'updateStaffForm.name' => 'required',
+                'updateStaffForm.image' => 'image|max:1024',
                 'updateStaffForm.email' => 'required',
                 'updateStaffForm.role' => 'required',
                 'updateStaffForm.services' => 'array|min:1',
@@ -270,6 +279,9 @@ class View extends Component
                     ]);
                 }
             }
+
+            //update the staff image if neccessary
+            
             
             //update the staff details
             $this->updatingStaff->name = $this->updateStaffForm['name'];

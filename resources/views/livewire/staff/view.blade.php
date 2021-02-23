@@ -18,7 +18,7 @@
                                 @foreach ($staff as $item)
                                     <li id="item1" href="#" class="list-group-item">
                                         <div class="pull-left">
-                                            <img src="{{asset('img/user-profile.png')}}" alt="user profile image" class="img-thumbnail" style="float:left; vertical-align: middle; width: 50px; height: 50px; border-radius: 50%;">
+                                            <img src="{{asset('img/random-user.jpg')}}" alt="user profile image" class="img-thumbnail" style="float:left; vertical-align: middle; width: 50px; height: 50px; border-radius: 50%;">
                                             <span id="badge" class="badge" style="float:left;">{{$item->name}}</span><br>
                                         </div>
 
@@ -70,6 +70,17 @@
                                                                     <br>
                                                                     
                                                                     @if($showDetails)
+                                                                        <div class="form-group row">
+                                                                            <label for="userImage"><i class="fa fa-upload" aria-hidden="true"></i></label>
+                                                                            <input type="file" type="text" wire:model.lazy="updateStaffForm.image" class="form-control-file @error('updateStaffForm.image') is-invalid @enderror" id="userImage">
+                                                                        </div>
+
+                                                                        @error('updateStaffForm.image')
+                                                                            <span class="error" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
+
                                                                         <div class="form-group row">
                                                                             <div class="col-10">
                                                                                 <input class="form-control @error('updateStaffForm.name') is-invalid @enderror" type="text" wire:model.lazy="updateStaffForm.name" name="updateName" placeholder="name"  id="updateCustomerInput" value="{{ $updateStaffForm['name'] ?  $updateStaffForm['name'] : '' }}" required  autofocus>
@@ -232,6 +243,19 @@
                                                 <br>
                                                 
                                                 @if($addStaffDetails)
+                                                <div class="form-group row">
+                                                    <div class="col-10">
+                                                        <label for="userImage">Profile picture</label>
+                                                        <input type="file" name="userImage" wire:model.lazy="staffForm.image" class="form-control-file @error('staffForm.image') is-invalid @enderror" id="userImage">
+                                                    </div>
+                                                </div>
+
+                                                @error('staffForm.image')
+                                                    <span class="error" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+
                                                 <div class="form-group row">
                                                     <div class="col-10">
                                                         <input class="form-control @error('staffForm.name') is-invalid @enderror" type="text" wire:model.lazy="staffForm.name" name="name" placeholder="name"  id="addCustomerInput" value="{{ old('name') }}" required  autofocus>
