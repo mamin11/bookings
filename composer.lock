@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f24a6eebb00af74ffd2a716e138453ea",
+    "content-hash": "e51ecb2eb44877c150a4d55ab45cc848",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1729,22 +1729,22 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v1.0.0",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "e4d220d50a1722a15f49044aaf3c64d8c91bbfb5"
+                "reference": "874ba1b8d6b12efa472147697942fe2f78a5d371"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/e4d220d50a1722a15f49044aaf3c64d8c91bbfb5",
-                "reference": "e4d220d50a1722a15f49044aaf3c64d8c91bbfb5",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/874ba1b8d6b12efa472147697942fe2f78a5d371",
+                "reference": "874ba1b8d6b12efa472147697942fe2f78a5d371",
                 "shasum": ""
             },
             "require": {
-                "illuminate/database": "~5.6.0|~5.7.0|~5.8.0|^6.0|^7.0",
-                "illuminate/support": "~5.6.0|~5.7.0|~5.8.0|^6.0|^7.0",
-                "illuminate/validation": "~5.6.0|~5.7.0|~5.8.0|^6.0|^7.0",
+                "illuminate/database": "~5.6.0|~5.7.0|~5.8.0|^6.0|^7.0|^8.0",
+                "illuminate/support": "~5.6.0|~5.7.0|~5.8.0|^6.0|^7.0|^8.0",
+                "illuminate/validation": "~5.6.0|~5.7.0|~5.8.0|^6.0|^7.0|^8.0",
                 "php": "^7.1.3",
                 "symfony/http-kernel": "^4.0|^5.0"
             },
@@ -1784,9 +1784,15 @@
             "description": "A front-end framework for Laravel.",
             "support": {
                 "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/v1.0.0"
+                "source": "https://github.com/livewire/livewire/tree/master"
             },
-            "time": "2020-02-26T03:02:43+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/calebporzio",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-06-08T15:12:38+00:00"
         },
         {
             "name": "monolog/monolog",

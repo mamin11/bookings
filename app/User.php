@@ -4,6 +4,7 @@ namespace App;
 
 use App\Role;
 use App\Address;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -18,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'address_id', 'date_of_birth', 'role_id',
+        'name', 'email', 'password', 'address_id', 'date_of_birth', 'role_id', 'image',
     ];
 
     /**
@@ -49,6 +50,20 @@ class User extends Authenticatable
 
     public function getRole() {
         return Role::where('role_id', $this->role_id)->first();
+    }
+
+    public function getStaffProfilePic() {
+        if($this->image) {
+            return Storage::disk('s3')->url('staff/'.$this->image);
+        }
+        return 'img/user-profile.png';
+    }
+
+    public function getCustomerProfilePic() {
+        if($this->image) {
+            return Storage::disk('s3')->url('customer/'.$this->image);
+        }
+        return 'img/user-profile.png';
     }
 
     public static function search($search) {

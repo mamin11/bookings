@@ -9,14 +9,17 @@ use App\Service;
 // use App\User_role;
 use Livewire\Component;
 use App\User_speciality;
+use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class View extends Component
 {
+    use WithFileUploads;
+    
     //holds data when adding staff
     public $staffForm = [
         'name' => '',
-        'image' => '',
         'email' => '',
         'password' => '',
         'role' => '',
@@ -27,11 +30,14 @@ class View extends Component
         'country' => '',
         'post_code' => ''
     ];
-    
+
+    //for when creating staff, when updating staff
+    public $staffImage, $staffUpdateImage, $updateStaffImageView;
+
+
     //holds data about updating staff
     public $updateStaffForm = [
         'name' => '',
-        'image' => '',
         'email' => '',
         'password' => '',
         'role' => '',
@@ -47,7 +53,6 @@ class View extends Component
     public $updatingStaff;
     public $updatingStaffAddress;
     public $updatingStaffServices;
-    public $updatingStaffRole;
     public $newStaffAddress;
 
     public $staffServices = [];
@@ -86,10 +91,12 @@ class View extends Component
     }
 
     public function addStaff() {
+        // $fileName = $this->staffForm['image']->file('image')->getClientOriginalName();
+        // @dd($fileName);
+
         //rules
         $rules = [
             'staffForm.name' => 'required',
-            'staffForm.image' => 'image|max:1024',
             'staffForm.email' => 'required|unique:users,email',
             'staffForm.password' => 'required',
             'staffForm.role' => 'required|integer',
@@ -103,6 +110,18 @@ class View extends Component
 
         //validate
         $validatedData = $this->validate($rules, $this->customMessages);
+
+        $fileName = time();
+        //validate the image if there is an image
+        if($this->staffImage) {
+            $this->validate([
+                'staffImage' => 'image|max:1024', // 1MB Max
+            ]);
+
+            //upload the image 
+            $this->staffImage->storePubliclyAs('staff', $fileName, 's3');
+        }
+
 
         //add address first
         $address_id = Address::insertGetId([
@@ -120,6 +139,7 @@ class View extends Component
             'address_id' => $address_id,
             'role_id' => $this->staffForm['role'],
             'date_of_birth' => $this->staffForm['date_of_birth'], 
+            'image' => $fileName 
         ]);
 
         //add specialities (services)
@@ -130,9 +150,6 @@ class View extends Component
                 'service_id' => $value
             ]);
         }
-
-        //upload the image if there is one
-
 
         //flash messages
         session()->flash('Successfully added');
@@ -184,8 +201,8 @@ class View extends Component
         // }
 
         $this->updatingStaff = User::where('user_id',$user_id)->first();
+        $this->updateStaffImageView = $this->updatingStaff->getStaffProfilePic();
         $this->updatingStaffAddress = Address::where('address_id',$this->updatingStaff->address_id)->first();
-        // $this->updatingStaffRole = User_role::where('user_id',$this->updatingStaff->user_id)->first();
         $this->updatingStaffServices = User_speciality::where('user_id', $this->updatingStaff->user_id)->get();
 
         
@@ -193,7 +210,7 @@ class View extends Component
         $this->updateStaffForm['name'] = $this->updatingStaff->name;
         $this->updateStaffForm['email'] = $this->updatingStaff->email;
         $this->updateStaffForm['date_of_birth'] = $this->updatingStaff->date_of_birth;
-        $this->updateStaffForm['role'] = $this->updatingStaff->role;
+        $this->updateStaffForm['role'] = $this->updatingStaff->role_id;
         //get the ids of the staff services and push to array
         if(count($this->updatingStaffServices) > 0){
             foreach($this->updatingStaffServices as $items) {
@@ -229,7 +246,6 @@ class View extends Component
             //rules
             $rules = [
                 'updateStaffForm.name' => 'required',
-                'updateStaffForm.image' => 'image|max:1024',
                 'updateStaffForm.email' => 'required',
                 'updateStaffForm.role' => 'required',
                 'updateStaffForm.services' => 'array|min:1',
@@ -243,16 +259,32 @@ class View extends Component
             //validate
             $validatedData = $this->validate($rules, $this->customMessages);
 
-            // @dd();
+            $fileName = time();
+            //validate the image if there is an image
+            //if an image is selected and the staff already doesnt have an image, add new image
+            if($this->staffUpdateImage && !($this->updatingStaff->image)) {
+                // @dd($this->updatingStaff->getStaffProfilePic());
+                $this->validate([
+                    'staffUpdateImage' => 'image|max:1024', // 1MB Max
+                ]);
+                $this->staffUpdateImage->storePubliclyAs('staff', $fileName, 's3');
+                $this->updatingStaff->image = $fileName;
+            }
+
+            if($this->staffUpdateImage && ($this->updatingStaff->image)) {
+                // @dd($this->updatingStaff->getStaffProfilePic());
+                //first delete original from s3
+                Storage::disk('s3')->delete('staff/'.$this->updatingStaff->image);
+                //then add new
+                $this->staffUpdateImage->storePubliclyAs('staff', $fileName, 's3');
+                $this->updatingStaff->image = $fileName;
+            }
 
             //update the address first
             $this->updatingStaffAddress->address = $this->updateStaffForm['address'];
             $this->updatingStaffAddress->city = $this->updateStaffForm['city'];
             $this->updatingStaffAddress->country = $this->updateStaffForm['country'];
             $this->updatingStaffAddress->post_code = $this->updateStaffForm['post_code'];
-
-            //update the role
-            $this->updatingStaffRole->role_id =  $this->updateStaffForm['role'];
 
             //update the specialities/services *********************************
             //loop the services array from form and compare to those in db
@@ -281,18 +313,17 @@ class View extends Component
             }
 
             //update the staff image if neccessary
-            
+
             
             //update the staff details
             $this->updatingStaff->name = $this->updateStaffForm['name'];
             $this->updatingStaff->email = $this->updateStaffForm['email'];
             $this->updatingStaff->date_of_birth = $this->updateStaffForm['date_of_birth'];
+            $this->updatingStaff->role_id =  $this->updateStaffForm['role'];
+
 
             //save the record
             $this->updatingStaffAddress->save();
-            $this->updatingStaffRole->save();
-            // $this->updatingStaffServices->save();
-
             $this->updatingStaff->save();
 
             //reload page

@@ -211,7 +211,9 @@
                                         {{-- button to create booking --}}
                                         <div class="form-group">
                                             <button type="submit" wire:click.prevent="createBooking" class="btn btn-primary rounded-pill btn-block">{{__('Add') }}</button>
-                                        </div>     
+                                        </div>
+                                        
+                                        <div wire:loading>Loading ... </div>
 
                                             @else
                                                 <p class="badge" style="float:center;">Please fill the previous forms</p><br>

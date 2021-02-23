@@ -18,7 +18,7 @@
                                 @foreach ($staff as $item)
                                     <li id="item1" href="#" class="list-group-item">
                                         <div class="pull-left">
-                                            <img src="{{asset('img/random-user.jpg')}}" alt="user profile image" class="img-thumbnail" style="float:left; vertical-align: middle; width: 50px; height: 50px; border-radius: 50%;">
+                                            <img src="{{$item->getStaffProfilePic()}}" alt="user profile image" class="img-thumbnail" style="float:left; vertical-align: middle; width: 50px; height: 50px; border-radius: 50%;">
                                             <span id="badge" class="badge" style="float:left;">{{$item->name}}</span><br>
                                         </div>
 
@@ -50,7 +50,7 @@
                             @if($showUpdateForm)
                             {{-- ********** start of update staff form ********* --}}
                             <div id="login-register" style="background-color: #E7E8E9 !important;">
-                                                <form >
+                                                <form enctype="multipart/form-data">
                                                     @csrf
                                                     
                                                     @if(session()->has('message'))
@@ -71,12 +71,14 @@
                                                                     
                                                                     @if($showDetails)
                                                                         <div class="form-group row">
-                                                                            <label for="userImage"><i class="fa fa-upload" aria-hidden="true"></i></label>
-                                                                            <input type="file" type="text" wire:model.lazy="updateStaffForm.image" class="form-control-file @error('updateStaffForm.image') is-invalid @enderror" id="userImage">
+                                                                            <div class="col-10">
+                                                                                <label for="userImage"><img src="{{$staffUpdateImage ? $staffUpdateImage->temporaryUrl() : $updateStaffImageView }}" alt="user profile image" class="img-thumbnail" style="float:left; vertical-align: middle; width: 70px; height: 70px; border-radius: 50%;"></label>
+                                                                                <input type="file" wire:model="staffUpdateImage" class="form-control-file @error('staffUpdateImage') is-invalid @enderror" id="userImage">
+                                                                            </div>
                                                                         </div>
 
-                                                                        @error('updateStaffForm.image')
-                                                                            <span class="error" role="alert">
+                                                                        @error('staffUpdateImage')
+                                                                            <span class="error text-danger" role="alert">
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
                                                                         @enderror
@@ -88,7 +90,7 @@
                                                                         </div>
                                                                         
                                                                         @error('updateStaffForm.name')
-                                                                            <span class="error" role="alert">
+                                                                            <span class="error text-danger" role="alert">
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
                                                                         @enderror
@@ -102,16 +104,16 @@
                     
                                                                         
                                                                         @error('updateStaffForm.email')
-                                                                            <span class="error" role="alert">
+                                                                            <span class="error text-danger" role="alert">
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
                                                                         @enderror
                                                                         
                                                                         <div class="form-group row">
                                                                             <div class="col-10">
-                                                                                <select class="form-control @error('updateStaffForm.role') is-invalid @enderror" type="text" wire:model.lazy="updateStaffForm.role" name="role" placeholder="role" value="{{ $updateStaffForm['role'] ? $updateStaffForm['role'] : '' }}" required >
+                                                                                <select class="form-control @error('updateStaffForm.role') is-invalid @enderror" type="text" wire:model.lazy="updateStaffForm.role" name="role" placeholder="role"  required >
                                                                                     @foreach($roles as $role)
-                                                                                        <option {{$role->role_id == $updateStaffForm['role'] ? 'selected="selected"' : ''}} value="{{$role->role_id}}">{{$role->name}}</option>
+                                                                                        <option {{$role->role_id == $updateStaffForm['role'] ? 'selected="selected"' : ''}} value="{{$updateStaffForm['role'] ? $updateStaffForm['role'] : $role->role_id}}">{{$role->name}}</option>
                                                                                     @endforeach
                                                                                 </select>
                                                                             </div>
@@ -119,7 +121,7 @@
                     
                                                                         
                                                                         @error('updateStaffForm.role')
-                                                                            <span class="error" role="alert">
+                                                                            <span class="error text-danger" role="alert">
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
                                                                         @enderror
@@ -132,7 +134,7 @@
                         
                                                                         
                                                                         @error('updateStaffForm.date_of_birth')
-                                                                            <span class="error" role="alert">
+                                                                            <span class="error text-danger" role="alert">
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
                                                                         @enderror
@@ -145,7 +147,7 @@
                         
                                                                         
                                                                         @error('updateStaffForm.address')
-                                                                            <span class="error" role="alert">
+                                                                            <span class="error text-danger" role="alert">
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
                                                                         @enderror
@@ -158,7 +160,7 @@
                         
                                                                         
                                                                         @error('updateStaffForm.city')
-                                                                            <span class="error" role="alert">
+                                                                            <span class="error text-danger" role="alert">
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
                                                                         @enderror
@@ -171,7 +173,7 @@
                         
                                                                         
                                                                         @error('updateStaffForm.country')
-                                                                            <span class="error" role="alert">
+                                                                            <span class="error text-danger" role="alert">
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
                                                                         @enderror
@@ -184,7 +186,7 @@
                         
                                                                         
                                                                         @error('updateStaffForm.post_code')
-                                                                            <span class="error" role="alert">
+                                                                            <span class="error text-danger" role="alert">
                                                                                 <strong>{{ $message }}</strong>
                                                                             </span>
                                                                         @enderror
@@ -212,7 +214,15 @@
 
                                                                         <div class="form-group">
                                                                             <button type="submit" wire:click.prevent="updateConfirm" class="btn btn-primary rounded-pill btn-block">{{__('Update') }}</button>
-                                                                        </div> 
+                                                                        </div>
+                                                                        
+                                                                        <div wire:loading>Loading ... </div>
+
+                                                                        @if ($errors->any())
+                                                                            <span class="error text-danger" role="alert">
+                                                                                <strong>There is an error is previous forms</strong>
+                                                                            </span>
+                                                                        @endif
                                                                     @endif
 
                                                 </form>
@@ -222,7 +232,7 @@
 
                         @else
                         <div id="login-register" style="background-color: #E7E8E9 !important;">
-                            <form >
+                            <form enctype="multipart/form-data">
                                 @csrf
                                 
                                 @if(session()->has('message'))
@@ -245,13 +255,13 @@
                                                 @if($addStaffDetails)
                                                 <div class="form-group row">
                                                     <div class="col-10">
-                                                        <label for="userImage">Profile picture</label>
-                                                        <input type="file" name="userImage" wire:model.lazy="staffForm.image" class="form-control-file @error('staffForm.image') is-invalid @enderror" id="userImage">
+                                                        <label for="userImage"><img src="{{$staffImage ? $staffImage->temporaryUrl() : asset('img/user-profile.png') }}" alt="user profile image" class="img-thumbnail" style="float:left; vertical-align: middle; width: 70px; height: 70px; border-radius: 50%;"></label>
+                                                        <input type="file" name="userImage" wire:model="staffImage" class="form-control-file @error('staffImage') is-invalid @enderror" id="userImage">
                                                     </div>
                                                 </div>
 
-                                                @error('staffForm.image')
-                                                    <span class="error" role="alert">
+                                                @error('staffImage')
+                                                    <span class="error text-danger" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
@@ -263,7 +273,7 @@
                                                 </div>
                                                 
                                                 @error('staffForm.name')
-                                                    <span class="error" role="alert">
+                                                    <span class="error text-danger" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
@@ -277,7 +287,7 @@
 
                                                 
                                                 @error('staffForm.email')
-                                                    <span class="error" role="alert">
+                                                    <span class="error text-danger" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
@@ -290,7 +300,7 @@
 
                                                 
                                                 @error('staffForm.password')
-                                                    <span class="error" role="alert">
+                                                    <span class="error text-danger" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
@@ -308,7 +318,7 @@
 
                                                 
                                                 @error('staffForm.role')
-                                                    <span class="error" role="alert">
+                                                    <span class="error text-danger" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
@@ -321,7 +331,7 @@
 
                                                 
                                                 @error('staffForm.date_of_birth')
-                                                    <span class="error" role="alert">
+                                                    <span class="error text-danger" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
@@ -334,7 +344,7 @@
 
                                                 
                                                 @error('staffForm.address')
-                                                    <span class="error" role="alert">
+                                                    <span class="error text-danger" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
@@ -347,7 +357,7 @@
 
                                                 
                                                 @error('staffForm.city')
-                                                    <span class="error" role="alert">
+                                                    <span class="error text-danger" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
@@ -360,7 +370,7 @@
 
                                                 
                                                 @error('staffForm.country')
-                                                    <span class="error" role="alert">
+                                                    <span class="error text-danger" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
@@ -373,7 +383,7 @@
 
                                                 
                                                 @error('staffForm.country')
-                                                    <span class="error" role="alert">
+                                                    <span class="error text-danger" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
@@ -398,9 +408,17 @@
                                                 </span>
                                                 @enderror
 
+                                                @if ($errors->any())
+                                                <span class="error text-danger" role="alert">
+                                                    <strong>There is an error is previous forms</strong>
+                                                </span>
+                                                @endif
+
                                             <div class="form-group">
                                                 <button type="submit" wire:click.prevent="addStaff" class="btn btn-primary rounded-pill btn-block">{{__('Complete') }}</button>
-                                            </div> 
+                                            </div>
+
+                                            <div wire:loading>Loading ... </div>
 
                                             {{-- staff specialities ends here --}}
 
