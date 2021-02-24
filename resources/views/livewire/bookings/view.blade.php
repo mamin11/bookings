@@ -120,9 +120,9 @@
                                         @if($formComponents['showBookingDetails'])
                                                 <div class="form-group">
                                                     <select class="form-control @error('bookingForm.service_id') is-invalid @enderror row" type="text" wire:model.lazy="bookingForm.service_id" name="service_id"   required >
-                                                        @if(count($services))
+                                                        @if(count($services)>0)
                                                             @foreach($services as $service)
-                                                                <option {{$service->service_id == $bookingForm['service_id'] ? 'selected="selected"' : ''}} value="{{$bookingForm['service_id'] ? $bookingForm['service_id'] : $service->service_id}}">{{$service->name}}</option>
+                                                                <option {{$service->service_id == $bookingForm['service_id'] ? 'selected' : ''}} name="{{$service->service_id}}" value="{{ $service->service_id}}">{{$service->name}}</option>
                                                             @endforeach
                                                         @else
                                                             <option disabled >No services Found</option>
@@ -139,8 +139,8 @@
                                                     <div class="form-group">
                                                         <select class="form-control @error('bookingForm.staff_id') is-invalid @enderror row" type="text" wire:model.lazy="bookingForm.staff_id" name="staff_id"  required  >
                                                             @if(count($staff))
-                                                                @foreach($staff as $staff)
-                                                                    <option {{$bookingForm['staff_id'] == $staff->user_id ? 'selected="selected"' : ''}} value="{{$bookingForm['staff_id'] ? $bookingForm['staff_id'] : $staff->user_id}}">{{$staff->name}}</option>
+                                                                @foreach($staff as $sta)
+                                                                    <option {{ $sta->user_id == $bookingForm['staff_id'] ? 'selected="selected"' : ''}} value="{{ $sta->user_id}}">{{$sta->name}}</option>
                                                                 @endforeach
                                                             @else
                                                                 <option disabled >No staff Found</option>
