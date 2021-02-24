@@ -22,9 +22,7 @@ class BookingComponent extends Component
     public $bookingForm = [
         'service_id' => '',
         'staff_id' => '',
-        // 'start_date' => '',
         'start_time' => '',
-        // 'end_time' => '',
         'duration' => '',
         'customer_id' => '',
         'notifyCustomer' => 0,

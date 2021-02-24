@@ -4,6 +4,7 @@ namespace App;
 
 use App\Role;
 use App\Address;
+use App\User_appointment;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -64,6 +65,10 @@ class User extends Authenticatable
             return Storage::disk('s3')->url('customer/'.$this->image);
         }
         return 'img/user-profile.png';
+    }
+
+    public function getCustomerBookings() {
+        return User_appointment::where('customer_id', $this->user_id);
     }
 
     public static function search($search) {
