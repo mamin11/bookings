@@ -107,7 +107,6 @@
                 
                 <div class="form-group">
                     <a wire:click="toggleComponent('showBookingDetails')" class="login-register-links-sm cursor-pointer @if($formComponents['showBookingDetails']) link-active @endif d-inline-block">Booking Details</a>
-                    <a wire:click="toggleComponent('editBooking')" class="login-register-links-sm cursor-pointer @if($formComponents['editBooking']) link-active @endif  d-inline-block">Edit</a>
                     <a wire:click="toggleComponent('deleteBooking')" class="login-register-links-sm cursor-pointer @if($formComponents['deleteBooking']) link-active @endif  d-inline-block">Delete</a>
                 </div>
                 {{-- <hr> --}}
@@ -117,7 +116,7 @@
                             <div id="login-register">
                                 <form >
                                     @csrf
-                                        @if($formComponents['showBookingDetails'])
+                                        @if($formComponents['showBookingDetails']  && $updatingBooking)
                                                 <div class="form-group">
                                                     <select class="form-control @error('bookingForm.service_id') is-invalid @enderror row" type="text" wire:model.lazy="bookingForm.service_id" name="service_id"   required >
                                                         @if(count($services)>0)
@@ -167,10 +166,11 @@
                                                     @enderror
 
                                                     <div class="form-group">
-                                                        <label for="timepicker" id="timepickerlabel" class="col-10 col-form-label form-control">Start Time</label><br>
+                                                        <label for="timepicker" id="timepickerlabel" class="col-10 col-form-label form-control">Previous Start Time</label><br>
                                                         <div class="form-group">
                                                             <div class="col-10">
-                                                                <input class="form-control @error('bookingForm.start_time') is-invalid @enderror row" name="start_time" wire:model.lazy="bookingForm.start_time" type="text" value="{{  $bookingForm['start_time'] ? date("yyyy-MM-ddThh:mm", strtotime($bookingForm['start_time'])) : '' }}" id="timepicker">
+                                                                <input class="form-control row" disabled name="originalTime" type="text" value="{{  $updatingBooking ? $updatingBooking->start_at : '' }}">
+                                                                <input class="form-control @error('bookingForm.start_time') is-invalid @enderror row" name="start_time" wire:model.lazy="bookingForm.start_time" type="datetime-local" value="{{  $bookingForm['start_time'] ? $bookingForm['start_time'] : '' }}" id="timepicker">
                                                             </div>
                                                         </div>                                                    
                                                     </div>
@@ -181,7 +181,7 @@
                                                         </span>
                                                     @enderror
 
-                                                    @error('confirmationData.end_time')
+                                                    @error('bookingForm.end_time')
                                                         <span class="error text-danger" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
@@ -230,7 +230,7 @@
                                                         
                                                         @if ($errors->any())
                                                             <span class="error text-danger" role="alert">
-                                                                <strong>There is an error is previous forms</strong>
+                                                                <strong>There is an error is in forms</strong>
                                                             </span>
                                                         @endif
                                                     <hr>
@@ -246,18 +246,40 @@
                                                             </label>
                                                         </div>
                                                     </div>
+
+                                                    <div class="form-group">
+                                                        <button type="submit" wire:click.prevent="updateBookingConfirm" class="btn btn-primary rounded-pill btn-block">{{__('Update') }}</button>
+                                                    </div>
                                         @endif
 
-                                        @if($formComponents['editBooking'])
-                                            <h1>edit details</h1>
+
+                                        @if($formComponents['deleteBooking'] && $updatingBooking)
+                                            @if($deleteConfirmed)
+                                                <div class="alert alert-success" role="alert">
+                                                    Successfully Deleted!
+                                                </div>
+                                            @elseif($deleteCancelled)
+                                                <div class="alert alert-danger" role="alert">
+                                                    Cancelled deletion!
+                                                </div>
+                                            @else
+                                                <div class="container">
+                                                    <div class="card" style="width: 28rem;">
+                                                        <div class="card-body">
+                                                        <h2 class="card-title">Are You Sure?</h2>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-5 btn btn-primary ml-2" wire:click="deleteBooking({{$updatingBooking->appointment_id}})" style="background-color: green !important;">YES</div>
+                                                            <div class="col-5 btn btn-primary ml-2" wire:click="cancelDeleteBooking()" style="background-color: red !important;">NO</div>
+                                                        </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
                                         @endif
 
-                                        @if($formComponents['deleteBooking'])
-                                            <h1>DELETE</h1>
-                                        @endif
-
-                                        @if(!$formComponents['deleteBooking'] && !$formComponents['editBooking'] && !$formComponents['showBookingDetails'])
-                                        <span class="error" role="alert">Please above options</span>
+                                        @if(!$formComponents['deleteBooking']  && !$formComponents['showBookingDetails'])
+                                            <span class="error" role="alert">Please select above options</span>
                                         @endif
                                 </form>
                             </div>
