@@ -9,10 +9,12 @@ use Livewire\Component;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 use RealRashid\SweetAlert\Facades\Alert;
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 
-class Login extends Component
+class Login extends Component 
 {
     public $login_active = true;
     public $register_active = false;
@@ -90,7 +92,9 @@ class Login extends Component
         session()->flash('Successfuly registered');
         session()->flash('alert-class', 'alert-success');
 
-        Auth::attempt(['email' => $this->register_form['email'], 'password' => $this->register_form['password']]);
+        event(new Registered($user));
+
+        // Auth::attempt(['email' => $this->register_form['email'], 'password' => $this->register_form['password']]);
 
         return redirect()->route('dashboard');
 

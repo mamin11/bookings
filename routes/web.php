@@ -3,7 +3,8 @@
 use App\Http\Livewire\Login;
 use App\Http\Livewire\Register;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,6 +16,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//email verification routes
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/dashboard');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+
+
+//route groups
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/', function () {
         return view('home');
@@ -33,7 +54,7 @@ Route::group([ 'middleware' => 'auth'], function () {
 });
 
 //booking routes
-Route::group(['prefix' => 'bookings'], function () {
+Route::group(['prefix' => 'bookings', 'middleware' => 'verified'], function () {
     Route::livewire('/add', 'booking-component')
     ->name('addBooking')
     ->layout('layouts.dashboard')
