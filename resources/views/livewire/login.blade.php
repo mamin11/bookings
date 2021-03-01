@@ -50,6 +50,7 @@
 
                     <div class="form-group">
                         <button type="submit" wire:click.prevent="login" class="btn btn-primary rounded-pill btn-block">{{__('Login') }}</button>
+                        <a  href="/login/google" class="btn btn-primary rounded-pill btn-block"><img class="mr-2" src="https://img.icons8.com/offices/30/000000/google-logo.png"/>{{__('Login with Google') }}</a>
                     </div>
                     
                         @if (Route::has('password.request'))

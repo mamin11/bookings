@@ -19,6 +19,10 @@ class Logout extends Component
 
     public function render()
     {
+        Auth::logout();
+
+        redirect()->route('login');
+
         return view('livewire.logout');
     }
 }

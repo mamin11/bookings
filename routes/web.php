@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Livewire\Login;
+use Illuminate\Http\Request;
 use App\Http\Livewire\Register;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,6 +35,10 @@ Route::post('/email/verification-notification', function (Request $request) {
 
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+//login with google
+Route::get('login/google', 'Auth\LoginController@redirectToProvider');
+Route::get('google/callback', 'Auth\LoginController@handleProviderCallback');
 
 
 

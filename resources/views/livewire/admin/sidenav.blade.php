@@ -68,7 +68,7 @@
 
         <div class="sidebar__logout">
             <i class="fa fa-power-off"></i>
-            <a href="#">Log out</a>
+            <a href="{{route('logout')}}">Log out</a>
         </div>
 
     </div>
