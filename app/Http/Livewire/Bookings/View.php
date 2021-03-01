@@ -49,6 +49,9 @@ class View extends Component
     public $updatingBooking;
     public $updatingBookingUserAppointment;
 
+    public $cancellingBooking;
+    public $confirmCancelID;
+
     //custom validation messages
     private $customMessages = [
         'required' => 'This field must be filled in',
@@ -121,14 +124,6 @@ class View extends Component
         return $price * $duration;
     }
 
-    public function cancelBooking($id) {
-
-    }
-
-    public function confirmCancel($id) {
-
-    }
-
     public function updateBooking($id) {
         $this->formComponents['showBookingDetails'] = true;
         $this->updatingBooking = Appointment::where('appointment_id', $id)->first();
@@ -192,6 +187,21 @@ class View extends Component
     public function cancelDeleteBooking() {
         
         $this->deleteCancelled = true;
+    }
+
+    
+    public function cancelBooking($id) {
+        $this->confirmCancelID = $id;
+    }
+    
+    public function confirmCancel($appointment_id) {
+        //find the booking first
+        $this->cancellingBooking = Appointment::where('appointment_id', $appointment_id)->first();
+        $this->cancellingBooking->cancelled = 0;
+        $this->cancellingBooking->save();
+
+        //refresh page
+        // return redirect()->route('viewBookings');
     }
 
     public function render()

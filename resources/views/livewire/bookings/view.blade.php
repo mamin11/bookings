@@ -30,10 +30,10 @@
                                     </div>
 
                                     <div class="pull-right">
-                                        @if($confirmingID === $booking->appointment_id)
-                                            <span id="badge" class="badge cursor-pointer" wire:click="cancelBooking({{$booking->appointment_id}})" style="color: red; float: right;">Sure?</span>
+                                        @if($confirmCancelID === $booking->appointment_id)
+                                            <span id="badge" class="badge cursor-pointer" wire:click="confirmCancel({{$booking->appointment_id}})" style="color: red; float: right;">Sure?</span>
                                         @else
-                                            <i class="far fa-window-close cursor-pointer" wire:click="confirmCancel({{$booking->appointment_id}})" style="color: red; float: right;"></i>
+                                            <i class="far fa-window-close cursor-pointer" wire:click="cancelBooking({{$booking->appointment_id}})" style="color: red; float: right;"></i>
                                         @endif
                                         <i class="fa fa-pen cursor-pointer" wire:click="updateBooking({{$booking->appointment_id}})"  style="color: black; padding-right: 10px; float: right;"></i>
                                     </div>
