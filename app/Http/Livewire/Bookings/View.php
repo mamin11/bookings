@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Bookings;
 
 use App\User;
 use App\Service;
+use Carbon\Carbon;
 use App\Appointment;
 use Livewire\Component;
 use App\User_appointment;
@@ -134,11 +135,11 @@ class View extends Component
         $this->updatingBookingUserAppointment = User_appointment::where('appointment_id', $id)->first();
         $this->bookingForm['service_id'] =$this->updatingBooking->service_id;
         $this->bookingForm['staff_id'] =  $this->updatingBooking->user_id;
-        $this->bookingForm['start_time'] = $this->updatingBooking->start_at;
-        $this->bookingForm['duration'] =  $this->getDuration($this->updatingBooking->end_at, $this->updatingBooking->start_at);
-        $this->bookingForm['end_time'] = $this->updatingBooking->end_at ;
+        // $this->bookingForm['start_time'] = $this->bookingForm['start_time'];
+        $this->bookingForm['duration'] = $this->getDuration($this->updatingBooking->end_at, $this->updatingBooking->start_at);
+        $this->bookingForm['end_time'] = $this->bookingForm['start_time'] ? $this->getEndTime($this->bookingForm['start_time'], $this->bookingForm['duration']) : $this->updatingBooking->end_at;
         $this->bookingForm['customer_id'] =  $this->updatingBooking->getCustomer()->user_id;
-        $this->bookingForm['comments'] =$this->updatingBooking->comments;
+        $this->bookingForm['comments'] = $this->updatingBooking->comments;
         // $this->bookingForm['service_id'] = $this->bookingForm['service_id'] ? $this->bookingForm['service_id'] : $this->updatingBooking->service_id;
         // $this->bookingForm['staff_id'] = $this->bookingForm['staff_id'] ? $this->bookingForm['staff_id'] : $this->updatingBooking->user_id;
         // $this->bookingForm['start_time'] = $this->bookingForm['start_time'] ? $this->bookingForm['start_time'] : $this->updatingBooking->start_at;
@@ -164,14 +165,14 @@ class View extends Component
         //update the appointment
         $this->updatingBooking->service_id = $this->bookingForm['service_id'];
         $this->updatingBooking->user_id = $this->bookingForm['staff_id'];
-        $this->updatingBooking->duration = $this->bookingForm['duration'] ? $this->bookingForm['duration'] : $this->updatingBooking->duration;
-        $this->updatingBooking->start_at = $this->bookingForm['start_time'] ? $this->bookingForm['start_time'] : $this->updatingBooking->start_at;
+        $this->updatingBooking->start_at = $this->bookingForm['start_time'] ? Carbon::parse($this->bookingForm['start_time']) : $this->updatingBooking->start_at;
         $this->updatingBooking->end_at = $this->bookingForm['end_time'] ? $this->bookingForm['end_time'] : $this->updatingBooking->end_at;
         $this->updatingBooking->comments = $this->bookingForm['comments'] ? $this->bookingForm['comments'] : $this->updatingBooking->comments;
 
         //update the user appointment
         $servicePrice = Service::find( $this->bookingForm['service_id'])->first()->price;
         $this->updatingBookingUserAppointment->total_price = $this->bookingForm['service_id'] ? $this->getPrice($servicePrice, $this->bookingForm['duration']) : $this->updatingBookingUserAppointment->total_price;
+        $this->updatingBookingUserAppointment->duration = $this->bookingForm['duration'] ? $this->bookingForm['duration'] : $this->updatingBooking->duration;
 
         //save the appointment
         $this->updatingBooking->save();
