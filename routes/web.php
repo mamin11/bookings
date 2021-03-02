@@ -4,8 +4,8 @@ use App\Http\Livewire\Login;
 use Illuminate\Http\Request;
 use App\Http\Livewire\Register;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
 use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
@@ -31,7 +31,13 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
+    try {
+        $request->user()->sendEmailVerificationNotification();
+    } catch (Exception $e) {
+        // dd($e);
+        Session::flash('alert-class', 'alert-danger');
+        return back()->with('message', $e->getMessage().' !');
+    }
 
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');

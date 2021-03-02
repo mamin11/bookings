@@ -139,11 +139,11 @@
                                 @csrf
                                 <button type="submit" class="btn btn-primary"> Resend</button>
                             </form>
+                            @if(Session::has('message'))
+                            <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
+                            @endif
                         </td>
                     </tr>
-                    @if(Session::has('message'))
-                    <p class="alert alert-info">{{ Session::get('message') }}</p>
-                    @endif
                 </table>
             </td>
         </tr>
