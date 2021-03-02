@@ -1,69 +1,73 @@
     <div class="sidebar-menu">
         {{-- <a href="javascript:void(0)" class="closebtn" onclick="checkToggle()">&times;</a> --}}
-        <div class="sidebar-link-item active-menu-link">
-            <i class="fas fa-2x fa-calendar-check pr-4"></i>
-            <a href="#" class="hideText icon-span menu-active">Calendar</a>
+        <div class="sidebar-link-item ">
+            <h3 class="hideText icon-span menu-active">User: {{Auth::user()->name}}</h3>
         </div>
 
-        <div class="sidebar-link-item ">
+        <div class="sidebar-link-item {{checkRoute('viewCalendar')}} ">
+            <i class="fas fa-2x fa-calendar-check pr-4"></i>
+            <a href="/calendar" class="hideText icon-span menu-active">Calendar</a>
+        </div>
+
+        <div class="sidebar-link-item {{checkRoute('viewBookings') }} {{ checkRoute('addBooking')}}">
             <i class="fas fa-2x fa-clock pr-4"></i>
             <a href="/bookings/view" class="hideText icon-span">Bookings</a>
         </div>
 
-        <div class="sidebar-link-item ">
+        <div class="sidebar-link-item {{checkRoute('viewCustomers')}} ">
             <i class="fas fa-2x fa-user-friends pr-4"></i>
             <a href="/customers" class="hideText icon-span">Customers</a>
         </div>
 
-        <div class="sidebar-link-item ">
+        <div class="sidebar-link-item {{checkRoute('viewStaff')}} ">
             <i class="fas fa-2x fa-id-badge pr-4"></i>
             <a href="/staff" class="hideText icon-span">Staff</a>
         </div>
 
-        <div class="sidebar-link-item ">
+        <div class="sidebar-link-item {{checkRoute('viewOrders')}} ">
             <i class="fas fa-2x fa-store pr-4"></i>
-            <a href="#" class=" icon-span">Orders</a>
+            <a href="/orders" class=" icon-span">Orders</a>
         </div>
 
-        <div class="sidebar-link-item ">
+        <div class="sidebar-link-item {{checkRoute('viewProducts')}} ">
             <i class="fab fa-2x fa-product-hunt pr-4"></i>
-            <a href="#" class=" icon-span">Products</a>
+            <a href="/products" class=" icon-span">Products</a>
         </div>
 
         
-        <div class="sidebar-link-item ">
+        <div class="sidebar-link-item {{checkRoute('viewReceipts')}} ">
             <i class="fas fa-2x fa-file-alt pr-4"></i>
-            <a href="#" class="hideText icon-span">Receipts</a>
+            <a href="/receipts" class="hideText icon-span">Receipts</a>
         </div>
 
-        <div class="sidebar-link-item ">
+        <div class="sidebar-link-item {{checkRoute('viewServices')}}">
             <i class="fas fa-2x fa-shopping-cart pr-4"></i>
             <a href="/services" class="hideText icon-span">Services</a>
         </div>
 
-        <div class="sidebar-link-item ">
+        <div class="sidebar-link-item {{checkRoute('viewTemplates')}} ">
             <i class="fas fa-2x fa-paper-plane pr-4"></i>
-            <a href="#" class="hideText icon-span">SMS templates</a>
+            <a href="/templates" class="hideText icon-span">SMS templates</a>
         </div>
 
-        <div class="sidebar-link-item ">
+        <div class="sidebar-link-item {{checkRoute('viewStatistics')}} ">
             <i class="fas fa-2x fa-chart-bar pr-4"></i>
-            <a href="#" class="hideText icon-span">Statistics</a>
+            <a href="/statistics" class="hideText icon-span">Statistics</a>
         </div>
 
-        <div class="sidebar-link-item ">
+        <div class="sidebar-link-item {{checkRoute('viewSetting')}} ">
             <i class="fas fa-2x fa-toolbox pr-4"></i>
-            <a href="#" class="hideText icon-span">Settings</a>
+            <a href="/settings" class="hideText icon-span">Settings</a>
         </div>
 
-        <div class="sidebar-link-item ">
+        <div class="sidebar-link-item {{checkRoute('viewMessages')}} ">
             <i class="fas fa-2x fa-envelope-open-text pr-4"></i>
-            <a href="#" class=" icon-span">Messages</a>
+            <a href="/messages" class=" icon-span">Messages</a>
         </div>
 
-        <div class="sidebar-link-item ">
+        <div class="sidebar-link-item {{checkRoute('viewAccount')}}">
             <i class="fas fa-2x fa-user-circle pr-4"></i>
-            <a href="#" class=" icon-span">My account</a>
+            <a href="/account" class=" icon-span">My account</a>
         </div>
 
         <div class="sidebar__logout">
@@ -92,11 +96,7 @@
         function openNav() {
             toggle = true;
 
-            // sideNav = document.getElementById('mySidenav');
-            // mainArea = document.getElementById('main');
-
             document.getElementById("mySidenav").style.width = "15vw";
-            // document.classList.remove('showNavText');
             document.getElementById("main").style.marginRight = "15vw";
 
             var elements = document.getElementsByClassName('icon-span');
@@ -110,11 +110,7 @@
         function closeNav() {
             toggle = false;
 
-            // sideNav = document.getElementById('mySidenav');
-            // mainArea = document.getElementById('main');
-
             document.getElementById("mySidenav").style.width = "5vw";
-            // document.classList.append('showNavText');
             document.getElementById("main").style.marginRight = "0";
 
             var elements = document.getElementsByClassName('icon-span');
