@@ -64,6 +64,13 @@
                     {{-- ************ start register component ************* --}}
 
                     @elseif($register_active)
+                    <div class="form-group">
+                        <div class="form-check">
+                            <label class="form-check-label" for="agree-terms">
+                                This is the customer registeration 
+                            </label>
+                        </div>
+                    </div>
                             <div class="form-group">
                                 <input class="form-control @error('register_form.name') is-invalid @enderror" type="text" wire:model.lazy="register_form.name" name="name" placeholder="Name" value="{{ old('name') }}" required autocomplete="name" autofocus>
                                 
@@ -101,7 +108,7 @@
                             <div class="form-group">
                                 <div class="form-check">
                                     <label class="form-check-label" for="agree-terms">
-                                        By registering you agree to <span>Terms and Conditions </span> and <span>Privacy Policy</span>. 
+                                        By registering you agree to <b>Terms and Conditions </b> and <b>Privacy Policy</b>. 
                                     </label>
                                 </div>
                             </div>

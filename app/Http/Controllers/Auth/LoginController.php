@@ -31,13 +31,24 @@ class LoginController extends Controller
             $user = Socialite::driver('google')->user();
 
             $userInDB = User::where('google_id',$user->getId())->first();
+            $emailInBD = User::where('email', $user->getEmail())->first();
 
             //if the user already exists, login else create
             if($userInDB) {
                 //automatically login the user
                 Auth::login($userInDB, true);
                 return redirect()->route('dashboard');
-            } else {
+            }
+            else if($emailInBD) {
+                //set their google id
+                $emailInBD->google_id = $user->getId();
+                $emailInBD->save();
+
+                //log them in
+                Auth::login($emailInBD, true);
+                return redirect()->route('dashboard');
+            }
+            else {
                 $googleUser = User::create([
                     'name' => $user->getName(),
                     'email' => $user->getEmail(),
