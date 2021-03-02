@@ -5,14 +5,17 @@ namespace App;
 use App\User;
 use DateTime;
 use App\Service;
+use Carbon\Carbon;
 use App\User_appointment;
 use Illuminate\Database\Eloquent\Model;
 
-class Appointment extends Model
+class Appointment extends Model implements \Acaronlex\LaravelCalendar\Event
 {
     protected $guarded = [];
     public $timestamps = false;
     protected $primaryKey = 'appointment_id';
+    protected $dates = ['start_at', 'end_at'];
+
 
     public function getDuration() {
         $diff = strtotime($this->end_at) - strtotime($this->start_at);
@@ -40,6 +43,57 @@ class Appointment extends Model
     public function getCustomer() {
         $customer_id = User_appointment::where('appointment_id', $this->appointment_id)->first()->customer_id;
         return User::where('user_id', $customer_id)->first();
+    }
+
+    //full calendar package imaplemented class required methods
+    /**
+     * Get the event's id number
+     *
+     * @return int
+     */
+    public function getId() {
+		return $this->appointment_id;
+	}
+
+    /**
+     * Get the event's title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        $title = $this->getService()->name .' : '.$this->getStaff()->name;
+        return $title;
+    }
+
+    /**
+     * Is it an all day event?
+     *
+     * @return bool
+     */
+    public function isAllDay()
+    {
+        return (bool)$this->all_day;
+    }
+
+    /**
+     * Get the start time
+     *
+     * @return DateTime
+     */
+    public function getStart()
+    {
+        return Carbon::parse($this->start_at);
+    }
+
+    /**
+     * Get the end time
+     *
+     * @return DateTime
+     */
+    public function getEnd()
+    {
+        return Carbon::parse($this->end_at);
     }
 
 }
