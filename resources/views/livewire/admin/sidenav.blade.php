@@ -4,61 +4,72 @@
             <h3 class="hideText icon-span menu-active">User: {{Auth::user()->name}}</h3>
         </div>
 
-        <div class="sidebar-link-item {{checkRoute('viewCalendar')}} ">
-            <i class="fas fa-2x fa-calendar-check pr-4"></i>
-            <a href="/calendar" class="hideText icon-span menu-active">Calendar</a>
-        </div>
+        @if(Auth::user()->role_id !== 3)
 
-        <div class="sidebar-link-item {{checkRoute('viewBookings') }} {{ checkRoute('addBooking')}}">
-            <i class="fas fa-2x fa-clock pr-4"></i>
-            <a href="/bookings/view" class="hideText icon-span">Bookings</a>
-        </div>
+            <div class="sidebar-link-item {{checkRoute('viewCalendar')}} ">
+                <i class="fas fa-2x fa-calendar-check pr-4"></i>
+                <a href="/calendar" class="hideText icon-span menu-active">Calendar</a>
+            </div>
 
-        <div class="sidebar-link-item {{checkRoute('viewCustomers')}} ">
-            <i class="fas fa-2x fa-user-friends pr-4"></i>
-            <a href="/customers" class="hideText icon-span">Customers</a>
-        </div>
+            <div class="sidebar-link-item {{checkRoute('viewBookings') }} {{ checkRoute('addBooking')}}">
+                <i class="fas fa-2x fa-clock pr-4"></i>
+                <a href="/bookings/view" class="hideText icon-span">Bookings</a>
+            </div>
 
-        <div class="sidebar-link-item {{checkRoute('viewStaff')}} ">
-            <i class="fas fa-2x fa-id-badge pr-4"></i>
-            <a href="/staff" class="hideText icon-span">Staff</a>
-        </div>
+            <div class="sidebar-link-item {{checkRoute('viewCustomers')}} ">
+                <i class="fas fa-2x fa-user-friends pr-4"></i>
+                <a href="/customers" class="hideText icon-span">Customers</a>
+            </div>
 
-        <div class="sidebar-link-item {{checkRoute('viewOrders')}} ">
-            <i class="fas fa-2x fa-store pr-4"></i>
-            <a href="/orders" class=" icon-span">Orders</a>
-        </div>
+            <div class="sidebar-link-item {{checkRoute('viewStaff')}} ">
+                <i class="fas fa-2x fa-id-badge pr-4"></i>
+                <a href="/staff" class="hideText icon-span">Staff</a>
+            </div>
 
-        <div class="sidebar-link-item {{checkRoute('viewProducts')}} ">
-            <i class="fab fa-2x fa-product-hunt pr-4"></i>
-            <a href="/products" class=" icon-span">Products</a>
-        </div>
+            <div class="sidebar-link-item {{checkRoute('viewOrders')}} ">
+                <i class="fas fa-2x fa-store pr-4"></i>
+                <a href="/orders" class=" icon-span">Orders</a>
+            </div>
 
-        
-        <div class="sidebar-link-item {{checkRoute('viewReceipts')}} ">
-            <i class="fas fa-2x fa-file-alt pr-4"></i>
-            <a href="/receipts" class="hideText icon-span">Receipts</a>
-        </div>
+            <div class="sidebar-link-item {{checkRoute('viewProducts')}} ">
+                <i class="fab fa-2x fa-product-hunt pr-4"></i>
+                <a href="/products" class=" icon-span">Products</a>
+            </div>
 
-        <div class="sidebar-link-item {{checkRoute('viewServices')}}">
-            <i class="fas fa-2x fa-shopping-cart pr-4"></i>
-            <a href="/services" class="hideText icon-span">Services</a>
-        </div>
+            
+            <div class="sidebar-link-item {{checkRoute('viewReceipts')}} ">
+                <i class="fas fa-2x fa-file-alt pr-4"></i>
+                <a href="/receipts" class="hideText icon-span">Receipts</a>
+            </div>
 
-        <div class="sidebar-link-item {{checkRoute('viewTemplates')}} ">
-            <i class="fas fa-2x fa-paper-plane pr-4"></i>
-            <a href="/templates" class="hideText icon-span">SMS templates</a>
-        </div>
+            <div class="sidebar-link-item {{checkRoute('viewServices')}}">
+                <i class="fas fa-2x fa-shopping-cart pr-4"></i>
+                <a href="/services" class="hideText icon-span">Services</a>
+            </div>
 
-        <div class="sidebar-link-item {{checkRoute('viewStatistics')}} ">
-            <i class="fas fa-2x fa-chart-bar pr-4"></i>
-            <a href="/statistics" class="hideText icon-span">Statistics</a>
-        </div>
+            <div class="sidebar-link-item {{checkRoute('viewTemplates')}} ">
+                <i class="fas fa-2x fa-paper-plane pr-4"></i>
+                <a href="/templates" class="hideText icon-span">SMS templates</a>
+            </div>
 
-        <div class="sidebar-link-item {{checkRoute('viewSetting')}} ">
-            <i class="fas fa-2x fa-toolbox pr-4"></i>
-            <a href="/settings" class="hideText icon-span">Settings</a>
-        </div>
+            <div class="sidebar-link-item {{checkRoute('viewStatistics')}} ">
+                <i class="fas fa-2x fa-chart-bar pr-4"></i>
+                <a href="/statistics" class="hideText icon-span">Statistics</a>
+            </div>
+
+            <div class="sidebar-link-item {{checkRoute('viewSetting')}} ">
+                <i class="fas fa-2x fa-toolbox pr-4"></i>
+                <a href="/settings" class="hideText icon-span">Settings</a>
+            </div>
+            @else
+            
+            <div class="sidebar-link-item {{checkRoute('viewBookings') }} {{ checkRoute('addBooking')}}">
+                <i class="fas fa-2x fa-clock pr-4"></i>
+                <a href="/bookings/view" class="hideText icon-span">My Bookings</a>
+            </div>
+
+            @endif
+            
 
         <div class="sidebar-link-item {{checkRoute('viewMessages')}} ">
             <i class="fas fa-2x fa-envelope-open-text pr-4"></i>
