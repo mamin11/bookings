@@ -16,6 +16,10 @@
                 <p class="alert {{ session()->get('alert-class', 'message') }}">{{ session()->get('message') }}</p>
                 @endif
 
+                @if($invalidEmailError)
+                <p class="alert alert-danger">{{ $invalidEmailError }}</p>
+                @endif
+
                 {{-- ************ start login component ************* --}}
                 @if ($login_active)
                     <div class="form-group">

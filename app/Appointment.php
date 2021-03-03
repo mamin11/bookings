@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 class Appointment extends Model implements \Acaronlex\LaravelCalendar\Event
 {
     protected $guarded = [];
-    public $timestamps = false;
+    public $timestamps = true;
     protected $primaryKey = 'appointment_id';
     protected $dates = ['start_at', 'end_at'];
 

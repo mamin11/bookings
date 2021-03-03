@@ -115,3 +115,4 @@ Route::livewire('/dashboard', 'dashboard')
 
 //calendar route
 Route::get('/calendar','CalendarController@index')->name('viewCalendar');
+Route::get('/iCalendar','IcalendarController@getIcalEvents')->name('getIcalendar');

@@ -37,6 +37,8 @@ class Login extends Component
         'password' => 'required',
     ];
 
+    public $invalidEmailError = '';
+
     public function toggleLogin() 
     {
         $this->login_active = true;
@@ -77,28 +79,35 @@ class Login extends Component
     {
         $this->validate([
             'register_form.name' => 'required',
-            'register_form.email' => 'required|email',
+            'register_form.email' => 'required|unique:users,email',
             'register_form.password' => 'required|min:6|confirmed',
             'register_form.password_confirmation' => 'required|min:6'
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $this->register_form['name'],
             'email' => $this->register_form['email'],
             'password' => Hash::make($this->register_form['password']),
             'role_id' => 3,
         ]);
-
+        
+        try {
+            event(new Registered($user));
+        } catch (\Exception $e) {
+            session()->flash('alert-class', 'alert-danger');
+            $this->invalidEmailError = 'This means something is wrong with your email';
+            
+            //if email is invalid, remove that user
+            User::destroy($user->user_id);
+            return back()->with('message', $e->getMessage().' !');
+        }
+        
+        
         session()->flash('Successfuly registered');
         session()->flash('alert-class', 'alert-success');
-
-        event(new Registered($user));
-
-        // Auth::attempt(['email' => $this->register_form['email'], 'password' => $this->register_form['password']]);
+        Auth::attempt(['email' => $this->register_form['email'], 'password' => $this->register_form['password']]);
 
         return redirect()->route('dashboard');
-
-        // @dd('register the user here');
     }
 
     public function render()

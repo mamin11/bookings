@@ -21,6 +21,8 @@ class CreateAppointmentsTable extends Migration
             $table->integer('service_id');
             $table->integer('user_id');
             $table->integer('cancelled');
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
         });
     }
 
