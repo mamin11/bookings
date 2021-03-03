@@ -76,7 +76,7 @@
             <a href="/messages" class=" icon-span">Messages</a>
         </div>
 
-        <div class="sidebar-link-item {{checkRoute('viewAccount')}}">
+        <div class="sidebar-link-item {{checkRoute('myAccount')}}">
             <i class="fas fa-2x fa-user-circle pr-4"></i>
             <a href="/account" class=" icon-span">My account</a>
         </div>

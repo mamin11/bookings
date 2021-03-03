@@ -16,7 +16,7 @@
                         <ul class="list-group list-group">
                             @if(count($staff))
                                 @foreach ($staff as $item)
-                                    <li id="item1" href="#" class="list-group-item">
+                                    <li id="item1"  class="list-group-item">
                                         <div class="pull-left">
                                             <img src="{{$item->getStaffProfilePic()}}" alt="user profile image" class="img-thumbnail" style="float:left; vertical-align: middle; width: 50px; height: 50px; border-radius: 50%;">
                                             <span id="badge" class="badge" style="float:left;">{{$item->name}}</span><br>

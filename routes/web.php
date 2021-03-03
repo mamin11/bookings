@@ -108,6 +108,12 @@ Route::group(['prefix' => 'staff'], function () {
     
 });
 
+//user profile route
+Route::livewire('/account', 'userprofile.view')
+->name('myAccount')
+->layout('layouts.dashboard')
+->section('content');
+    
 //dashboard routes
 Route::livewire('/dashboard', 'dashboard')
 ->layout('layouts.dashboard')
