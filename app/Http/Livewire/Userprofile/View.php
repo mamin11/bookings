@@ -31,6 +31,7 @@ class View extends Component
     ];
 
     public $image;
+    public $updated = false;
 
     //custom validation messages
     private $customMessages = [
@@ -94,21 +95,24 @@ class View extends Component
         $this->address->save();
         $this->user->save();
 
-        return redirect()->route('myAccount');
+        $this->updated = true;
+        if($this->form['name'] || $this->form['email'] || $this->form['newpassword'] || $this->form['confirmpassword'] || $this->form['date_of_birth'] || $this->form['address'] || $this->form['city'] || $this->form['country'] ) {
+            $this->flashMessage = [
+                'class' => 'success',
+                'message' => 'Successfully updated',
+            ];
+        } else {
+            $this->flashMessage = [
+                'class' => 'danger',
+                'message' => 'Nothing changed',
+            ];
+        }
+
+        // return redirect()->route('myAccount');
     }
 
     public function render()
     {
-        $this->flashMessage = [
-            'class' => 'success',
-            'message' => 'User Found',
-        ];
-        session()->flash('alert-class', 'alert-success');
-        // $this->user = User::where('user_id', Auth::user()->user_id)->first();
-        // $address = Address::where('address_id', $this->user->address_id)->first();
-        return view('livewire.userprofile.view', [
-            // 'user' => $this->user,
-            // 'address' => $address
-            ]);
+        return view('livewire.userprofile.view');
     }
 }

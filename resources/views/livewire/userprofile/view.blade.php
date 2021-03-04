@@ -1,8 +1,8 @@
 <div>
-    <div class="container-fluid d-flex justify-content-center ">
-        <div class="col-xl-10">
+    <div class="container  d-flex justify-content-center">
+        <div class="col-xl-9">
 
-                <div class="card  shadow">
+                <div class="card  shadow ">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                         <div class="col-12">
@@ -159,9 +159,12 @@
                     </div>
 
 
-                    @if($flashMessage['message'] )
-                    <p class="text-center alert  @if($flashMessage['class'] == 'success') alert-success @else alert-danger @endif ">{{ $flashMessage['message'] }}</p>
+                    @if($updated)
+                        @if($flashMessage['message'] )
+                            <p class="text-center alert  @if($flashMessage['class'] == 'success') alert-success @else alert-danger @endif ">{{ $flashMessage['message'] }}</p>
+                        @endif
                     @endif
+
 
                 </div>
 
