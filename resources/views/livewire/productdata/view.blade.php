@@ -68,7 +68,7 @@
                                         @else
                                             <i class="fa fa-trash cursor-pointer" wire:click="confirmDelete({{$item->category_id}})" style="color: red; float: right;"></i>
                                         @endif
-                                            <i class="fa fa-pen cursor-pointer" wire:click="updateCategpry({{$item->category_id}})"  style="color: black; padding-right: 10px; float: right;"></i>
+                                            <i class="fa fa-pen cursor-pointer" wire:click="updateCategory({{$item->category_id}})"  style="color: black; padding-right: 10px; float: right;"></i>
                                         </div>
                                     </li>
                                 @endforeach

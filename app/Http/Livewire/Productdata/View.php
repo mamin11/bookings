@@ -125,29 +125,32 @@ class View extends Component
 
     //confirm delete function start
     public function confirmDelete($id) {
-
+        $this->categoryConfirmingID = $id;
     }
 
     public function confirmDeleteMaterial($id) {
-
+        $this->materialConfirmingID = $id;
     }
 
     public function confirmDeleteSize($id) {
-
+        $this->sizeConfirmingID = $id;
     }
     //confirm delete function
 
     //delete functions start here
     public function deleteCategory($id) {
-
+        Product_category::destroy($id);
+        return redirect()->route('productdata');
     }
 
     public function deleteMaterial($id) {
-
+        Product_material::destroy($id);
+        return redirect()->route('productdata');
     }
 
     public function deleteSize($id) {
-
+        Product_size::destroy($id);
+        return redirect()->route('productdata');
     }
     //delete functions end here
 
