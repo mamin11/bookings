@@ -19,8 +19,8 @@
                                         <div class="row mb-5">
                                             <div class="col-lg-12">
                                                 <div class="form-group focused">
-                                                    <input type="text" wire:model.lazy='categoryForm.name' id="categoryname"  class="form-control form-control-alternative @error('categoryForm.name') is-invalid @enderror " placeholder="Category name" value="">
-                                                    <input type="number" wire:model.lazy='categoryForm.extra_cost' id="categoryextraprice"  class="form-control form-control-alternative @error('categoryForm.extra_cost') is-invalid @enderror " placeholder="Extra Price" value="">
+                                                    <input type="text" wire:model.lazy='categoryForm.name' id="categoryname" name="categoryname"  class="form-control form-control-alternative @error('categoryForm.name') is-invalid @enderror " placeholder="Category name" value="{{ $updatingCategory ? $categoryForm['name'] : '' }}">
+                                                    <input type="number" wire:model.lazy='categoryForm.extra_cost' id="categoryextraprice"  class="form-control form-control-alternative @error('categoryForm.extra_cost') is-invalid @enderror " placeholder="Extra Price" value="{{ $updatingCategory ? $categoryForm['extra_cost'] : '' }}">
                                                 </div>
 
                                                 @error('categoryForm.name')
@@ -47,7 +47,11 @@
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-8">
                                     <div class="form-group">
-                                        <button type="submit" wire:click.prevent="addCategory" class="btn btn-dark rounded-pill btn-block btn-lg">{{__('Add') }}</button>
+                                        @if($showUpdateCatButton)
+                                            <button type="submit" wire:click.prevent="updateCategoryConfirm" class="btn btn-dark rounded-pill btn-block btn-lg">{{__('Update') }}</button>
+                                        @else
+                                            <button type="submit" wire:click.prevent="addCategory" class="btn btn-dark rounded-pill btn-block btn-lg">{{__('Add') }}</button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -101,8 +105,8 @@
                                         <div class="row mb-5">
                                             <div class="col-lg-12">
                                                 <div class="form-group focused">
-                                                    <input type="text" id="productmaterial" wire:model.lazy='materialForm.name' class="form-control form-control-alternative @error('materialForm.name') is-invalid @enderror " placeholder="Product Material" value="">
-                                                    <input type="number" id="materialextraprice" wire:model.lazy='materialForm.extra_price_on_product' class="form-control form-control-alternative @error('materialForm.extra_price_on_product') is-invalid @enderror " placeholder="Extra Price" value="">
+                                                    <input type="text" id="productmaterial" wire:model.lazy='materialForm.name' class="form-control form-control-alternative @error('materialForm.name') is-invalid @enderror " placeholder="Product Material" value="{{ $updatingMaterial ? $materialForm['name'] : '' }}">
+                                                    <input type="number" id="materialextraprice" wire:model.lazy='materialForm.extra_price_on_product' class="form-control form-control-alternative @error('materialForm.extra_price_on_product') is-invalid @enderror " placeholder="Extra Price" value="{{ $updatingMaterial ? $materialForm['extra_price_on_product'] : '' }}">
                                                 </div>
 
                                                 @error('materialForm.name')
@@ -129,7 +133,11 @@
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-8">
                                     <div class="form-group">
-                                        <button type="submit" wire:click.prevent="addMaterial" class="btn btn-dark rounded-pill btn-block btn-lg">{{__('Add') }}</button>
+                                        @if($showUpdateMatButton)
+                                            <button type="submit" wire:click.prevent="updateMaterialConfirm" class="btn btn-dark rounded-pill btn-block btn-lg">{{__('Update') }}</button>
+                                        @else
+                                            <button type="submit" wire:click.prevent="addMaterial" class="btn btn-dark rounded-pill btn-block btn-lg">{{__('Add') }}</button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -183,8 +191,8 @@
                                         <div class="row mb-5">
                                             <div class="col-lg-12">
                                                 <div class="form-group focused">
-                                                    <input type="text" id="productsize" wire:model.lazy='sizeForm.name' class="form-control form-control-alternative @error('sizeForm.name') is-invalid @enderror  " placeholder="Product Size" value="">
-                                                    <input type="number" id="sizeextraprice" wire:model.lazy='sizeForm.extra_price_on_product' class="form-control form-control-alternative @error('sizeForm.extra_price_on_product') is-invalid @enderror  " placeholder="Extra Price" value="">
+                                                    <input type="text" id="productsize" wire:model.lazy='sizeForm.name' class="form-control form-control-alternative @error('sizeForm.name') is-invalid @enderror  " placeholder="Product Size" value="{{ $updatingSize ? $sizeForm['name'] : '' }}">
+                                                    <input type="number" id="sizeextraprice" wire:model.lazy='sizeForm.extra_price_on_product' class="form-control form-control-alternative @error('sizeForm.extra_price_on_product') is-invalid @enderror  " placeholder="Extra Price" value="{{ $updatingSize ? $sizeForm['extra_price_on_product'] : '' }}">
                                                 </div>
 
                                                 @error('sizeForm.name')
@@ -211,7 +219,11 @@
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-8">
                                     <div class="form-group">
-                                        <button type="submit" wire:click.prevent="addSize" class="btn btn-dark rounded-pill btn-block btn-lg">{{__('Add') }}</button>
+                                        @if($showUpdateSizeButton)
+                                            <button type="submit" wire:click.prevent="updateSizeConfirm" class="btn btn-dark rounded-pill btn-block btn-lg">{{__('Update') }}</button>
+                                        @else
+                                            <button type="submit" wire:click.prevent="addSize" class="btn btn-dark rounded-pill btn-block btn-lg">{{__('Add') }}</button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

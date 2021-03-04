@@ -13,6 +13,10 @@ class View extends Component
     public $productMaterials;
     public $productSizes;
 
+    public $updatingCategory;
+    public $updatingMaterial;
+    public $updatingSize;
+
     public $categoryConfirmingID;
     public $materialConfirmingID;
     public $sizeConfirmingID;
@@ -41,6 +45,10 @@ class View extends Component
         'max' => 'The number exceeds the maximum (:max) allowed',
         'numeric' => 'Please enter a number value',
     ];
+
+    public $showUpdateCatButton = false;
+    public $showUpdateMatButton = false;
+    public $showUpdateSizeButton = false;
     
 
     public function mount() {
@@ -113,13 +121,99 @@ class View extends Component
 
     //update functions start
     public function updateCategory($id) {
-
+        $this->updatingCategory = Product_category::where('category_id', $id)->first();
+        $this->categoryForm['name'] = $this->updatingCategory->name;
+        $this->categoryForm['extra_cost'] = $this->updatingCategory->extra_cost;
+        $this->showUpdateCatButton = true;
     }
-    public function updateMaterial($id) {
 
+    public function updateCategoryConfirm() {
+        //rules
+        if($this->categoryForm['name'] !== $this->updatingCategory->name ) {
+            $rules = [
+                'categoryForm.name' => 'required|String|unique:product_categories,name'
+            ];
+        } else if ($this->categoryForm['extra_cost']) {
+            $rules = [
+                'categoryForm.extra_cost' => 'required|numeric|max:9'
+            ];
+        }else {
+            $rules = [
+                'categoryForm.name' => 'required|String|unique:product_categories,name',
+                'categoryForm.extra_cost' => 'required|numeric|max:9'
+            ];
+        }
+        //validate
+        $validatedData = $this->validate($rules, $this->customMessages);
+
+        $this->updatingCategory->name = $this->categoryForm['name'];
+        $this->updatingCategory->extra_cost = $this->categoryForm['extra_cost'];
+
+        $this->updatingCategory->save();
+        return redirect()->route('productdata');
+    }
+
+    public function updateMaterial($id) {
+        $this->updatingMaterial = Product_material::where('material_id', $id)->first();
+        $this->materialForm['name'] = $this->updatingMaterial->name;
+        $this->materialForm['extra_price_on_product'] = $this->updatingMaterial->extra_price_on_product;
+        $this->showUpdateMatButton = true;
+    }
+    public function updateMaterialConfirm() {
+        //rules
+        if($this->materialForm['name'] !== $this->updatingMaterial->name ) {
+            $rules = [
+                'materialForm.name' => 'required|String|unique:product_materials,name'
+            ];
+        } else if ($this->materialForm['extra_price_on_product']) {
+            $rules = [
+                'materialForm.extra_price_on_product' => 'required|numeric|max:9'
+            ];
+        }else {
+            $rules = [
+                'materialForm.name' => 'required|String|unique:product_materials,name',
+                'materialForm.extra_price_on_product' => 'required|numeric|max:9'
+            ];
+        }
+        //validate
+        $validatedData = $this->validate($rules, $this->customMessages);
+
+        $this->updatingMaterial->name = $this->materialForm['name'];
+        $this->updatingMaterial->extra_price_on_product = $this->materialForm['extra_price_on_product'];
+
+        $this->updatingMaterial->save();
+        return redirect()->route('productdata');
     }
     public function updateSize($id) {
+        $this->updatingSize = Product_size::where('size_id', $id)->first();
+        $this->sizeForm['name'] = $this->updatingSize->name;
+        $this->sizeForm['extra_price_on_product'] = $this->updatingSize->extra_price_on_product;
+        $this->showUpdateSizeButton = true;
+    }
+    public function updateSizeConfirm() {
+        //rules
+        if($this->sizeForm['name'] !== $this->updatingSize->name ) {
+            $rules = [
+                'sizeForm.name' => 'required|String|unique:product_sizes,name'
+            ];
+        } else if ($this->sizeForm['extra_price_on_product']) {
+            $rules = [
+                'sizeForm.extra_price_on_product' => 'required|numeric|max:9'
+            ];
+        }else {
+            $rules = [
+                'sizeForm.name' => 'required|String|unique:product_sizes,name',
+                'sizeForm.extra_price_on_product' => 'required|numeric|max:9'
+            ];
+        }
+        //validate
+        $validatedData = $this->validate($rules, $this->customMessages);
 
+        $this->updatingSize->name = $this->sizeForm['name'];
+        $this->updatingSize->extra_price_on_product = $this->sizeForm['extra_price_on_product'];
+
+        $this->updatingSize->save();
+        return redirect()->route('productdata');
     }
     //update functions end
 
