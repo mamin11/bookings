@@ -143,7 +143,7 @@
                                                         @foreach($customers as $customer)
                                                             <div class="form-group row">
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input  @error('bookingForm.customer_id') is-invalid @enderror" type="radio" wire:model="bookingForm.customer_id" value="{{$customer->user_id}}" id="{{$customer->user_id}}">
+                                                                    <input @if(($customer->user_id !== Auth::user()->user_id) && Auth::user()->role_id ==3) disabled @endif class="form-check-input  @error('bookingForm.customer_id') is-invalid @enderror" type="radio" wire:model="bookingForm.customer_id" value="{{$customer->user_id}}" id="{{$customer->user_id}}">
                                                                     <label class="form-check-label" for="{{$customer->user_id}}">{{$customer->name}}</label>
                                                                 </div>
                                                             </div>

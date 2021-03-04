@@ -97,7 +97,7 @@
 
             <h1 class="text-center">
                 <div class="d-flex justify-content-center p-4">
-                    <a href="/bookings/add" class="btn btn-primary">
+                    <a href="{{route('addBooking')}}" class="btn btn-primary">
                         <i class="fas fa-plus"></i>
                         ADD BOOKING</a>
                 </div> 

@@ -11,6 +11,7 @@ use App\User_appointment;
 use Livewire\WithPagination;
 use Spatie\GoogleCalendar\Event;
 use App\Rules\validateAppointment;
+use Illuminate\Support\Facades\Auth;
 
 //booking component is shown when /bookings/add is visited
 class BookingComponent extends Component
@@ -206,7 +207,8 @@ class BookingComponent extends Component
         session()->flash('alert-class', 'alert-success');
 
         //redirect to refresh
-        return redirect()->route('viewBookings');
+        return Auth::user()->role_id == 3 ? redirect()->route('mybookings') :redirect()->route('viewBookings');
+        // return redirect()->route('viewBookings');
     }
     
     public function render()

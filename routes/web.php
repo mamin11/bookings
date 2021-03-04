@@ -96,8 +96,14 @@ Route::group(['prefix' => 'customers'], function () {
     ->name('viewCustomers')
     ->layout('layouts.dashboard')
     ->section('content');
-    
+
 });
+
+//view my bookings route
+Route::livewire('/mybookings', 'customer.bookings.view')
+->name('mybookings')
+->layout('layouts.dashboard')
+->section('content');
 
 //staff routes
 Route::group(['prefix' => 'staff'], function () {
