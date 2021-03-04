@@ -113,6 +113,12 @@ Route::livewire('/account', 'userprofile.view')
 ->name('myAccount')
 ->layout('layouts.dashboard')
 ->section('content');
+
+//product data route
+Route::livewire('/productdata', 'productdata.view')
+->name('productdata')
+->layout('layouts.dashboard')
+->section('content');
     
 //dashboard routes
 Route::livewire('/dashboard', 'dashboard')

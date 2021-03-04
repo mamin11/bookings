@@ -5,6 +5,10 @@
   padding: 0;
 }
 
+.vertical-divider {
+  border-right: 1px dashed #333;
+}
+
 /*!
  * Bootstrap v4.5.3 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
