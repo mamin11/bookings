@@ -13,7 +13,7 @@
 
             <div class="sidebar-link-item {{checkRoute('viewBookings') }} {{ checkRoute('addBooking')}}">
                 <i class="fas fa-2x fa-clock pr-4"></i>
-                <a href="/bookings/view" class="hideText icon-span">Bookings</a>
+                <a href="{{route('viewBookings')}}" class="hideText icon-span">Bookings</a>
             </div>
 
             <div class="sidebar-link-item {{checkRoute('viewCustomers')}} ">
@@ -69,7 +69,12 @@
             
             <div class="sidebar-link-item {{checkRoute('viewBookings') }} {{ checkRoute('addBooking')}}">
                 <i class="fas fa-2x fa-clock pr-4"></i>
-                <a href="/bookings/view" class="hideText icon-span">My Bookings</a>
+                <a href="{{ route('mybookings')}}" class="hideText icon-span">My Bookings</a>
+            </div>
+            
+            <div class="sidebar-link-item ">
+                <i class="fas fa-2x fa-shopping-bag pr-4"></i>
+                <a href="#" class="hideText icon-span">My Orders</a>
             </div>
 
             @endif

@@ -82,7 +82,7 @@ Route::group(['prefix' => 'bookings', 'middleware' => 'verified'], function () {
 });
 
 //services routes
-Route::group(['prefix' => 'services'], function () {
+Route::group(['prefix' => 'services', 'middleware' => 'verified'], function () {
     Route::livewire('/', 'services.view')
     ->name('viewServices')
     ->layout('layouts.dashboard')
@@ -91,7 +91,7 @@ Route::group(['prefix' => 'services'], function () {
 });
 
 //customers routes
-Route::group(['prefix' => 'customers'], function () {
+Route::group(['prefix' => 'customers', 'middleware' => 'verified'], function () {
     Route::livewire('/', 'customers.view')
     ->name('viewCustomers')
     ->layout('layouts.dashboard')
@@ -103,10 +103,10 @@ Route::group(['prefix' => 'customers'], function () {
 Route::livewire('/mybookings', 'customer.bookings.view')
 ->name('mybookings')
 ->layout('layouts.dashboard')
-->section('content');
+->section('content')->middleware('auth');
 
 //staff routes
-Route::group(['prefix' => 'staff'], function () {
+Route::group(['prefix' => 'staff', 'middleware' => 'auth'], function () {
     Route::livewire('/', 'staff.view')
     ->name('viewStaff')
     ->layout('layouts.dashboard')
@@ -118,19 +118,19 @@ Route::group(['prefix' => 'staff'], function () {
 Route::livewire('/account', 'userprofile.view')
 ->name('myAccount')
 ->layout('layouts.dashboard')
-->section('content');
+->section('content')->middleware('auth');
 
 //product data route
 Route::livewire('/productdata', 'productdata.view')
 ->name('productdata')
 ->layout('layouts.dashboard')
-->section('content');
+->section('content')->middleware('auth');
     
 //dashboard routes
 Route::livewire('/dashboard', 'dashboard')
 ->layout('layouts.dashboard')
-->name('dashboard');
+->name('dashboard')->middleware('auth');
 
 //calendar route
-Route::get('/calendar','CalendarController@index')->name('viewCalendar');
-Route::get('/iCalendar','IcalendarController@getIcalEvents')->name('getIcalendar');
+Route::get('/calendar','CalendarController@index')->name('viewCalendar')->middleware('auth');
+Route::get('/iCalendar','IcalendarController@getIcalEvents')->name('getIcalendar')->middleware('auth');

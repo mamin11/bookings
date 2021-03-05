@@ -103,7 +103,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group focused">
                                         <label class="form-control-label" for="input-address">Address</label>
-                                        <input id="input-address @error('form.address') is-invalid @enderror" type="text" wire:model.lazy="form.address" class="form-control form-control-alternative"  placeholder="{{$address->address ? $address->address : $form['address'] }}" >
+                                        <input id="input-address @error('form.address') is-invalid @enderror" type="text" wire:model.lazy="form.address" class="form-control form-control-alternative"  placeholder="{{$address ? $address->address : $form['address'] }}" >
                                         </div>
                                         @error('form.address')
                                             <span class="error text-danger" role="alert">
@@ -116,7 +116,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group focused">
                                         <label class="form-control-label" for="input-city">City</label>
-                                        <input type="text" id="input-city"  wire:model.lazy="form.city" class="form-control form-control-alternative @error('form.city') is-invalid @enderror"  placeholder="{{$form['city'] ? $form['city'] : $address->city}}">
+                                        <input type="text" id="input-city"  wire:model.lazy="form.city" class="form-control form-control-alternative @error('form.city') is-invalid @enderror"  placeholder="{{$address ? $address->city : $form['city'] }}">
                                         </div>
                                         @error('form.city')
                                             <span class="error text-danger" role="alert">
@@ -127,7 +127,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group focused">
                                         <label class="form-control-label" for="input-country">Country</label>
-                                        <input type="text" id="input-country"  wire:model.lazy="form.country" class="form-control form-control-alternative @error('form.country') is-invalid @enderror"  placeholder="{{$form['country'] ? $form['country'] : $address->country}}">
+                                        <input type="text" id="input-country"  wire:model.lazy="form.country" class="form-control form-control-alternative @error('form.country') is-invalid @enderror"  placeholder="{{$address ? $address->country : $form['country'] }}">
                                         </div>
                                         @error('form.country')
                                             <span class="error text-danger" role="alert">
@@ -138,7 +138,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                         <label class="form-control-label" for="input-country">Postal code</label>
-                                        <input type="text" id="input-postal-code"  wire:model.lazy="form.post_code" class="form-control form-control-alternative @error('form.post_code') is-invalid @enderror" placeholder="{{$form['post_code'] ? $form['post_code'] : $address->post_code}}">
+                                        <input type="text" id="input-postal-code"  wire:model.lazy="form.post_code" class="form-control form-control-alternative @error('form.post_code') is-invalid @enderror" placeholder="{{$address ? $address->post_code : $form['post_code'] }}">
                                         </div>
                                         @error('form.post_code')
                                             <span class="error text-danger" role="alert">
