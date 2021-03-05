@@ -77,7 +77,7 @@ Route::group(['prefix' => 'bookings', 'middleware' => 'verified'], function () {
     Route::livewire('/view', 'bookings.view')
     ->name('viewBookings')
     ->layout('layouts.dashboard')
-    ->section('content');
+    ->section('content')->middleware('checkIsNotCustomer');
     
 });
 
@@ -86,12 +86,12 @@ Route::group(['prefix' => 'services', 'middleware' => 'verified'], function () {
     Route::livewire('/', 'services.view')
     ->name('viewServices')
     ->layout('layouts.dashboard')
-    ->section('content');
+    ->section('content')->middleware('checkIsNotCustomer');
     
 });
 
 //customers routes
-Route::group(['prefix' => 'customers', 'middleware' => 'verified'], function () {
+Route::group(['prefix' => 'customers', 'middleware' => ['verified', 'checkIsNotCustomer']], function () {
     Route::livewire('/', 'customers.view')
     ->name('viewCustomers')
     ->layout('layouts.dashboard')
@@ -110,7 +110,7 @@ Route::group(['prefix' => 'staff', 'middleware' => 'auth'], function () {
     Route::livewire('/', 'staff.view')
     ->name('viewStaff')
     ->layout('layouts.dashboard')
-    ->section('content');
+    ->section('content')->middleware('checkIsNotCustomer');
     
 });
 
@@ -124,7 +124,7 @@ Route::livewire('/account', 'userprofile.view')
 Route::livewire('/productdata', 'productdata.view')
 ->name('productdata')
 ->layout('layouts.dashboard')
-->section('content')->middleware('auth');
+->section('content')->middleware('auth', 'checkIsNotCustomer');
     
 //dashboard routes
 Route::livewire('/dashboard', 'dashboard')
