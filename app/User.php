@@ -72,6 +72,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return User_appointment::where('customer_id', $this->user_id);
     }
 
+    public function getUserBookings() {
+        return User_appointment::where('customer_id', $this->user_id)->get();
+    }
+
     public static function search($search) {
         return empty($search) ? static::query()
         : static::where('name', 'like', '%'.$search.'%')

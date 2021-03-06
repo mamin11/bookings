@@ -18,6 +18,10 @@ class User_appointment extends Model
     public function getBookings() {
         return Appointment::where('appointment_id', $this->appointment_id)->get();
     }
+
+    public function getBookingData() {
+        return Appointment::where('appointment_id', $this->appointment_id)->first();
+    }
     
     // public function getCancelledAppointments() {
     //     return User_appointment::where('cancelled', '=' , 0)->get();

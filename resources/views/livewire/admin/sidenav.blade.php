@@ -4,12 +4,13 @@
             <h3 class="hideText icon-span menu-active">User: {{Auth::user()->name}}</h3>
         </div>
 
+        <div class="sidebar-link-item {{checkRoute('viewCalendar')}} ">
+            <i class="fas fa-2x fa-calendar-check pr-4"></i>
+            <a href="/calendar" class="hideText icon-span menu-active">Calendar</a>
+        </div>
+        
         @if(Auth::user()->role_id !== 3)
 
-            <div class="sidebar-link-item {{checkRoute('viewCalendar')}} ">
-                <i class="fas fa-2x fa-calendar-check pr-4"></i>
-                <a href="/calendar" class="hideText icon-span menu-active">Calendar</a>
-            </div>
 
             <div class="sidebar-link-item {{checkRoute('viewBookings') }} {{ checkRoute('addBooking')}}">
                 <i class="fas fa-2x fa-clock pr-4"></i>
