@@ -2,11 +2,12 @@
 
 namespace App\Http\Livewire\Customers;
 
-use App\Address;
+use App\Role;
 use App\User;
+use App\Address;
+use App\Appointment;
 use Livewire\Component;
 use App\User_appointment;
-use App\Role;
 use Illuminate\Support\Facades\Hash;
 
 class View extends Component
@@ -125,7 +126,7 @@ class View extends Component
         $this->showBookings = false;
         $this->updatingCustomer = User::where('user_id',$customer_id)->first();
         $this->updatingCustomerAddress = Address::where('address_id',$this->updatingCustomer->address_id)->first();
-        $this->updatingCustomerBookings = User_appointment::where('customer_id', $this->updatingCustomer->customer_id)->get();
+        $this->updatingCustomerBookings = Appointment::where('customer_id', $this->updatingCustomer->user_id)->get();
 
         //update customer fields
         $this->updateCustomerForm['name'] = $this->updatingCustomer->name;

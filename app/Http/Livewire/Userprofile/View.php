@@ -55,7 +55,7 @@ class View extends Component
         $rules = [
             'form.name' => 'string',
             'form.email' => 'unique:users,email',
-            'form.newpassword' => 'min:6|confirmed',
+            'form.newpassword' => 'min:6|same:form.confirmpassword',
             'form.confirmpassword' => 'min:6',
             'form.date_of_birth' => 'date',
             'form.address' => 'string',
@@ -89,7 +89,7 @@ class View extends Component
         $this->user->name = $this->form['name'] ? $this->form['name'] : $this->user->name;
         $this->user->email = $this->form['email'] ? $this->form['email'] : $this->user->email;
         $this->user->date_of_birth = $this->form['date_of_birth'] ? $this->form['date_of_birth'] : $this->user->date_of_birth;
-        $this->user->password = $this->form['newpassword'] ? Hash::make($this->form['newpassword']) : $this->user->email; 
+        $this->user->password = $this->form['newpassword'] ? Hash::make($this->form['newpassword']) : $this->user->password; 
 
         //save address and user
         $this->address->save();

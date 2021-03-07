@@ -167,10 +167,8 @@
                                                                     @if($showBookings)
                                                                         <ul class="list-group list-group">
                                                                             @if(count($updatingCustomerBookings) > 0)
-                                                                                @foreach ($updatingCustomerBookings as $item)
-                                                                                    @foreach($item->getBookings() as $booking)
+                                                                                @foreach ($updatingCustomerBookings as $booking)
                                                                                         <li id="item1" class="list-group-item">Time: {{$booking->start_at}}-{{$booking->end_at}} <br> Total Price: £{{$booking->getPrice()}} (£{{$booking->getServicePrice()}}/hr)</li>
-                                                                                    @endforeach
                                                                                 @endforeach
                                                                             @else        
                                                                                     <li id="item1" class="list-group-item">No bookings</li>
