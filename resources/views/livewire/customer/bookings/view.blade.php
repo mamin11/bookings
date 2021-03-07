@@ -23,19 +23,10 @@
                         <div class="booking-component-body ">
                             <ul class="list-group list-group">
                                 @foreach($upcomingBookings as $booking)
-                                <li id="{{$loop->index}}"  class="list-group-item">
+                                <li id="{{$loop->index}}"  class="list-group-item cursor-pointer booking-hover {{$booking->appointment_id == $confirmingID ? 'active-booking-item'  : ''}}" wire:click="showSelectedBooking({{$booking->appointment_id}})">
                                     <div class="pull-left">
                                         <span  class="badge" style="float:left;">Date: {{$booking->start_at}}</span>
                                         <span  class="badge" style="float:left;">Customer: {{$booking->getCustomer()->name}} ( {{ $booking->getService()->name }} )</span><br>
-                                    </div>
-
-                                    <div class="pull-right">
-                                        @if($confirmCancelID === $booking->appointment_id)
-                                            <span id="badge" class="badge cursor-pointer" wire:click="confirmCancel({{$booking->appointment_id}})" style="color: red; float: right;">Sure?</span>
-                                        @else
-                                            <i class="far fa-window-close cursor-pointer" wire:click="cancelBooking({{$booking->appointment_id}})" style="color: red; float: right;"></i>
-                                        @endif
-                                        <i class="fa fa-pen cursor-pointer" wire:click="updateBooking({{$booking->appointment_id}})"  style="color: black; padding-right: 10px; float: right;"></i>
                                     </div>
                                 </li>
                                 @endforeach
@@ -55,10 +46,6 @@
                                 <div class="pull-left">
                                     <span  class="badge" style="float:left;">Date: {{$booking->start_at}}</span><br>
                                     <span  class="badge" style="float:left;">Customer: {{$booking->getCustomer()->name}} ( {{ $booking->getService()->name }} )</span>
-                                </div>
-
-                                <div class="pull-right">
-                                    <i class="fa fa-pen cursor-pointer" wire:click="updateBooking({{$booking->appointment_id}})"  style="color: black; padding-right: 10px; float: right;"></i>
                                 </div>
                             </li>
                             @endforeach
@@ -114,8 +101,54 @@
                 <div class="booking-component-body ">
                         <div class="form-container2">
                             <div id="login-register">
-                                <form >
-                                </form>
+                                <div class="form-group row">
+                                        @if($selectedBooking)
+                                        <div class="col-10">
+                                        <div class="list-group-item" style="font-size: large">
+                                            <span class=""> <b>Date:</b> {{date('Y:m:d ',strtotime($selectedBooking->start_at))}} </span><br>
+                                            <span class=""> <b>Time:</b> {{date('H:i ',strtotime($selectedBooking->start_at))}}-{{date('H:i ',strtotime($selectedBooking->end_at))}} </span><br>
+                                            <span class=""> <b>Service:</b> {{$selectedBooking->getService()->name}}</span><br>
+                                            <span class=""> <b>Staff:</b> {{$selectedBooking->getStaff()->name}}</span><br>
+                                            <span class=""> <b>Total Price:</b> £{{$selectedBooking->getPrice()}} (£{{$selectedBooking->getServicePrice()}}/hr)</span><br>
+                                        </div>
+                                        </div>
+                                        @endif
+                                </div>
+
+                                {{-- <div class="form-group">
+                                    <div class="form-check" id="form-slider">
+                                        <label class="form-check-label" for="addComment">
+                                            Add Comments. 
+                                        </label>
+                                        <label class="switch">
+                                            <input type="checkbox" name="addComment" wire:click="$toggle('showAddComment')">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                </div> --}}
+                                    
+                                    @if ($showAddComment)
+                                        <div class="form-group row">
+                                            <div class="col-10">
+                                                <textarea class="form-control  @error('cancellationMessage') is-invalid @enderror" name="cancellationMessage" rows="5" wire:model.lazy="cancellationMessage" placeholder="Add a mesage here "  value="{{ $cancellationMessage ? $cancellationMessage : old('cancellationMessage') }}" id="bookingComment"></textarea>
+                                                @error('cancellationMessage')
+                                                    <span class="error text-danger" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                @if($selectedBooking)<button wire:click="$toggle('showAddComment')" class="btn btn-dark rounded-pill btn-block btn-lg">{{__('toggle') }}</button>@endif
+                                                @if($showAddComment)<button type="submit" wire:click.prevent="requestCancellation" class="btn btn-danger rounded-pill btn-block btn-lg">{{__('Request Cancellation') }}</button>@endif
+                                            </div>
+                                        </div>
+                                    </div>
+
                             </div>
                         </div>
                 </div>

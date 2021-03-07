@@ -9,6 +9,14 @@
   border-right: 1px dashed #333;
 }
 
+.booking-hover:hover {
+  background-color: #E7E8E9;
+}
+
+.active-booking-item {
+  background-color: #E7E8E9 !important;
+}
+
 /*!
  * Bootstrap v4.5.3 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors

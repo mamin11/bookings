@@ -5,4 +5,12 @@
 
 .vertical-divider {
     border-right: 1px dashed #333;
-  }
+}
+
+.booking-hover:hover {
+    background-color: $app-gray;
+}
+
+.active-booking-item {
+    background-color: $app-gray !important;
+}

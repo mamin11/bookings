@@ -207,8 +207,8 @@ class View extends Component
     public function render()
     {
         $date = date("Y-m-d H:i:s");
-        $this->upcomingBookings = Appointment::where('start_at', '>=', $date)->where('cancelled', 1)->get();
-        $this->pastBookings = Appointment::where('start_at', '<=', $date)->where('cancelled', 1)->get();
+        $this->upcomingBookings = Appointment::where('start_at', '>=', $date)->where(['cancelled' => 1, 'status' => 1])->get();
+        $this->pastBookings = Appointment::where('start_at', '<=', $date)->where(['cancelled' => 1, 'status' => 1])->get();
         $this->cancelledBookings = Appointment::where('cancelled', 0)->get();
 
         $staff = User::where('role_id', 2)->get();

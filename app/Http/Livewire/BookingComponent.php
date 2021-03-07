@@ -183,6 +183,7 @@ class BookingComponent extends Component
             'service_id' => $this->confirmationData['service']['service_id'],
             'user_id' => $this->confirmationData['staff']['user_id'],
             'customer_id' => $this->confirmationData['customer']['user_id'],
+            'status' => 1,
             'cancelled' => 1,
         ]);
 
