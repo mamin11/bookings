@@ -10,8 +10,10 @@ use Livewire\Component;
 use App\User_appointment;
 use Livewire\WithPagination;
 use Spatie\GoogleCalendar\Event;
+use App\Mail\BookingConfirmation;
 use App\Rules\validateAppointment;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 //booking component is shown when /bookings/add is visited
 class BookingComponent extends Component
@@ -207,6 +209,12 @@ class BookingComponent extends Component
         //flash messages
         session()->flash('Successfully added');
         session()->flash('alert-class', 'alert-success');
+
+        //send emails
+        $emailingAppointment = Appointment::where('appointment_id', $appointment_id)->first();
+        Mail::to('mamindesigns@gmail.com')->send(new BookingConfirmation($emailingAppointment));
+
+        //emails to customer and staff can be sent once amazon ses is in production mode
 
         //redirect to refresh
         return Auth::user()->role_id == 3 ? redirect()->route('mybookings') :redirect()->route('viewBookings');
