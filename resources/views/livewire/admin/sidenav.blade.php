@@ -68,7 +68,7 @@
             </div>
             @else
             
-            <div class="sidebar-link-item {{checkRoute('viewBookings') }} {{ checkRoute('addBooking')}}">
+            <div class="sidebar-link-item {{checkRoute('mybookings') }} {{ checkRoute('addBooking')}}">
                 <i class="fas fa-2x fa-clock pr-4"></i>
                 <a href="{{ route('mybookings')}}" class="hideText icon-span">My Bookings</a>
             </div>
