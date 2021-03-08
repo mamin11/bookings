@@ -3,9 +3,10 @@
 use App\Http\Livewire\Login;
 use Illuminate\Http\Request;
 use App\Http\Livewire\Register;
-use App\Http\Controllers\CalendarController;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
