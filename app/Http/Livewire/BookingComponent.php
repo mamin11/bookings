@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\User;
+use App\Invoice;
 use App\Service;
 use Carbon\Carbon;
 use App\Appointment;
@@ -213,6 +214,16 @@ class BookingComponent extends Component
         //send emails
         $emailingAppointment = Appointment::where('appointment_id', $appointment_id)->first();
         Mail::to('mamindesigns@gmail.com')->send(new BookingConfirmation($emailingAppointment));
+
+        //create an invoice
+        $previousInvNum = Invoice::latest()->first()->invoice_no;
+        $newInvNum = $previousInvNum ? $previousInvNum +1 : 1000;
+        Invoice::create([
+            'customer_id' => $this->confirmationData['customer']['user_id'],
+            'invoice_no' => $newInvNum,
+            'booking_id' => $appointment_id,
+            'invoice_date' => Carbon::now()->addDay()
+        ]);
 
         //emails to customer and staff can be sent once amazon ses is in production mode
 

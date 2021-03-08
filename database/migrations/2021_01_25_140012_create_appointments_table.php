@@ -22,6 +22,7 @@ class CreateAppointmentsTable extends Migration
             $table->integer('user_id');
             $table->integer('customer_id');
             $table->integer('status');
+            $table->integer('reserved')->nullable();
             $table->integer('cancelled');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');

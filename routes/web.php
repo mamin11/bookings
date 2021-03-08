@@ -135,3 +135,7 @@ Route::livewire('/dashboard', 'dashboard')
 //calendar route
 Route::get('/calendar','CalendarController@index')->name('viewCalendar')->middleware('auth');
 Route::get('/iCalendar','IcalendarController@getIcalEvents')->name('getIcalendar')->middleware('auth');
+
+// Route::get('/invoice', function() {
+//     return view('livewire.invoice');
+// });
