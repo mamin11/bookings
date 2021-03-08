@@ -13,15 +13,17 @@ class BookingConfirmation extends Mailable
     use Queueable, SerializesModels;
 
     protected $booking;
+    protected $attachment;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Appointment $booking)
+    public function __construct(Appointment $booking, $attachment)
     {
         $this->booking = $booking;
+        $this->attachment = $attachment;
     }
 
     /**
@@ -31,6 +33,8 @@ class BookingConfirmation extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.bookings.bookingConfirmation')->with('booking', $this->booking);
+        return $this->markdown('emails.bookings.bookingConfirmation')
+        ->with('booking', $this->booking)
+        ->attach($this->attachment);
     }
 }

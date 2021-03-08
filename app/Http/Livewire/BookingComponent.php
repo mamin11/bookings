@@ -15,6 +15,9 @@ use App\Mail\BookingConfirmation;
 use App\Rules\validateAppointment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use LaravelDaily\Invoices\Classes\Buyer;
+use LaravelDaily\Invoices\Invoice as ld;
+use LaravelDaily\Invoices\Classes\InvoiceItem;
 
 //booking component is shown when /bookings/add is visited
 class BookingComponent extends Component
@@ -211,19 +214,42 @@ class BookingComponent extends Component
         session()->flash('Successfully added');
         session()->flash('alert-class', 'alert-success');
 
-        //send emails
-        $emailingAppointment = Appointment::where('appointment_id', $appointment_id)->first();
-        Mail::to('mamindesigns@gmail.com')->send(new BookingConfirmation($emailingAppointment));
-
         //create an invoice
         $previousInvNum = Invoice::latest()->first()->invoice_no;
         $newInvNum = $previousInvNum ? $previousInvNum +1 : 1000;
-        Invoice::create([
+        $dbInvoice = Invoice::create([
             'customer_id' => $this->confirmationData['customer']['user_id'],
             'invoice_no' => $newInvNum,
             'booking_id' => $appointment_id,
             'invoice_date' => Carbon::now()->addDay()
         ]);
+
+        $newBuyer = new Buyer([
+            'name' => $this->confirmationData['customer']['name'],
+            'custom_fields' => [
+                'email' => $this->confirmationData['customer']['name'],
+            ]
+        ]);
+
+        $item = (new InvoiceItem())->title($this->confirmationData['service']['name'])->pricePerUnit($this->confirmationData['service']['price']);
+
+        $invoice = ld::make('Invoice')
+        ->buyer($newBuyer)
+        ->date($dbInvoice->created_at)
+        ->payUntilDays(1)
+        ->notes('Your booking is reserved for 24 hours. It will automatically be cancelled if you dont pay')
+        ->filename($this->confirmationData['customer']['name']. '-' .$dbInvoice->created_at)
+        ->addItem($item)
+        ->save('s3');
+
+        $link = $invoice->url();
+
+        // return $invoice->stream();
+
+        //send emails
+        //attach invoice when sending to customer
+        $emailingAppointment = Appointment::where('appointment_id', $appointment_id)->first();
+        Mail::to('mamindesigns@gmail.com')->send(new BookingConfirmation($emailingAppointment, $link));
 
         //emails to customer and staff can be sent once amazon ses is in production mode
 
