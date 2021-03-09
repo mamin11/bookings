@@ -3,6 +3,10 @@
 
 This is to verify that the following booking has been created for you:
 
+<div  class="container">
+Please be aware that the booking has been reserved only for 24 hours.It will automatically be cancelled if no payment is received.
+</div>
+
 <div class="col-10">
     <div class="list-group-item" style="font-size: large">
         <span class=""> <b>Date:</b> {{date('Y:m:d ',strtotime($booking->start_at))}} </span><br>
@@ -15,7 +19,9 @@ This is to verify that the following booking has been created for you:
 
 
 <hr>
-#We hope to see you soon.
+
+
+We hope to see you soon.
 
 
 Thanks,<br>

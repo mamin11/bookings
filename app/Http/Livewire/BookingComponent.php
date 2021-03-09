@@ -175,7 +175,7 @@ class BookingComponent extends Component
             'bookingForm.customer_id' => 'required|integer',
             'bookingForm.start_time' => ['required' , new validateAppointment()],
             'confirmationData.end_time' => ['required' , new validateAppointment()],
-            'bookingForm.duration' => 'required|integer',
+            'bookingForm.duration' => 'required|integer|max:8',
         ];
 
         //validate
@@ -227,11 +227,14 @@ class BookingComponent extends Component
         $newBuyer = new Buyer([
             'name' => $this->confirmationData['customer']['name'],
             'custom_fields' => [
-                'email' => $this->confirmationData['customer']['name'],
+                'email' => $this->confirmationData['customer']['email'],
             ]
         ]);
 
-        $item = (new InvoiceItem())->title($this->confirmationData['service']['name'])->pricePerUnit($this->confirmationData['service']['price']);
+        $item = (new InvoiceItem())
+        ->title($this->confirmationData['service']['name'])
+        ->pricePerUnit($this->confirmationData['service']['price'])
+        ->quantity($this->bookingForm['duration']);
 
         $invoice = ld::make('Invoice')
         ->buyer($newBuyer)

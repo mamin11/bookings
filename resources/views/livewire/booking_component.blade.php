@@ -113,6 +113,7 @@
                                                     </span>
                                                 @enderror
                                                 
+                                                @if(Auth::user()->role_id !== 3)
                                                 <div class="form-group">
                                                     <div class="form-check" >
                                                         <label class="form-check-label" for="inform-customer">
@@ -124,6 +125,7 @@
                                                         </label>
                                                     </div>
                                                 </div>
+                                                @endif
                                             @endif
                                                 
                     
@@ -210,10 +212,13 @@
                                         
                                         {{-- button to create booking --}}
                                         <div class="form-group">
-                                            <button type="submit" wire:click.prevent="createBooking" class="btn btn-primary rounded-pill btn-block">{{__('Add') }}</button>
+                                            <a  wire:click="createBooking" class="btn btn-primary rounded-pill btn-block">{{__('Reserve') }}</a>
+                                        </div>
+                                        <div class="form-group">
+                                            <a  href="{{route('customerCheckout')}}" class="btn btn-success rounded-pill btn-block">{{__('Pay Now') }}</a>
                                         </div>
                                         
-                                        <div wire:loading>Loading ... </div>
+                                        <div wire:loading>Loading ...... </div>
 
                                             @else
                                                 <p class="badge" style="float:center;">Please fill the previous forms</p><br>

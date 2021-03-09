@@ -139,3 +139,5 @@ Route::get('/iCalendar','IcalendarController@getIcalEvents')->name('getIcalendar
 // Route::get('/invoice', function() {
 //     return view('livewire.invoice');
 // });
+Route::get('/checkout', 'Controller@checkout')->name('customerCheckout');
+Route::post('/checkout', 'Controller@checkoutsubmit')->name('customerSubmit');

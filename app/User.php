@@ -6,7 +6,6 @@ use App\Role;
 use App\Address;
 use App\User_appointment;
 use Illuminate\Http\Request;
-use Laravel\Cashier\Billable;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -15,7 +14,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
-    use Billable;
 
     /**
      * The attributes that are mass assignable.

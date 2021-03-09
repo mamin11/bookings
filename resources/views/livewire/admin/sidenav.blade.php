@@ -66,6 +66,7 @@
                 <i class="fas fa-2x fa-toolbox pr-4"></i>
                 <a href="/settings" class="hideText icon-span">Settings</a>
             </div>
+
             @else
             
             <div class="sidebar-link-item {{checkRoute('mybookings') }} {{ checkRoute('addBooking')}}">
@@ -80,6 +81,11 @@
 
             @endif
             
+                        
+        <div class="sidebar-link-item ">
+            <i class="fas fa-2x fa-file-invoice pr-4"></i>
+            <a href="#" class="hideText icon-span">Invoices</a>
+        </div>
 
         <div class="sidebar-link-item {{checkRoute('viewMessages')}} ">
             <i class="fas fa-2x fa-envelope-open-text pr-4"></i>
