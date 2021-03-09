@@ -60,7 +60,9 @@ class BookingComponent extends Component
     public $showConfirmationDetails = false;
 
     //event listener
-    protected $listeners = ['bookingClose'];
+    protected $listeners = ['bookingClose', 'paynow'];
+
+    public $paynowbtn = false;
 
     //custom validation messages
     private $customMessages = [
@@ -75,6 +77,13 @@ class BookingComponent extends Component
     public function bookingClose()
     {
         $this->showBookingComponent = !$this->showBookingComponent;
+    }
+
+    public function paynow() {
+        // dd('paynow clicked');
+        //reserve the booking for the customer
+        $this->paynowbtn = true;
+        $this->createBooking();
     }
 
     public function getDuration($end_at, $start_at) {
@@ -109,6 +118,10 @@ class BookingComponent extends Component
         }
         else if($comp === 'showCustomerDetailForm') {
             $this->formComponents[$comp] = true;
+
+            if(Auth::user()->role_id === 3) {
+                $this->formComponents['showExistingCustomerForm'] = true;
+            }
             
             $this->formComponents['showBookingDetailForm'] = false;
             $this->formComponents['showConfirmationForm'] = false;
@@ -257,6 +270,9 @@ class BookingComponent extends Component
         //emails to customer and staff can be sent once amazon ses is in production mode
 
         //redirect to refresh
+        if($this->paynowbtn) {
+            return redirect()->route('customerCheckout', ['id' => $dbInvoice->id]);
+        }
         return Auth::user()->role_id == 3 ? redirect()->route('mybookings') :redirect()->route('viewBookings');
         // return redirect()->route('viewBookings');
     }

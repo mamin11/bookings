@@ -36,4 +36,10 @@ return [
         'redirect' => 'http://127.0.0.1:8000/google/callback',
     ],
 
+    'stripe' => [
+        'model' => App\User::class,
+        'key' => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
+    ],
+
 ];

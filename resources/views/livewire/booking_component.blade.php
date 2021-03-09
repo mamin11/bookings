@@ -23,7 +23,7 @@
                         <div class="form-container2">
                             {{-- <div class="image-holder"></div> --}}
                             <div id="login-register">
-                                <form >
+                                <form action="{{route('customerSubmit')}}" method="POST">
                                     @csrf
                                     
                                     @if(session()->has('message'))
@@ -134,26 +134,40 @@
                                         @if ($formComponents['showCustomerDetailForm'])        
                                             {{-- ************ start customer-details form  ************* --}}
                                             <div class="form-group text-center">
-                                                <a wire:click="toggleCustomerStates('showExistingCustomerForm')" class="login-register-links-sm cursor-pointer @if($formComponents['showExistingCustomerForm']) link-active @endif d-inline-block">Existing Customer</a>
-                                                <a wire:click="redirectToCreateCustomer" class="login-register-links-sm cursor-pointer d-inline-block">New Customer</a>
+                                                @if(Auth::user()->role_id !== 3)<a wire:click="toggleCustomerStates('showExistingCustomerForm')" class="login-register-links-sm cursor-pointer @if($formComponents['showExistingCustomerForm']) link-active @endif d-inline-block">Existing Customer</a>
+                                                <a wire:click="redirectToCreateCustomer" class="login-register-links-sm cursor-pointer d-inline-block">New Customer</a>@endif
                                             </div>
                                             <hr>
 
                                             @if($formComponents['showExistingCustomerForm'])
                                                     {{-- Existing customer list  --}}
-                                                    @if($customers->isNotEmpty())
-                                                        @foreach($customers as $customer)
-                                                            <div class="form-group row">
-                                                                <div class="form-check">
-                                                                    <input @if(($customer->user_id !== Auth::user()->user_id) && Auth::user()->role_id ==3) disabled @endif class="form-check-input  @error('bookingForm.customer_id') is-invalid @enderror" type="radio" wire:model="bookingForm.customer_id" value="{{$customer->user_id}}" id="{{$customer->user_id}}">
-                                                                    <label class="form-check-label" for="{{$customer->user_id}}">{{$customer->name}}</label>
+                                                    @if(Auth::user()->role_id !== 3)
+                                                    {{-- show new and exisiting options to non customer user --}}
+                                                        @if($customers->isNotEmpty())
+                                                            @foreach($customers as $customer)
+                                                                <div class="form-group row">
+                                                                    <div class="form-check">
+                                                                        <input @if(($customer->user_id !== Auth::user()->user_id) && Auth::user()->role_id ==3) disabled @endif class="form-check-input  @error('bookingForm.customer_id') is-invalid @enderror" type="radio" wire:model="bookingForm.customer_id" value="{{$customer->user_id}}" id="{{$customer->user_id}}">
+                                                                        <label class="form-check-label" for="{{$customer->user_id}}">{{$customer->name}}</label>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        @endforeach
-                                                        {{$customers->links()}}
+                                                            @endforeach
+                                                            {{$customers->links()}}
+                                                        @else
+                                                        <span id="badge" class="badge" style="float:center;">No customers found</span>
+                                                        @endif
+
                                                     @else
-                                                    <span id="badge" class="badge" style="float:center;">No customers found</span>
+                                                    
+                                                    <div class="form-group row">
+                                                        <div class="form-check">
+                                                            <input checked class="form-check-input  @error('bookingForm.customer_id') is-invalid @enderror" type="radio" wire:model="bookingForm.customer_id" value="{{ Auth::user()->user_id }}" id="{{Auth::user()->user_id}}">
+                                                            <label class="form-check-label" for="{{Auth::user()->user_id}}">{{Auth::user()->name}}</label>
+                                                        </div>
+                                                    </div>
+
                                                     @endif
+                                                    {{-- end of showing customers based on whose is logged in --}}
 
                                                 @error('bookingForm.customer_id')
                                                     <span class="error text-danger" role="alert">
@@ -215,7 +229,7 @@
                                             <a  wire:click="createBooking" class="btn btn-primary rounded-pill btn-block">{{__('Reserve') }}</a>
                                         </div>
                                         <div class="form-group">
-                                            <a  href="{{route('customerCheckout')}}" class="btn btn-success rounded-pill btn-block">{{__('Pay Now') }}</a>
+                                            <button wire:click.prevent="$emit('paynow')"  class="btn btn-success rounded-pill btn-block">{{__('Pay Now') }}</button>
                                         </div>
                                         
                                         <div wire:loading>Loading ...... </div>
