@@ -62,6 +62,7 @@
                                                 <label class="form-control-label" for="input-email">Email address</label>
                                                 <input type="hidden" id="invoice_id" name="invoice_id"  class="form-control form-control-alternative" value="{{$invoice ? $invoice->id : ''}}">
                                                 <input type="hidden"  name="customer_id"  class="form-control form-control-alternative" value="{{$customer ? $customer->user_id : ''}}">
+                                                {{-- <input type="hidden" id="paymentIntent" name="paymentIntent"  class="form-control form-control-alternative" value="{{$paymentIntent ? $paymentIntent : ''}}"> --}}
                                                 <input type="email" disabled id="card-holder-email"  class="form-control form-control-alternative" placeholder="{{$customer ? $customer->email : ''}}">
                                                 </div>
                                                 @error('email')
@@ -142,6 +143,13 @@
                                         Process Payment
                                     </button>
                                     <div id="card-errors" class="error text-danger text-center mt-4" role="alert"></div>
+                                    @if ($errors->any())
+                                        <span class="error text-danger" role="alert">
+                                            @foreach ($errors->all() as $error)
+                                                <strong>{{ $error }}</strong>
+                                            @endforeach
+                                        </span>
+                                    @endif
                                 </form>
                             </div>
         
@@ -235,6 +243,9 @@
             stripeTokenHandler(result.token);
         }
         });
+
+
+
     });
 
     function stripeTokenHandler(token) {
