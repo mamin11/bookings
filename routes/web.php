@@ -137,8 +137,10 @@ Route::get('/calendar','CalendarController@index')->name('viewCalendar')->middle
 Route::get('/iCalendar','IcalendarController@getIcalEvents')->name('getIcalendar')->middleware('auth');
 
 // Route::get('/invoice', function() {
-//     return view('livewire.invoice');
-// });
-Route::get('/checkout/{id}', 'Controller@checkout')->name('customerCheckout');
-Route::post('/checkout', 'Controller@checkoutsubmit')->name('customerSubmit');
-Route::get('payment-successfull', 'Controller@success')->name('payment-successfull');
+    //     return view('livewire.invoice');
+    // });
+Route::group([ 'middleware' => ['auth', 'checkIsCustomer']], function () {
+    Route::get('/checkout/{id}', 'Controller@checkout')->name('customerCheckout');
+    Route::post('/checkout', 'Controller@checkoutsubmit')->name('customerSubmit');
+    Route::get('payment-successfull', 'Controller@success')->name('payment-successfull');    
+});
