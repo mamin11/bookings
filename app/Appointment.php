@@ -28,6 +28,10 @@ class Appointment extends Model implements \Acaronlex\LaravelCalendar\Event
         return Service::where('service_id', $this->service_id)->first()->price;
     }
 
+    public function getTotalPrice() {
+        return User_appointment::where('appointment_id', $this->appointment_id)->first()->total_price;
+    }
+
     public function getPrice() {
         return $this->getDuration() * $this->getServicePrice();
     }
