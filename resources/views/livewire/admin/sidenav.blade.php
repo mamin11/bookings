@@ -82,9 +82,9 @@
             @endif
             
                         
-        <div class="sidebar-link-item ">
+        <div class="sidebar-link-item {{checkRoute('viewInvoices') }}">
             <i class="fas fa-2x fa-file-invoice pr-4"></i>
-            <a href="#" class="hideText icon-span">Invoices</a>
+            <a href="/invoices" class="hideText icon-span">Invoices</a>
         </div>
 
         <div class="sidebar-link-item {{checkRoute('viewMessages')}} ">
