@@ -202,10 +202,18 @@
                                 </div>
 
                     </div>
+
+                    @elseif($reminderSent)
+                    <div class="container">
+                    <p class="text-center alert alert-danger ">REMINDER SENT</p>
+                    </div>
                     
                     <!-- ****************** booking component body ends here ************************* -->
             </div>
     
         </div>
-    @endif    
+
+    @endif
+
+
 </div>

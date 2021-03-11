@@ -6,7 +6,9 @@ use App\Invoice;
 use App\Appointment;
 use Livewire\Component;
 use App\User_appointment;
+use App\Mail\BookingPaymentReminder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Invoice as ld;
@@ -28,6 +30,8 @@ class View extends Component
     public $confirmingCancelID;
     public $selectedInvoice;
     public $selectedInvoiceBooking;
+    
+    public $reminderSent = false;
 
     public $showingInvoices;
 
@@ -67,6 +71,7 @@ class View extends Component
         }
         //reset sure button to cancel when components change
         $this->confirmingCancelID = null;
+        $this->reminderSent = false;
     }
 
     public function showSelectedInvoice($id) {
@@ -74,44 +79,6 @@ class View extends Component
         $this->confirmingID = $this->selectedInvoice->id;
 
         $this->selectedInvoiceBooking = Appointment::where('appointment_id', $this->selectedInvoice->booking_id)->first();
-        
-        // $newBuyer = new Buyer([
-        //     'name' => $this->selectedInvoice->getCustomer()->name,
-        //     'custom_fields' => [
-        //         'email' => $this->selectedInvoice->getCustomer()->email,
-        //     ]
-        // ]);
-
-        // $item = (new InvoiceItem())
-        // ->title($booking->getService()->name)
-        // ->pricePerUnit($booking->getServicePrice())
-        // ->quantity($booking->getDuration());
-
-        // if($this->selectedInvoice->paid == 0){
-        //     $invoice = ld::make('Receipt')
-        //     ->buyer($newBuyer)
-        //     ->date($this->selectedInvoice->created_at)
-        //     ->payUntilDays(1)
-        //     ->notes('We have received your payment. Your booking is now officially confirmed.')
-        //     ->filename($this->selectedInvoice->getCustomer()->name. '-' .$this->selectedInvoice->created_at)
-        //     ->addItem($item);
-        // }
-        // $invoice = ld::make('Invoice')
-        // ->buyer($newBuyer)
-        // ->date($this->selectedInvoice->created_at)
-        // ->payUntilDays(1)
-        // ->notes('We have received your payment. Your booking is now officially confirmed.')
-        // ->filename($this->selectedInvoice->getCustomer()->name. '-' .$this->selectedInvoice->created_at)
-        // ->addItem($item);
-
-        // $invoice->stream();
-        // $link = $invoice->url();
-
-        // if the invoice already exists, retrieve from storage
-        //else create the invoice and store in s3, then display it
-        // $visibility = Storage::disk('s3')->getVisibility('invoices/'.$this->selectedInvoice->getCustomer()->name. '-' .$this->selectedInvoice->created_at);
-        // $visibility = Storage::disk('s3')->setVisibility('invoices/'.$this->selectedInvoice->getCustomer()->name. '-' .$this->selectedInvoice->created_at, 'public');
-        // $this->showingInvoices = Storage::disk('s3')->url('invoices/'.$this->selectedInvoice->getCustomer()->name. '-' .$this->selectedInvoice->created_at);
 
     }
 
@@ -131,21 +98,43 @@ class View extends Component
         //confirm action
         //delete invoice, appointment and user appointment from db
         $invoice = Invoice::where('id', $id)->first();
-        $booking = Appointment::where('appointment_id', $invoice->booking_id)->first();
-        $user_appointment = User_appointment::where('appointment_id', $booking->appointment_id)->first();
+        if($invoice->booking_id){
+            $booking = Appointment::where('appointment_id', $invoice->booking_id)->first();
+                if($booking) {
+                    $user_appointment = User_appointment::where('appointment_id', $booking->appointment_id)->first();
+                }
+        } else {
+            $booking = null;
+            $invoice = null;
+            $user_appointment = null;
+        }
         
         if($invoice && $booking && $user_appointment) {
             Invoice::destroy($invoice->id);
             Appointment::destroy($booking->appointment_id);
             User_appointment::destroy($user_appointment->user_appointment_id);
-
+            
+            return redirect()->route('viewInvoices');
+        } else {
+            Invoice::destroy($invoice->id);
             return redirect()->route('viewInvoices');
         }
 
     }
 
     public function sendReminder($id){
-        dd('reminder clicked');
+        $invoice = Invoice::where('id', $id)->first();
+        $booking = Appointment::where('appointment_id', $invoice->booking_id)->first();
+
+        if($invoice && $booking) {
+            //change email to customer email when in production
+            $this->reminderSent = true;
+        Mail::to('mamindesigns@gmail.com')->send(new BookingPaymentReminder($booking));
+
+        return redirect()->route('viewInvoices');
+        } else {
+            abort(500);
+        }
     }
 
     public function render()
