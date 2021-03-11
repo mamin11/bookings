@@ -27,8 +27,12 @@ class Controller extends BaseController
         // dd('checkout page here');
         //get invoice using id
         $invoice = Invoice::where('id', $id)->first();
-        $booking = Appointment::where('appointment_id', $invoice->booking_id)->first();
-        $customer = User::where('user_id', Auth::user()->user_id)->first();
+        if($invoice) {
+            $booking = Appointment::where('appointment_id', $invoice->booking_id)->first();
+            $customer = User::where('user_id', Auth::user()->user_id)->first();
+        } else {
+            return redirect('/dashboard');
+        }
 
         //check if the invoice belongs to logged in user
         if($invoice->getCustomer()->user_id !== Auth::user()->user_id || $invoice->paid == 0) {

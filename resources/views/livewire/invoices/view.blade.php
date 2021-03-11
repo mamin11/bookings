@@ -24,15 +24,24 @@
                             <div class="booking-component-body ">
                                 <ul class="list-group list-group">
                                     @foreach($allInvoices as $invoice)
-                                    <li id="{{$loop->index}}"  class="list-group-item  booking-hover {{$invoice->paid == 0? 'active-booking-item-color'  : ''}} {{$invoice->id == $confirmingID ? 'active-booking-item'  : ''}}" wire:click="showSelectedInvoice({{$invoice->id}})">
+                                    <li id="{{$loop->index}}"  class="list-group-item  booking-hover  {{$invoice->id == $confirmingID ? 'active-booking-item'  : ''}}" >
                                         <div class="pull-left">
                                             <span  class="badge" style="float:left;">Date: {{$invoice->invoice_date}}</span><br>
                                             <span  class="badge" style="float:left;">Invoice No: {{$invoice->invoice_no}} </span>
                                         </div>
                                         @if($invoice->paid)
                                             <div class="pull-right">
-                                                <span  class="badge" style="float:right;"><button type="button" class="btn btn-labeled btn-danger">Cancel</button></span>
-                                                <span  class="badge" style="float:right;"><button type="button" class="btn btn-labeled btn-success">Pay</button></span>
+                                                <span  class="badge" style="float:right;">
+                                                    @if(Auth::user()->role_id !== 3)
+                                                        @if($confirmingCancelID === $invoice->id)
+                                                            <button type="button" class="btn btn-labeled btn-danger" wire:click='cancelNow({{$invoice->id}})'>Sure?</button>
+                                                        @else
+                                                            <button type="button" class="btn btn-labeled btn-danger" wire:click='confirmCancel({{$invoice->id}})'>Cancel</button>
+                                                        @endif
+                                                    @endif
+                                                </span>
+                                                <span  class="badge" style="float:right;"><button type="button" class="btn btn-labeled btn-success" wire:click="payNow({{$invoice->id}})">{{Auth::user()->role_id !== 3 ? 'send reminder' : 'Pay'}}</button></span>
+                                                <span  class="badge" style="float:right;"><button type="button" class="btn btn-labeled btn-primary" wire:click="showSelectedInvoice({{$invoice->id}})">View</button></span>
                                             </div>
                                         @else
                                         <div class="pull-right">
@@ -54,14 +63,21 @@
                         <div class="booking-component-body ">
                             <ul class="list-group list-group">
                                 @foreach($unPaidInvoices as $invoice)
-                                <li id="{{$loop->index}}" class="list-group-item" wire:click="showSelectedInvoice({{$invoice->id}})">
+                                <li id="{{$loop->index}}" class="list-group-item" >
                                     <div class="pull-left">
                                         <span  class="badge" style="float:left;">Date: {{$invoice->invoice_date}}</span><br>
                                         <span  class="badge" style="float:left;">Invoice No: {{$invoice->invoice_no}} </span>
                                     </div>
                                     <div class="pull-right">
-                                        <span  class="badge" style="float:right;"><button type="button" class="btn btn-labeled btn-danger">Cancel</button></span>
-                                        <span  class="badge" style="float:right;"><button type="button" class="btn btn-labeled btn-success">Pay</button></span>
+                                        <span  class="badge" style="float:right;">
+                                            @if($confirmingCancelID === $invoice->id)
+                                                <button type="button" class="btn btn-labeled btn-danger" wire:click='cancelNow({{$invoice->id}})'>Sure?</button>
+                                            @else
+                                                @if(Auth::user()->role_id !== 3)<button type="button" class="btn btn-labeled btn-danger" wire:click='confirmCancel({{$invoice->id}})'>Cancel</button>@endif
+                                            @endif
+                                        </span>
+                                        <span  class="badge" style="float:right;"><button type="button" class="btn btn-labeled btn-success" wire:click='payNow({{$invoice->id}})'>{{Auth::user()->role_id !== 3 ? 'send reminder' : 'Pay'}}</button></span>
+                                        <span  class="badge" style="float:right;"><button type="button" class="btn btn-labeled btn-primary" wire:click="showSelectedInvoice({{$invoice->id}})">View</button></span>
                                     </div>
                                 </li>
                                 @endforeach

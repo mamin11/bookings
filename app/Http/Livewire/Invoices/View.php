@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Invoices;
 use App\Invoice;
 use App\Appointment;
 use Livewire\Component;
+use App\User_appointment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use LaravelDaily\Invoices\Classes\Buyer;
@@ -24,6 +25,7 @@ class View extends Component
     ];
 
     public $confirmingID;
+    public $confirmingCancelID;
     public $selectedInvoice;
     public $selectedInvoiceBooking;
 
@@ -63,6 +65,8 @@ class View extends Component
             $this->invoiceViewOptions['paid'] = false;
 
         }
+        //reset sure button to cancel when components change
+        $this->confirmingCancelID = null;
     }
 
     public function showSelectedInvoice($id) {
@@ -111,15 +115,36 @@ class View extends Component
 
     }
 
-    public function payNow() {
-        dd('pay now clicked');
+    public function payNow($id) {
+        //redirect user to checkout with $id 
+        if(Auth::user()->role_id !== 3) {
+            return $this->sendReminder($id);
+        }
+        return redirect()->route('customerCheckout', ['id' => $id]);
     }
 
-    public function cancelNow(){
-        dd('cancel now clicked');
+    public function confirmCancel($id) {
+        $this->confirmingCancelID = $id;
     }
 
-    public function sendReminder(){
+    public function cancelNow($id){
+        //confirm action
+        //delete invoice, appointment and user appointment from db
+        $invoice = Invoice::where('id', $id)->first();
+        $booking = Appointment::where('appointment_id', $invoice->booking_id)->first();
+        $user_appointment = User_appointment::where('appointment_id', $booking->appointment_id)->first();
+        
+        if($invoice && $booking && $user_appointment) {
+            Invoice::destroy($invoice->id);
+            Appointment::destroy($booking->appointment_id);
+            User_appointment::destroy($user_appointment->user_appointment_id);
+
+            return redirect()->route('viewInvoices');
+        }
+
+    }
+
+    public function sendReminder($id){
         dd('reminder clicked');
     }
 
