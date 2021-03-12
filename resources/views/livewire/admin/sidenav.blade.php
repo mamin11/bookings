@@ -32,7 +32,7 @@
                 <a href="/orders" class=" icon-span">Orders</a>
             </div>
 
-            <div class="sidebar-link-item {{checkRoute('viewProducts')}} ">
+            <div class="sidebar-link-item {{checkRoute('products')}} ">
                 <i class="fab fa-2x fa-product-hunt pr-4"></i>
                 <a href="/products" class=" icon-span">Products</a>
             </div>
@@ -40,11 +40,6 @@
             <div class="sidebar-link-item {{checkRoute('productdata')}} ">
                 <i class="fas fa-2x fa-database pr-4"></i>
                 <a href="/productdata" class=" icon-span">Product data</a>
-            </div>
-            
-            <div class="sidebar-link-item {{checkRoute('viewReceipts')}} ">
-                <i class="fas fa-2x fa-file-alt pr-4"></i>
-                <a href="/receipts" class="hideText icon-span">Receipts</a>
             </div>
 
             <div class="sidebar-link-item {{checkRoute('viewServices')}}">

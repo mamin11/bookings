@@ -126,6 +126,12 @@ Route::livewire('/productdata', 'productdata.view')
 ->name('productdata')
 ->layout('layouts.dashboard')
 ->section('content')->middleware('auth', 'checkIsNotCustomer');
+
+//product data route
+Route::livewire('/products', 'products.view')
+->name('products')
+->layout('layouts.dashboard')
+->section('content')->middleware('auth', 'checkIsNotCustomer');
     
 //dashboard routes
 Route::livewire('/dashboard', 'dashboard')
