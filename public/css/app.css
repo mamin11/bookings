@@ -21,6 +21,10 @@
   background-color: #3490dc82 !important;
 }
 
+.dark-mode-black {
+  background-color: black !important;
+}
+
 /*!
  * Bootstrap v4.5.3 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
@@ -11473,7 +11477,7 @@ form .already {
 }
 
 #form-slider input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #121313;
 }
 
 #form-slider input:focus + .slider {

@@ -122,20 +122,40 @@
             </nav>
                 
             
-                <div id="mySidenav" class="sidenav">
-                    <div class="sidebar__title">
-                        <div class="sidebar__img">
-                            {{-- <img src="assets/logo.png" alt="logo" /> --}}
-                            <h1>Dashboard</h1>
+                <div id="mySidenav" class="sidenav ">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="sidebar__title">
+                                <div class="sidebar__img">
+                                    {{-- <img src="assets/logo.png" alt="logo" /> --}}
+                                    <div class="row d-flex">
+                                        <div class="col-8">
+                                            <h1>Dashboard</h1>
+                                        </div>
+                                        <div class="col-4 flex-row mt-auto">
+                                            <div class="form-group mt-auto">
+                                                <div class="form-check" id="form-slider">
+                                                    <label class="switch">
+                                                        <input type="checkbox" name="addComment" onClick="toggleNightMode()">
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <i
+                                    onclick="closeSidebar()"
+                                    class="fa fa-times"
+                                    id="sidebarIcon"
+                                    aria-hidden="true"
+                                    ></i>
+                                </div>
+                            @livewire('admin.sidenav')
                         </div>
-                            <i
-                            onclick="closeSidebar()"
-                            class="fa fa-times"
-                            id="sidebarIcon"
-                            aria-hidden="true"
-                            ></i>
-                        </div>
-                    @livewire('admin.sidenav')
+                    </div>
+                    
                 </div>
 
                 <!-- the main content goes here -->
@@ -161,9 +181,12 @@
     var sidebar = document.getElementById("mySidenav");
     var sidebarCloseIcon = document.getElementById("sidebarIcon");
 
+    var nightMode = false;
+
     function toggleSidebar() {
     if (!sidebarOpen) {
         sidebar.classList.add("sidebar_responsive");
+
         sidebarOpen = true;
     }
     }
@@ -183,5 +206,15 @@
             sidebar.classList.remove("sidebar_hidden");
             lgSidebarOpen = true;
         }
+    }
+
+    function toggleNightMode() {
+        nightMode = !nightMode;
+        if(nightMode) {
+            sidebar.classList.add("dark-mode-black");
+        } else {
+            sidebar.classList.remove("dark-mode-black");
+        }
+        // console.log('night mode ' + nightMode);
     }
 </script>
