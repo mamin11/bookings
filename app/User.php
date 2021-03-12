@@ -4,6 +4,7 @@ namespace App;
 
 use App\Role;
 use App\Address;
+use App\Message;
 use App\User_appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -74,6 +75,14 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getUserBookings() {
         return User_appointment::where('customer_id', $this->user_id)->get();
+    }
+
+    public function getMessages() {
+        return Message::where('sender', $this->user_id)->orWhere('receiver', $this->user_id)->get();
+    }
+
+    public function getLatestMessage() {
+        return Message::where('sender', $this->user_id)->orWhere('receiver', $this->user_id)->latest()->first();
     }
 
     public static function search($search) {

@@ -87,9 +87,9 @@
             <a href="/invoices" class="hideText icon-span">Invoices</a>
         </div>
 
-        <div class="sidebar-link-item {{checkRoute('viewMessages')}} ">
+        <div class="sidebar-link-item {{checkRoute('messages')}} ">
             <i class="fas fa-2x fa-envelope-open-text pr-4"></i>
-            <a href="/messages" class=" icon-span">Messages</a>
+            <a href="/chat" class=" icon-span">Messages</a>
         </div>
 
         <div class="sidebar-link-item {{checkRoute('myAccount')}}">

@@ -142,8 +142,14 @@ Route::group([ 'middleware' => ['auth', 'checkIsCustomer']], function () {
     Route::get('payment-successfull', 'Controller@success')->name('payment-successfull');    
 });
 
-//user profile route
+//invoice route
 Route::livewire('/invoices', 'invoices.view')
 ->name('viewInvoices')
+->layout('layouts.dashboard')
+->section('content')->middleware('auth');
+
+//chat route
+Route::livewire('/chat', 'chat.view')
+->name('messages')
 ->layout('layouts.dashboard')
 ->section('content')->middleware('auth');
