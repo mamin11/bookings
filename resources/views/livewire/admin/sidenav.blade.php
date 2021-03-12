@@ -89,7 +89,7 @@
 
         <div class="sidebar-link-item {{checkRoute('messages')}} ">
             <i class="fas fa-2x fa-envelope-open-text pr-4"></i>
-            <a href="/chat" class=" icon-span">Messages</a>
+            <a href="/chat" class=" icon-span">Messages <span class="badge text-danger border border-danger rounded-circle ml-2" style="font-size: 15px;">{{$messagesCount}}</span></a>
         </div>
 
         <div class="sidebar-link-item {{checkRoute('myAccount')}}">

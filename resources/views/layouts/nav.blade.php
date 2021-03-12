@@ -10,11 +10,26 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-                
+
             </ul>
             
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item mr-3">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item mr-3">
+                    <a class="nav-link" href="#">Shop</a>
+                </li>
+                <li class="nav-item mr-3">
+                    <a class="nav-link" href="#">Bookings</a>
+                </li>
+                <li class="nav-item mr-3">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item mr-3">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
                 <!-- Authentication Links -->
                 @guest
                 <li class="nav-item">
