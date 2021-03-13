@@ -62,7 +62,7 @@ class Login extends Component
         if (Auth::attempt(['email' => $this->login_form['email'], 'password' => $this->login_form['password']])) {
             //return redirect()->intended('dashboard');
 
-            return redirect()->route('dashboard');
+            return redirect()->route('home');
             //@dd('login credentials right');
             //return redirect()->route('dashboard');
         }
@@ -107,7 +107,7 @@ class Login extends Component
         session()->flash('alert-class', 'alert-success');
         Auth::attempt(['email' => $this->register_form['email'], 'password' => $this->register_form['password']]);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('home');
     }
 
     public function render()

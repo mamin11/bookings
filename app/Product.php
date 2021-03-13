@@ -20,6 +20,10 @@ class Product extends Model
 
     }
 
+    public function getShippingCost() {
+        return ($this->getCategory()->extra_cost + $this->getSize()->extra_price_on_product + $this->getMaterial()->extra_price_on_product);
+    }
+
     public function getMaterial() {
         return Product_material::where('material_id', $this->material_id)->first();
     }

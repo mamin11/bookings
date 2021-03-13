@@ -16,13 +16,13 @@
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item mr-3">
-                    <a class="nav-link" href="#">Home</a>
+                    <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item mr-3">
                     <a class="nav-link" href="#">Shop</a>
                 </li>
                 <li class="nav-item mr-3">
-                    <a class="nav-link" href="#">Bookings</a>
+                    <a class="nav-link" href="{{ route('viewBookings') }}">Bookings</a>
                 </li>
                 <li class="nav-item mr-3">
                     <a class="nav-link" href="#">About</a>
@@ -37,20 +37,32 @@
                 </li>
 
                 
-                @else
+                @endguest
+                @auth
                 <li class="nav-item">
                     <a class="nav-link" href="/dashboard">Dashboard</a>
                 </li>
+                @endauth
+
+                
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('cart') }}">
+                            <i class="nav-link fa fa-cart-arrow-down" aria-hidden="true"></i>1
+                        </a>
+                    </li>
+                
+
+                @auth 
                 <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }}
                     </a>
                     
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        @livewire('logout')
+                            <a class="nav-link" href="/logout">Logout</a>
                         </div>
                     </li>
-                    @endguest
+                    @endauth
                 </ul>
             </div>
         </div>

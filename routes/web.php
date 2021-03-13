@@ -50,17 +50,16 @@ Route::get('google/callback', 'Auth\LoginController@handleProviderCallback');
 
 
 
-//route groups
-Route::group(['middleware' => 'guest'], function () {
-    Route::get('/', function () {
-        return view('home');
-    });
-    
-    //this login route handles both the login and register. Uses livewire component
-    Route::livewire('/login', 'login')->name('login')
-    ->layout('layouts.app')
-    ->section('content');
-});
+//route groups cart and guest
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/cart', 'HomeController@cart')->name('cart')->middleware('auth');
+Route::post('/cart', 'HomeController@addToCart')->middleware('auth');
+Route::get('/remove/{id}', 'HomeController@removefromcart')->name('remove')->middleware('auth');
+
+//this login route handles both the login and register. Uses livewire component
+Route::livewire('/login', 'login')->name('login')
+->layout('layouts.app')
+->section('content');
 
 //add 'prefix' => 'admin', before below middleware to define route group for admin. eg admin/dashboard
 Route::group([ 'middleware' => 'auth'], function () {
@@ -127,13 +126,13 @@ Route::livewire('/productdata', 'productdata.view')
 ->layout('layouts.dashboard')
 ->section('content')->middleware('auth', 'checkIsNotCustomer');
 
-// Route::livewire('/products/view', 'products.productslist')
-// ->name('productslist')
-// ->layout('layouts.dashboard')
-// ->section('content')->middleware('auth', 'checkIsNotCustomer');
-
-// //product view route
+//product view route
 Route::group(['prefix' => 'products', 'middleware' => ['auth', 'checkIsNotCustomer']], function () {
+    Route::livewire('/{id}', 'products.viewone')
+    ->name('viewone')
+    ->layout('layouts.home')
+    ->section('content');
+
     Route::livewire('/view', 'products.productslist')
     ->name('productslist')
     ->layout('layouts.dashboard')
@@ -177,3 +176,9 @@ Route::livewire('/chat', 'chat.view')
 ->name('messages')
 ->layout('layouts.dashboard')
 ->section('content')->middleware('auth');
+
+// //cart route
+// Route::livewire('/cart', 'cart.view')
+// ->name('cart')
+// ->layout('layouts.home')
+// ->section('content')->middleware('auth');

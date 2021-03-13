@@ -1,0 +1,35 @@
+.link-active {
+    color: rgb(50, 133, 169);
+    border-color: rgb(50, 133, 169);
+    cursor: default;
+}
+
+.cursor-pointer:hover {
+    cursor: pointer;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #ecf0f1;
+    border-radius: 50%;
+    color: white;
+}
+
+.product-link {
+    color: black;
+}
+
+.product-link:hover {
+    text-decoration: none;
+    list-style-type: none;
+    color: black;
+}
+
+.product-link-danger {
+    color: rgb(218, 37, 37);
+}
+
+.product-link-danger:hover {
+    text-decoration: none;
+    list-style-type: none;
+    color: rgb(218, 37, 37);
+}

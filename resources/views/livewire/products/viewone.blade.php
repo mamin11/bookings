@@ -1,0 +1,156 @@
+<div>
+    <div class="container mt-5">
+        <div class="row">
+        <div class="col-md-6">
+    
+            <div class="mdb-lightbox">
+    
+            <div class="row product-gallery mx-1">
+    
+                <div class="col-12 mb-5">
+                <figure class="view overlay rounded z-depth-1 main-img">
+                    <img src="{{$product->getMainImage() ? $product->getMainImage() : 'https://via.placeholder.com/500' }}"
+                        class="img-fluid z-depth-1">
+                    </a>
+                </figure>
+                </div>
+                <div class="col-12">
+                <div class="row">
+                    @if($product->getImages())
+                        @foreach($product->getImages() as $image)
+                            <div class="col-3">
+                                <div class="view overlay rounded z-depth-1 gallery-item">
+                                    <img src="{{ $image }}"
+                                    class="img-fluid">
+                                    <div class="mask rgba-white-slight"></div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+
+                </div>
+                </div>
+            </div>
+    
+            </div>
+    
+        </div>
+        <div class="col-md-6">
+    
+            <h5>{{ $product->name }}</h5>
+            <p class="mb-2 text-muted text-uppercase small">{{ $product->getCategory()->name }}</p>
+            <ul class="rating">
+                <div class="row">
+                    <div class="col-6 m-0">
+                        <i class="fas fa-star fa-sm text-primary"></i>
+                        <i class="fas fa-star fa-sm text-primary"></i>
+                        <i class="fas fa-star fa-sm text-primary"></i>
+                        <i class="fas fa-star fa-sm text-primary"></i>
+                        <i i class="far fa-star fa-sm text-primary"></i>
+                    </div>
+                </div>
+            </ul>
+            <p><span class="mr-1"><strong>£{{ $product->getTotalPrice() }}</strong></span></p>
+            <p class="pt-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, sapiente illo. Sit
+            error voluptas repellat rerum quidem, soluta enim perferendis voluptates laboriosam. Distinctio,
+            officia quis dolore quos sapiente tempore alias.</p>
+            <div class="table-responsive">
+            <table class="table table-sm table-borderless mb-0">
+                <tbody>
+                <tr>
+                    <th class="pl-0 w-25" scope="row"><strong>Category</strong></th>
+                    <td>{{ $product->getCategory()->name }}</td>
+                </tr>
+                <tr>
+                    <th class="pl-0 w-25" scope="row"><strong>Material</strong></th>
+                    <td>{{ $product->getMaterial()->name }}</td>
+                </tr>
+                <tr>
+                    <th class="pl-0 w-25" scope="row"><strong>Size</strong></th>
+                    <td>{{ $product->getSize()->name }}</td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+            <hr>
+            <div class="table-responsive mb-2">
+            <table class="table table-sm table-borderless">
+                <tbody>
+                <tr>
+                    <td class="pl-0 pb-0 w-25">Quantity</td>
+                </tr>
+                <tr>
+                    <td class="pl-0">
+                    <div class="def-number-input number-input safari_only mb-0">
+                        <button class="minus"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                        <input class="quantity" min="0" name="quantity" value="1" type="number">
+                        <button class="plus"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+            <button type="button" class="btn btn-primary btn-md mr-1 mb-2">Buy now</button>
+            <button type="button" class="btn btn-light btn-md mr-1 mb-2"><i
+                class="fas fa-shopping-cart pr-2"></i>Add to cart</button>
+        </div>
+        </div>
+        {{-- container ends here  --}}
+
+        {{-- similar products starts here  --}}
+        <div class="container mt-5" style="margin-top: 200px !important;">
+            <h1 class="text-center mt-5 mb-2">Similar Products</h1>
+            <hr>
+            <section class="text-center">
+    
+            <!-- Grid row -->
+            <div class="row">
+                @foreach ($similar as $product)
+                <!-- Grid column -->
+                <div class="col-md-6 col-lg-3 mb-5">
+
+                <!-- Card -->
+                <div class="">
+
+                    <div class="view zoom overlay z-depth-2 rounded">
+                    <a href="{{route('viewone', ['id' => $product->product_id])}}">
+                        <div class="mask">
+                        <img class="img-fluid w-100"
+                            src="{{ $product->getMainImage() ? $product->getMainImage() : 'https://via.placeholder.com/150x100' }}">
+                        <div class="mask rgba-black-slight"></div>
+                        </div>
+                    </a>
+                    </div>
+
+                    <div class="pt-4">
+
+                    <h5><a class="product-link" href="{{route('viewone', ['id' => $product->product_id])}}">{{ $product->name }}</a></h5>
+                    <h6>
+                        <span class="text-grey mr-1">£{{$product->getTotalPrice()}}</span>
+                    </h6>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                            <div class="col-12 text-center mt-2 cursor-pointer"><img class="add-to-cart-btn" src="https://img.icons8.com/pastel-glyph/34/000000/plus--v1.png"/></div>
+                        </div>
+                        </div>
+                    </div>
+
+                    </div>
+
+                </div>
+                <!-- Card -->
+
+                </div>
+                <!-- Grid column --> 
+            @endforeach
+                </div>
+                <!-- Grid row -->
+
+            </section>
+        </div>
+        {{-- similar products ends here  --}}
+
+</div>
