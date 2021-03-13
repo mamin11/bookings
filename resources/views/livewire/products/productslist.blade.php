@@ -80,7 +80,7 @@
                                         <td>{{$product->getSize() ? $product->getSize()->name : ''}}</td>
                                         <td>
                                         <p data-placement="top" data-toggle="tooltip" title="Edit">
-                                            <button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit{{$product->product_id}}" >
+                                            <button class="btn btn-primary btn-xs" wire:click='edit({{$product->product_id}})' >
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </button>
                                         </p>

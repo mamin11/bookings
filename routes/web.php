@@ -138,6 +138,11 @@ Route::group(['prefix' => 'products', 'middleware' => ['auth', 'checkIsNotCustom
     ->name('productslist')
     ->layout('layouts.dashboard')
     ->section('content');
+    
+    Route::livewire('/edit/{id}', 'products.edit')
+    ->name('productedit')
+    ->layout('layouts.dashboard')
+    ->section('content');
 });
 
 //product data route
