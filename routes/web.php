@@ -127,6 +127,19 @@ Route::livewire('/productdata', 'productdata.view')
 ->layout('layouts.dashboard')
 ->section('content')->middleware('auth', 'checkIsNotCustomer');
 
+Route::livewire('/products/view', 'products.productslist')
+->name('productslist')
+->layout('layouts.dashboard')
+->section('content')->middleware('auth', 'checkIsNotCustomer');
+
+// //product view route
+// Route::group(['prefix' => 'products', 'middleware' => 'auth'], function () {
+//     Route::livewire('/list', 'products.productslist')
+//     ->name('productslist')
+//     ->layout('layouts.dashboard')
+//     ->section('content')->middleware('auth', 'checkIsNotCustomer');
+// });
+
 //product data route
 Route::livewire('/products', 'products.view')
 ->name('products')
