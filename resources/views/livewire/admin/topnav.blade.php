@@ -8,13 +8,14 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item pr-4">
-                    <a class="nav-link icons-font-size">
-                        <i class="fas fa-3x fa-arrow-left top-icon-style"></i>
+                    <a class="nav-link " href="/">
+                        {{-- <i class="fas fa-3x fa-arrow-left top-icon-style"></i> --}}
+                        Store
                     </a>
                 </li>
                 <li class="nav-item pr-4">
-                    <a class="nav-link icons-font-size">
-                        <i class="fas fa-3x fa-redo top-icon-style"></i>
+                    <a class="nav-link icons-font-size" href="/">
+                        <i class="fas fa-3x fa-store top-icon-style"></i>
                     </a>
                 </li>
             </ul>

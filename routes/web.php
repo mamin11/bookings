@@ -187,3 +187,5 @@ Route::livewire('/shop', 'products.shop')
 ->name('shop')
 ->layout('layouts.home')
 ->section('content')->middleware('auth');
+
+Route::get('/sendreceipt', 'HomeController@sendCustomerReceipt');

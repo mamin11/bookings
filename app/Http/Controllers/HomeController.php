@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Order;
 use App\Product;
 use App\Order_detail;
+use App\Mail\NewOrder;
 use Darryldecode\Cart\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Cartalyst\Stripe\Laravel\Facades\Stripe;
 use Cartalyst\Stripe\Exception\CardErrorException;
 
@@ -115,6 +117,10 @@ class HomeController extends Controller
                         'order_id' => $orderID,
                     ],
                 ]);
+                
+                //send email to customer
+                $order = Order::where('order_id', $orderID)->first();
+                $this->sendCustomerReceipt($order);
 
                 //destroy cart
                 \Cart::session(Auth::user()->user_id)->clear();
@@ -162,7 +168,8 @@ class HomeController extends Controller
     }
 
     public function sendCustomerReceipt($order) {
-        dd('send receipt');
+         //change email to customer email when in production
+        Mail::to('mamindesigns@gmail.com')->send(new NewOrder($order));
     }
 
     public function checkOutSuccess() {

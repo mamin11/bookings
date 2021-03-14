@@ -14,4 +14,13 @@ class Order extends Model
     public function getOrderDetails() {
         return Order_detail::where('order_id', $this->order_id)->get();
     }
+
+    public function getTotalItems() {
+        $orderItems = Order_detail::where('order_id', $this->order_id)->get();
+        $count = 0;
+        foreach ($orderItems as $item) {
+            $count += $item->product_quantity;
+        }
+        return $count;
+    }
 }

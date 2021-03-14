@@ -12,7 +12,7 @@ class Order_detail extends Model
     protected $primaryKey = 'order_details_id';
 
     public function getProduct() {
-        return Product::where('product_id', $this->product_id);
+        return Product::where('product_id', $this->product_id)->first();
     }
 
 }
