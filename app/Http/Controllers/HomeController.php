@@ -61,9 +61,9 @@ class HomeController extends Controller
 
     public function cartcheckoutview() {
         \Cart::session(Auth::user()->user_id);
-        $items = \Cart::getContent();
+        $items = \Cart::session(Auth::user()->user_id)->getContent();
 
-        if(! count($items) < 0){
+        if((count($items) > 0)){
             $subTotal = \Cart::session(Auth::user()->user_id)->getSubTotal();
             return view('cartcheckout')->with(['items' => $items, 'total' => $subTotal, 'shipping' => $this->getCartShippingCost()]);
         } else {
@@ -85,7 +85,7 @@ class HomeController extends Controller
         $cartContents = \Cart::session(Auth::user()->user_id)->getContent();
         // $order = Order::where('order_id', $request->order_id)->first();
 
-        if(! count($cartContents) < 0){
+        if( (count($cartContents) > 0)){
             $currentOrderID = 0;
 
             try {

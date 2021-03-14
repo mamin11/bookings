@@ -24,7 +24,7 @@
                             </div>
                         
                             <div class="card-body">
-                                <form action="{{route('cartcheckoutpost')}}" method="POST" id="payment-form">
+                                <form action="{{route('cartcheckoutpost')}}" method="POST" id="payment-form-cart">
                                     @csrf
                                     <div class="pl-lg-4">
                                     <h4 class="heading-small text-muted mb-4">User information</h4>
@@ -34,7 +34,6 @@
                                                 <label class="form-control-label" for="input-email">Email address</label>
                                                 <input type="hidden" id="shipping" name="shipping"  class="form-control form-control-alternative" value="{{ $shipping ? $shipping : '' }}">
                                                 <input type="hidden"  name="total"  class="form-control form-control-alternative" value="{{ $total ? $total : '' }}">
-                                                {{-- <input type="hidden" id="order_id" name="order_id"  class="form-control form-control-alternative" value="{{$order_id ? $order_id : ''}}"> --}}
                                                 <input type="email" disabled id="card-holder-email"  class="form-control form-control-alternative" placeholder="{{ Auth::user()->email ? Auth::user()->email : ''}}">
                                                 </div>
                                                 @error('email')
@@ -111,7 +110,7 @@
                                         </div>
                                     </div>
 
-                                    <button type="submit" class="btn btn-dark btn-block btn-lg" id="card-button">
+                                    <button type="submit" class="btn btn-dark btn-block btn-lg" id="card-button-pay">
                                         Process Payment
                                     </button>
                                     <div id="card-errors" class="error text-danger text-center mt-4" role="alert"></div>
@@ -193,7 +192,7 @@
     const cardHolderCity = document.getElementById('card-holder-city');
     const cardHolderCountry = document.getElementById('card-holder-country');
     const cardHolderPostcode = document.getElementById('card-holder-post-code');
-    const cardButton = document.getElementById('card-button');
+    const cardButton = document.getElementById('card-button-pay');
 
     const stripe = Stripe('pk_test_9Nq6jaOF8klXI941hDxbY9f700u8lnonq9');
 
@@ -234,11 +233,11 @@
     });
 
     // Handle form submission
-    var form = document.getElementById('payment-form');
+    var form = document.getElementById('payment-form-cart');
         form.addEventListener('submit', function(event) {
             event.preventDefault();
             // Disable the submit button to prevent double clicks
-            document.getElementById('card-button').disabled = true;
+            document.getElementById('card-button-pay').disabled = true;
             var options = {
             name: document.getElementById('card-holder-name').value,
             address_line1: document.getElementById('card-holder-address').value,
@@ -253,7 +252,7 @@
             var errorElement = document.getElementById('card-errors');
             errorElement.textContent = result.error.message;
             // Enable the submit button
-            document.getElementById('card-button').disabled = false;
+            document.getElementById('card-button-pay').disabled = false;
         } else {
             // Send the token to your server
             stripeTokenHandler(result.token);
@@ -265,7 +264,7 @@
     });
 
     function stripeTokenHandler(token) {
-        var form = document.getElementById('payment-form');
+        var form = document.getElementById('payment-form-cart');
         var hiddenInput = document.createElement('input');
         hiddenInput.setAttribute('type', 'hidden');
         hiddenInput.setAttribute('name', 'stripeToken');

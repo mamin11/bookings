@@ -19,16 +19,16 @@
                     <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item mr-3">
-                    <a class="nav-link" href="#">Shop</a>
+                    <a class="nav-link" href="/shop">Shop</a>
                 </li>
                 <li class="nav-item mr-3">
                     <a class="nav-link" href="{{ route('viewBookings') }}">Bookings</a>
                 </li>
                 <li class="nav-item mr-3">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" href="/about">About</a>
                 </li>
                 <li class="nav-item mr-3">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="/contact">Contact</a>
                 </li>
                 <!-- Authentication Links -->
                 @guest
