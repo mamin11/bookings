@@ -73,27 +73,16 @@
             </table>
             </div>
             <hr>
-            <div class="table-responsive mb-2">
-            <table class="table table-sm table-borderless">
-                <tbody>
-                <tr>
-                    <td class="pl-0 pb-0 w-25">Quantity</td>
-                </tr>
-                <tr>
-                    <td class="pl-0">
-                    <div class="def-number-input number-input safari_only mb-0">
-                        <button class="minus"><i class="fa fa-minus" aria-hidden="true"></i></button>
-                        <input class="quantity" min="0" name="quantity" value="1" type="number">
-                        <button class="plus"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                    </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            </div>
-            <button type="button" class="btn btn-primary btn-md mr-1 mb-2">Buy now</button>
-            <button type="button" class="btn btn-light btn-md mr-1 mb-2"><i
+
+            <form action="/cart" method="POST">
+                @csrf
+                <input type="hidden" name="id" value="{{ $product->product_id }}">
+                <input type="hidden" name="name" value="{{ $product->name }}">
+                <input type="hidden" name="price" value="{{ $product->getTotalPrice() }}">
+                <button type="submit" class="btn btn-primary btn-md mr-1 mb-2">Buy now</button>
+                <button type="submit" class="btn btn-light btn-md mr-1 mb-2"><i
                 class="fas fa-shopping-cart pr-2"></i>Add to cart</button>
+            </form>
         </div>
         </div>
         {{-- container ends here  --}}

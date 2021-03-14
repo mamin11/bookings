@@ -41,7 +41,7 @@
 
                       <h5><a class="product-link" href="{{route('viewone', ['id' => $product->product_id])}}">{{ $product->name }}</a></h5>
                       <h6>
-                        <span class="text-grey mr-1">£{{$product->getTotalPrice()}}</span>
+                        <span class="text-grey mr-1">£{{$product->price}}</span>
                       </h6>
 
                       <div class="row">

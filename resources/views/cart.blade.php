@@ -28,13 +28,13 @@
     
                 <h5 class="mb-4">Cart (<span>{{count($items)}}</span> items)</h5>
                 {{-- @dd($items) --}}
-    
+        @if(count($items) > 0)
                 @foreach ($items as $product)
                     <div class="row mb-4">
                         <div class="col-md-5 col-lg-3 col-xl-3">
                             <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
                             <img class="img-fluid w-100"
-                                src="{{ $product->associatedModel->getMainImage() }}" alt="Sample">
+                                src="{{ $product->associatedModel->getMainImage() ? $product->associatedModel->getMainImage() : 'https://via.placeholder.com/150x100' }}" alt="Sample">
                             </div>
                         </div>
                         <div class="col-md-7 col-lg-9 col-xl-9">
@@ -48,6 +48,20 @@
                                 </div>
 
                             </div>
+                            <div class="table-responsive mb-2">
+                                <table class="table table-sm table-borderless">
+                                    <tbody>
+                                    <tr>
+                                        <td class="pl-0 pb-0 w-25">Quantity</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pl-0">
+                                            @livewire('cart.quantityoptions', ['rowID' => $product->id], key($product->id))
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                 <a href="{{ route('remove', ['id' => $product->id]) }}"  class="card-link-secondary small product-link-danger  text-uppercase mr-3"><i
@@ -60,7 +74,11 @@
                     </div>
                     <hr class="mb-4">      
                 @endforeach
-
+        @else
+        <div class="container">
+            <h2 class="text-center">No Items in cart</h2>
+        </div>
+        @endif
             </div>
             </div>
             <!-- Card -->
@@ -92,7 +110,7 @@
                         <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                             Products Price
-                            <span>£{{ $total ? $total : '' }}</span>
+                            <span>£{{ $total ?( $total  ): '' }}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                             Shipping and packaging

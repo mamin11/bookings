@@ -16,7 +16,6 @@ class HomeController extends Controller
 
     public function cart() {
         // \Cart::session(Auth::user()->user_id)->clear();
-        // // dd('removed');
         \Cart::session(Auth::user()->user_id);
         $items = \Cart::getContent();
         $subTotal = \Cart::session(Auth::user()->user_id)->getSubTotal();
@@ -35,7 +34,7 @@ class HomeController extends Controller
         \Cart::session(Auth::user()->user_id)->add([
             'id' => $uniqID,
             'name' => $product->name,
-            'price' => $product->getTotalPrice(),
+            'price' => $product->price,
             'quantity' => 1,
             'attributes' => [
                 'category' => $product->getCategory()->name,
