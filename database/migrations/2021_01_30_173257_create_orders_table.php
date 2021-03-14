@@ -17,10 +17,11 @@ class CreateOrdersTable extends Migration
             $table->increments('order_id');
             $table->string('order_number');
             $table->integer('customer_id');
-            $table->dateTime('order_date');
-            $table->integer('created_at');
-            $table->integer('updated_at');
-            $table->integer('shipment_id');
+            $table->integer('shipment_id')->nullable();
+            $table->integer('paid')->default('1');
+            $table->integer('total');
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
         });
     }
 

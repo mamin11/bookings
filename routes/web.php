@@ -54,7 +54,10 @@ Route::get('google/callback', 'Auth\LoginController@handleProviderCallback');
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/cart', 'HomeController@cart')->name('cart')->middleware('auth');
 Route::post('/cart', 'HomeController@addToCart')->middleware('auth');
+Route::get('/shopcheckout', 'HomeController@cartcheckoutview')->name('cartcheckoutview')->middleware('auth');
+Route::post('/cartcheckout', 'HomeController@cartcheckoutpost')->name('cartcheckoutpost')->middleware('auth');
 Route::get('/remove/{id}', 'HomeController@removefromcart')->name('remove')->middleware('auth');
+Route::get('/success', 'HomeController@checkOutSuccess')->name('checkout-success')->middleware('auth');
 
 //this login route handles both the login and register. Uses livewire component
 Route::livewire('/login', 'login')->name('login')

@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.home')
 @section('content')
 
 
@@ -24,7 +24,7 @@
                             </div>
                         
                             <div class="card-body">
-                                <form action="{{route('customerSubmit')}}" method="POST" id="payment-form">
+                                <form action="{{route('cartcheckoutpost')}}" method="POST" id="payment-form">
                                     @csrf
                                     <div class="pl-lg-4">
                                     <h4 class="heading-small text-muted mb-4">User information</h4>
@@ -32,10 +32,10 @@
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                 <label class="form-control-label" for="input-email">Email address</label>
-                                                <input type="hidden" id="invoice_id" name="invoice_id"  class="form-control form-control-alternative" value="{{$invoice ? $invoice->id : ''}}">
-                                                <input type="hidden"  name="customer_id"  class="form-control form-control-alternative" value="{{$customer ? $customer->user_id : ''}}">
-                                                {{-- <input type="hidden" id="paymentIntent" name="paymentIntent"  class="form-control form-control-alternative" value="{{$paymentIntent ? $paymentIntent : ''}}"> --}}
-                                                <input type="email" disabled id="card-holder-email"  class="form-control form-control-alternative" placeholder="{{$customer ? $customer->email : ''}}">
+                                                <input type="hidden" id="shipping" name="shipping"  class="form-control form-control-alternative" value="{{ $shipping ? $shipping : '' }}">
+                                                <input type="hidden"  name="total"  class="form-control form-control-alternative" value="{{ $total ? $total : '' }}">
+                                                {{-- <input type="hidden" id="order_id" name="order_id"  class="form-control form-control-alternative" value="{{$order_id ? $order_id : ''}}"> --}}
+                                                <input type="email" disabled id="card-holder-email"  class="form-control form-control-alternative" placeholder="{{ Auth::user()->email ? Auth::user()->email : ''}}">
                                                 </div>
                                                 @error('email')
                                                     <span class="error text-danger" role="alert">
@@ -65,7 +65,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group focused">
                                                 <label class="form-control-label" for="card-holder-address">Address</label>
-                                                <input id="card-holder-address" name="address" type="text" class="form-control form-control-alternative  @error('address') is-invalid @enderror"  placeholder="Address" value="{{$customer->getAddress() ? $customer->getAddress()->address : ''}}" required>
+                                                <input id="card-holder-address" name="address" type="text" class="form-control form-control-alternative  @error('address') is-invalid @enderror"  placeholder="Address" value="{{Auth::user()->getAddress() ? Auth::user()->getAddress()->address : ''}}" required>
                                                 </div>
                                                 @error('address')
                                                     <span class="error text-danger" role="alert">
@@ -78,7 +78,7 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group focused">
                                                 <label class="form-control-label" for="card-holder-city">City</label>
-                                                <input type="text" name="city" id="card-holder-city" class="form-control form-control-alternative @error('city') is-invalid @enderror"  placeholder="City" value="{{$customer->getAddress() ? $customer->getAddress()->city : ''}}" required>
+                                                <input type="text" name="city" id="card-holder-city" class="form-control form-control-alternative @error('city') is-invalid @enderror"  placeholder="City" value="{{Auth::user()->getAddress() ? Auth::user()->getAddress()->city : ''}}" required>
                                                 </div>
                                                 @error('city')
                                                     <span class="error text-danger" role="alert">
@@ -89,7 +89,7 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group focused">
                                                 <label class="form-control-label" for="card-holder-country">Country</label>
-                                                <input type="text" name="country" id="card-holder-country"  class="form-control form-control-alternative @error('country') is-invalid @enderror"  placeholder="Country" value="{{$customer->getAddress() ? $customer->getAddress()->country : ''}}" required>
+                                                <input type="text" name="country" id="card-holder-country"  class="form-control form-control-alternative @error('country') is-invalid @enderror"  placeholder="Country" value="{{Auth::user()->getAddress() ? Auth::user()->getAddress()->country : ''}}" required>
                                                 </div>
                                                 @error('country')
                                                     <span class="error text-danger" role="alert">
@@ -100,7 +100,7 @@
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                 <label class="form-control-label" for="card-holder-post-code">Postal code</label>
-                                                <input type="text" id="card-holder-post-code" name="post_code" class="form-control form-control-alternative @error('post_code') is-invalid @enderror" placeholder="Post Code" value="{{$customer->getAddress() ? $customer->getAddress()->post_code : ''}}" required>
+                                                <input type="text" id="card-holder-post-code" name="post_code" class="form-control form-control-alternative @error('post_code') is-invalid @enderror" placeholder="Post Code" value="{{Auth::user()->getAddress() ? Auth::user()->getAddress()->post_code : ''}}" required>
                                                 </div>
                                                 @error('post_code')
                                                     <span class="error text-danger" role="alert">
@@ -111,7 +111,7 @@
                                         </div>
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary btn-block btn-lg" id="card-button">
+                                    <button type="submit" class="btn btn-dark btn-block btn-lg" id="card-button">
                                         Process Payment
                                     </button>
                                     <div id="card-errors" class="error text-danger text-center mt-4" role="alert"></div>
@@ -122,6 +122,13 @@
                                             @endforeach
                                         </span>
                                     @endif
+
+
+                                    @if(session()->has('success-message'))
+                                        <div class="text-center">
+                                        <p class="text-center alert alert-success ">{{ session()->get('success-message') }}</p>
+                                        </div>
+                                    @endif
                                 </form>
                             </div>
         
@@ -130,6 +137,43 @@
                         </div>
         
                 </div>
+
+                        <!--Grid column ORDER DETAILS -->
+                        <div class="col-lg-4 shadow-lg">
+                    
+                            <!-- Card -->
+                            <div class="card mT-3">
+                                <div class="card-body">
+                        
+                                    <h5 class="mb-3">The total amount of</h5>
+                        
+                                    <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                        Products Price
+                                        <span>£{{ $total ?( $total  ): '' }}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                        Shipping and packaging
+                                        <span>£{{ $shipping ? $shipping : '' }}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                                        <div>
+                                        <strong>The total amount of</strong>
+                                        <strong>
+                                            <p class="mb-0">(including VAT)</p>
+                                        </strong>
+                                        </div>
+                                        <span><strong>£{{ $total ? ($total + $shipping) : '' }}</strong></span>
+                                    </li>
+                                    </ul>
+                                                            
+                                </div>
+                            </div>
+                            <!-- Card -->
+
+                    </div>
+                    <!--Grid column-->
+
                 </div>
             </div>
             </div>
@@ -193,7 +237,7 @@
     var form = document.getElementById('payment-form');
         form.addEventListener('submit', function(event) {
             event.preventDefault();
-            // Disable the submit button to prevent repeated clicks
+            // Disable the submit button to prevent double clicks
             document.getElementById('card-button').disabled = true;
             var options = {
             name: document.getElementById('card-holder-name').value,

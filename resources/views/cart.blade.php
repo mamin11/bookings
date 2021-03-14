@@ -126,8 +126,8 @@
                             <span><strong>£{{ $total ? ($total + $shippingCost) : '' }}</strong></span>
                         </li>
                         </ul>
-            
-                        <button type="button" class="btn btn-dark btn-block waves-effect waves-light">Checkout</button>
+                        
+                        <a href="{{ route('cartcheckoutview') }}" class="btn btn-dark btn-block waves-effect waves-light">Checkout</a>
             
                     </div>
                 </div>
