@@ -34,7 +34,7 @@
                         <div class="col-md-5 col-lg-3 col-xl-3">
                             <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
                             <img class="img-fluid w-100"
-                                src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg" alt="Sample">
+                                src="{{ $product->associatedModel->getMainImage() }}" alt="Sample">
                             </div>
                         </div>
                         <div class="col-md-7 col-lg-9 col-xl-9">
@@ -71,7 +71,7 @@
     
                 <h5 class="mb-4">Expected shipping delivery</h5>
     
-                <p class="mb-0"> Thu., 12.03. - Mon., 16.03.</p>
+                <p class="mb-0"> Mon., 07.00. - Fri., 21.00.</p>
             </div>
             </div>
             <!-- Card -->
@@ -95,7 +95,7 @@
                             <span>£{{ $total ? $total : '' }}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                            Shipping
+                            Shipping and packaging
                             <span>£{{ $shippingCost ? $shippingCost : '' }}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
