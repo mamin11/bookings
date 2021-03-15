@@ -3,36 +3,7 @@
         <div class="row">
         <div class="col-md-6">
     
-            <div class="mdb-lightbox">
-    
-            <div class="row product-gallery mx-1">
-    
-                <div class="col-12 mb-5">
-                <figure class="view overlay rounded z-depth-1 main-img">
-                    <img src="{{$product->getMainImage() ? $product->getMainImage() : 'https://via.placeholder.com/500' }}"
-                        class="img-fluid z-depth-1">
-                    </a>
-                </figure>
-                </div>
-                <div class="col-12">
-                <div class="row">
-                    @if($product->getImages())
-                        @foreach($product->getImages() as $image)
-                            <div class="col-3">
-                                <div class="view overlay rounded z-depth-1 gallery-item">
-                                    <img src="{{ $image }}"
-                                    class="img-fluid">
-                                    <div class="mask rgba-white-slight"></div>
-                                </div>
-                            </div>
-                        @endforeach
-                    @endif
-
-                </div>
-                </div>
-            </div>
-    
-            </div>
+            @livewire('products.images', ['images' => $product->getImages()], key($product->product_id))
     
         </div>
         <div class="col-md-6">
