@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\User;
 use App\Order_detail;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,4 +24,9 @@ class Order extends Model
         }
         return $count;
     }
+
+    public function getCustomer() {
+        return User::where('user_id', $this->customer_id)->first();
+    }
+
 }

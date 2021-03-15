@@ -22,6 +22,7 @@ class CreateOrdersTable extends Migration
             $table->integer('total');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
+            $table->integer('completed')->default('1');
         });
     }
 

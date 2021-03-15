@@ -27,7 +27,7 @@
                 <a href="/staff" class="hideText icon-span">Staff</a>
             </div>
 
-            <div class="sidebar-link-item {{checkRoute('viewOrders')}} ">
+            <div class="sidebar-link-item {{checkRoute('orders')}} ">
                 <i class="fas fa-2x fa-store pr-4"></i>
                 <a href="/orders" class=" icon-span">Orders</a>
             </div>

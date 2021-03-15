@@ -130,12 +130,12 @@ Route::livewire('/productdata', 'productdata.view')
 ->section('content')->middleware('auth', 'checkIsNotCustomer');
 
 //product view route
-Route::group(['prefix' => 'products', 'middleware' => 'auth'], function () {
-    Route::livewire('/{id}', 'products.viewone')
-    ->name('viewone')
-    ->layout('layouts.home')
-    ->section('content');
+Route::livewire('shop/{id}', 'products.viewone')
+->name('viewone')
+->layout('layouts.home')
+->section('content');
 
+Route::group(['prefix' => 'products', 'middleware' => 'auth'], function () {
     Route::livewire('/view', 'products.productslist')
     ->name('productslist')
     ->layout('layouts.dashboard')
@@ -186,6 +186,11 @@ Route::livewire('/chat', 'chat.view')
 Route::livewire('/shop', 'products.shop')
 ->name('shop')
 ->layout('layouts.home')
-->section('content')->middleware('auth');
+->section('content');
 
-Route::get('/sendreceipt', 'HomeController@sendCustomerReceipt');
+//order routes
+Route::livewire('/orders', 'order.view')
+->name('orders')
+->layout('layouts.dashboard')
+->section('content')
+->middleware(['auth', 'checkIsNotCustomer']);

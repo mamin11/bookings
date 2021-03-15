@@ -22,7 +22,7 @@
                     <a class="nav-link" href="/shop">Shop</a>
                 </li>
                 <li class="nav-item mr-3">
-                    <a class="nav-link" href="{{ route('viewBookings') }}">Bookings</a>
+                    <a class="nav-link" href="{{ route('addBooking') }}">Bookings</a>
                 </li>
                 <li class="nav-item mr-3">
                     <a class="nav-link" href="/about">About</a>
