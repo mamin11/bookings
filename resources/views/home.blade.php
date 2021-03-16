@@ -1,7 +1,17 @@
 @extends('layouts.home')
 @section('content')
 
-    <div class="container">
+<div class="container-fluid">
+  {{-- <h1 class=text-center>HERO SECTION</h1> ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|} --}}
+  <div class="row">
+    {{-- <div class="col-12" style="background-image: url('img/hero-black.jpg'); height: 100vh;">
+      <h1 class="float-left text-white" style="margin:500px ">Text goes here</h1>
+    </div> --}}
+  </div>
+  <img src="{{asset('img/hero-text-white.jpg')}}" class="img-fluid ml-5" alt="">
+</div>
+
+    <div class="container mt-5">
       <!--Section: Block Content-->
         <section class="text-center">
 
