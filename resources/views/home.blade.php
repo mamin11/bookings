@@ -8,10 +8,21 @@
       <h1 class="float-left text-white" style="margin:500px ">Text goes here</h1>
     </div> --}}
   </div>
-  <img src="{{asset('img/hero-text-white.jpg')}}" class="img-fluid ml-5" alt="">
+  <img src="{{asset('img/hero-text-white.jpg')}}" class="img-fluid" id="hero-image" alt="">
 </div>
 
-    <div class="container mt-5">
+
+<div class="container">
+  <section class="sticky">
+    <blockquote class="blockquote">Check out our portfolio to see our work<span class="span"></span></blockquote>
+    <img class="blockimages" id="office" src="{{asset('img/portrait-4.jpg')}}">
+    <img class="blockimages" id="portrait" src="{{asset('img/portrait-1.jpg')}}">
+    <img class="blockimages" id="camera" src="{{asset('img/camera.png')}}">
+    <div id="box"></div>
+  </section>
+</div>
+
+    <div class="container">
       <!--Section: Block Content-->
         <section class="text-center">
 
@@ -28,6 +39,7 @@
           @endif
 
           <!-- Grid row -->
+          <h2 class="text-center p-5">You Can Buy These</h2>
           <div class="row">
 
             @foreach ($products as $product)
@@ -91,3 +103,11 @@
     </div>
 
 @endsection
+
+<script>
+  // var tl = new TimelineMax({onUpdate:updatePercentage});
+  // var tl2 = new TimelineMax();
+  // const controller = new ScrollMagic.Controller();
+
+
+</script>
