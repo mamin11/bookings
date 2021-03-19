@@ -11,7 +11,7 @@
   <img src="{{asset('img/hero-text-white.jpg')}}" class="img-fluid" id="hero-image" alt="">
 </div>
 
-
+{{-- animation section --}}
 <div class="container">
   <section class="sticky">
     <blockquote class="blockquote">Check out our portfolio to see our work<span class="span"></span></blockquote>
@@ -21,6 +21,8 @@
     <div id="box"></div>
   </section>
 </div>
+{{-- animation section end  --}}
+
 
     <div class="container">
       <!--Section: Block Content-->
@@ -101,6 +103,47 @@
         </section>
         <!--Section: Block Content-->
     </div>
+
+    {{-- team section  --}}
+    <!-- Section: Team v.2 -->
+<div class="container text-center my-5">
+
+  <!-- Section heading -->
+  <h2 class="h1-responsive font-weight-bold my-5">Meet Our Team</h2>
+
+  <!-- Grid row -->
+  <div class="row text-center">
+
+    @foreach ($staff as $user)
+      <!-- Grid column -->
+      <div class="col-md-4 mb-md-0 mb-5">
+        <div class="avatar mx-auto">
+          <img src="{{$user->getStaffProfilePic()}}" class="rounded img-thumbnail z-depth-1-half" style="width: 200px; height: 200px;" alt="Sample avatar">
+        </div>
+        <h4 class="font-weight-bold dark-grey-text my-4">{{$user->name}}</h4>
+        <h6 class="text-uppercase grey-text mb-3"><strong>Photographer</strong></h6>
+        <!-- Facebook-->
+        <a type="button" class="btn-floating btn-sm mx-1 mb-0 btn-fb">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <!--Dribbble -->
+        <a type="button" class="btn-floating btn-sm mx-1 mb-0 btn-dribbble">
+          <i class="fab fa-dribbble"></i>
+        </a>
+        <!-- Twitter -->
+        <a type="button" class="btn-floating btn-sm mx-1 mb-0 btn-tw">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </div>
+      <!-- Grid column -->
+    @endforeach
+
+  </div>
+  <!-- Grid row -->
+
+</div>
+<!-- Section: Team v.2 -->
+    {{-- team section end  --}}
 
 @endsection
 
