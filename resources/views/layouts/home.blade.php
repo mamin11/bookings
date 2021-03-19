@@ -42,6 +42,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.6/plugins/animation.gsap.min.js"></script>
 
 </body>
+    @include('layouts.footer')
 </html>
 
 <script>

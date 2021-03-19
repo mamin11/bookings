@@ -24,7 +24,7 @@
 {{-- animation section end  --}}
 
 
-    <div class="container">
+    <div class="container my-5">
       <!--Section: Block Content-->
         <section class="text-center">
 
@@ -93,7 +93,7 @@
 
             <div class="container">
               <div class="row d-flex justify-content-center">
-                {{ $products->links() }}
+                <a href="{{route('shop')}}" class="btn btn-dark">Shop now</a>
               </div>
             </div>
 
