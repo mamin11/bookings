@@ -46,7 +46,7 @@
     <!-- Footer Elements -->
   
     <!-- Copyright -->
-    <div class="footer-copyright text-center py-3">© 2021 Copyright:
+    <div class="footer-copyright text-center py-3">© {{date('Y')}} Copyright:
       <a href="/" class="product-link" style="color: white !important;"> sedowstudios</a>
     </div>
     <!-- Copyright -->

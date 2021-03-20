@@ -34,6 +34,11 @@
     color: rgb(218, 37, 37);
 }
 
+.h-100 {
+    height: 100vh !important;
+}
+
+
 /* scroll animation */
 .sticky {
     padding: 3em;

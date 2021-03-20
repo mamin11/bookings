@@ -194,3 +194,7 @@ Route::livewire('/orders', 'order.view')
 ->layout('layouts.dashboard')
 ->section('content')
 ->middleware(['auth', 'checkIsNotCustomer']);
+
+//contact routes
+Route::get('/contact', 'ContactController@index')->name('contact');
+Route::post('/contact', 'ContactController@send');
