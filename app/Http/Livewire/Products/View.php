@@ -96,8 +96,6 @@ class View extends Component
     }
 
     public function addProduct() {
-        // dd($this->images);
-        // dd($this->productData);
 
         //validate the data
         $validatedData = $this->validate($this->rules, $this->customMessages);

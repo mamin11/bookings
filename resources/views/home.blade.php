@@ -104,9 +104,39 @@
         <!--Section: Block Content-->
     </div>
 
+    {{-- register now call  --}}
+    <div class="container my-5" style="margin-top: 100px !important" >
+      <div class="row">
+        <div class="col-md-5 " >
+          <img src="{{asset('img/booking.png')}}"  class="img-fluid shadow-lg" alt="">
+        </div>
+        <div class="col-md-7 mt-5">
+          @auth
+            <h1 class="text-center display-4"> Book your appointments Now while there are spaces left</h1>
+
+            <div class="row d-flex justify-content-center m-5">
+              <a href="{{route('addBooking')}}" class="btn btn-dark">Book Now</a>
+            </div>
+              
+          @endauth
+
+          @guest
+            <h1 class="text-center display-4">Register Now to Book your appointments</h1>
+
+            <div class="row d-flex justify-content-center m-5">
+              <a href="{{route('login')}}" class="btn btn-dark">Register</a>
+            </div>
+          @endguest
+
+        </div>
+      </div>
+    </div>
+
+    {{-- register now call end  --}}
+
     {{-- team section  --}}
     <!-- Section: Team v.2 -->
-<div class="container text-center my-5">
+<div class="container text-center my-5" style="margin-top: 100px !important">
 
   <!-- Section heading -->
   <h2 class="h1-responsive font-weight-bold my-5">Meet Our Team</h2>

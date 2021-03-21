@@ -17,7 +17,7 @@ use Cartalyst\Stripe\Exception\CardErrorException;
 class HomeController extends Controller
 {
     public function index() {
-        $products = Product::paginate(16);
+        $products = Product::paginate(8);
         $staff = User::inRandomOrder()->where('role_id', 2)->get()->take(3);
         return view('home', ['products' => $products, 'staff' => $staff]);
     }
