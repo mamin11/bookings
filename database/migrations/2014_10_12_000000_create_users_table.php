@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->integer('role_id')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->date('google_id')->nullable();
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->integer('size_id')->nullable();
             $table->integer('category_id')->nullable();
             $table->integer('quantity')->nullable();
+            $table->timestamps();
         });
     }
 
