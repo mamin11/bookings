@@ -89,7 +89,7 @@
 
         <div class="sidebar-link-item {{checkRoute('messages')}} ">
             <i class="fas fa-2x fa-envelope-open-text pr-4"></i>
-            <a href="/chat" class=" icon-span">Messages @if($messagesCount > 0) <span class="badge text-danger border border-danger rounded-circle ml-2" style="font-size: 15px;">{{$messagesCount}}</span> @endif</a>
+            <a href="/chat" class=" icon-span">Messages @livewire('chat.message-count') </a>
         </div>
 
         <div class="sidebar-link-item {{checkRoute('myAccount')}}">

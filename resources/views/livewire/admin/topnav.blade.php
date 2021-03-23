@@ -29,7 +29,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link pl-5 icons-font-size" >
-                        <i class="fas fa-4x fa-bell top-icon-style" ></i>
+                        <i class="fas fa-4x fa-bell top-icon-style" >@livewire('chat.message-count') </i>
                     </a>
                 </li>
                 </ul>
