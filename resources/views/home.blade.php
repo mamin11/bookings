@@ -176,11 +176,3 @@
     {{-- team section end  --}}
 
 @endsection
-
-<script>
-  // var tl = new TimelineMax({onUpdate:updatePercentage});
-  // var tl2 = new TimelineMax();
-  // const controller = new ScrollMagic.Controller();
-
-
-</script>

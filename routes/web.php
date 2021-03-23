@@ -198,3 +198,7 @@ Route::livewire('/orders', 'order.view')
 //contact routes
 Route::get('/contact', 'ContactController@index')->name('contact');
 Route::post('/contact', 'ContactController@send');
+
+//evaluation routes
+Route::get('/evaluation', 'ContactController@evaluationget')->name('evaluation')->middleware('auth');
+Route::post('/evaluation', 'ContactController@evaluationpost')->middleware('auth');

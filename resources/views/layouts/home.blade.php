@@ -42,7 +42,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.6/plugins/animation.gsap.min.js"></script>
 
 </body>
+    @if(checkRoute('home'))
     @include('layouts.footer')
+    @endif
 </html>
 
 <script>
