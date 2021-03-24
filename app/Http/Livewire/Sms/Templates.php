@@ -15,6 +15,7 @@ class Templates extends Component
         'active' => '',
     ];
     public $updatingTemplate;
+    public $viewingTemplate;
     public $showUpdateTemButton = false;
     public $templateConfirmingID;
     
@@ -50,7 +51,10 @@ class Templates extends Component
 
         $this->updatingTemplate->heading = $this->templateForm['heading'];
         $this->updatingTemplate->message = $this->templateForm['message'];
-        $this->updatingTemplate->active = $this->templateForm['active'];
+
+        //if current is set to active, deactivate previious
+
+        $this->updatingTemplate->active = $this->templateForm['active'] == 1 ? $this->templateForm['active'] : 0;
 
         $this->updatingTemplate->save();
         return redirect()->route('sms');
@@ -93,6 +97,9 @@ class Templates extends Component
         $this->templateConfirmingID = $id;
     }
 
+    public function viewTemplate($id) {
+        $this->viewingTemplate = Sms_template::where('id', $id)->first();
+    }
 
     public function render()
     {

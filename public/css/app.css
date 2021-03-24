@@ -11710,3 +11710,44 @@ img {
   overflow-y: auto;
 }
 
+#sms-preview {
+  background-image: url("/img/sms-png.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#sms-preview h4 {
+  margin-top: 140px;
+  margin-left: -190px;
+  margin-right: 0;
+  color: red;
+}
+
+#sms-preview .template {
+  margin-top: 170px;
+  margin-left: 20px;
+  margin-right: 0;
+  width: 200px;
+  height: 200px;
+}
+
+#sms-preview .template h6 {
+  font-weight: bold;
+  font-size: 0.9rem;
+  padding-top: 30px;
+  padding-left: 10px;
+}
+
+#sms-preview .template p {
+  font-weight: bold;
+  font-size: 0.8rem;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+#sms-preview .template span {
+  font-weight: bold;
+  font-size: 0.8rem;
+  padding-left: 10px;
+}
+

@@ -1,8 +1,8 @@
 <div>
-    <div class="container">
-        <div class="row">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
 
-            <div class="col-md-9">
+            <div class="col-md-6">
                                 {{-- card starts here --}}
                                 <div class="card  shadow ">
                                     {{-- card header starts here --}}
@@ -24,7 +24,7 @@
                                                                     <div class="form-group mt-3">
                                                                         <div class="form-check" >
                                                                             <label class="form-check-label" for="active">
-                                                                                set to active 
+                                                                                set to active ({{$templateForm['active']}})
                                                                             </label>
                                                                             <label class="switch">
                                                                                 <input type="checkbox" name="active" wire:model="templateForm.active" id="active" value="{{  $updatingTemplate ? $templateForm['active'] : '' }}">
@@ -85,6 +85,7 @@
                                                             <i class="fa fa-trash cursor-pointer" wire:click="confirmDelete({{$item->id}})" style="color: red; float: right;"></i>
                                                         @endif
                                                             <i class="fa fa-pen cursor-pointer" wire:click="updateTemplate({{$item->id}})"  style="color: black; padding-right: 10px; float: right;"></i>
+                                                            <i class="fa fa-eye cursor-pointer" wire:click="viewTemplate({{$item->id}})"  style="color: black; padding-right: 10px; float: right;"></i>
                                                         </div>
                                                     </li>
                                                 @endforeach
@@ -98,8 +99,23 @@
                                 {{-- card ends here --}}
             </div>
 
-            <div class="col-md-3">
-                preview
+            <div class="col-md-3" id="sms-preview">
+                {{-- <div class="card  shadow "> --}}
+
+                    {{-- <h1 class="my-3 text-center">Preview</h1> --}}
+                    @if($viewingTemplate)
+                    <div class="template">
+                        <h6 class=" " >{{$viewingTemplate->heading}} </h6>
+                        <p class=" " >{{$viewingTemplate->message}} </p>
+                        <span>Thanks,</span><br>
+                        <span>Sedowstudios</span>
+
+                    </div>
+                    @else
+                    @endif
+
+                    {{-- <p>This is test</p> --}}
+                {{-- </div> --}}
             </div>
 
         </div>
