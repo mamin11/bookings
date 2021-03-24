@@ -202,3 +202,10 @@ Route::post('/contact', 'ContactController@send');
 //evaluation routes
 Route::get('/evaluation', 'ContactController@evaluationget')->name('evaluation')->middleware('auth');
 Route::post('/evaluation', 'ContactController@evaluationpost')->middleware('auth');
+
+//sms templates routes
+Route::livewire('/templates', 'sms.templates')
+->name('sms')
+->layout('layouts.dashboard')
+->section('content')
+->middleware(['auth', 'checkIsNotCustomer']);
