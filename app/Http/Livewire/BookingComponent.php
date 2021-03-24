@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Invoice as ld;
+use App\Notifications\CustomerBookingSMS;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 
 //booking component is shown when /bookings/add is visited
@@ -266,8 +267,14 @@ class BookingComponent extends Component
         //attach invoice when sending to customer
         $emailingAppointment = Appointment::where('appointment_id', $appointment_id)->first();
         Mail::to('mamindesigns@gmail.com')->send(new BookingConfirmation($emailingAppointment, $link));
-
         //emails to customer and staff can be sent once amazon ses is in production mode
+
+        //SMS
+        if($this->bookingForm['notifyCustomer'] == 1){
+            $cust = User::where('user_id', $this->confirmationData['customer']['user_id'])->first();
+            $this->sendSMS($cust, $emailingAppointment);
+        }
+
 
         //redirect to refresh
         if($this->paynowbtn) {
@@ -275,6 +282,12 @@ class BookingComponent extends Component
         }
         return Auth::user()->role_id == 3 ? redirect()->route('mybookings') :redirect()->route('viewBookings');
         // return redirect()->route('viewBookings');
+    }
+
+    public function sendSMS($user, $booking) {
+        // $user = User::where('name', 'theoneamin')->first();
+        // $booking = Appointment::where('appointment_id', '47')->first();
+        $user->notify(new CustomerBookingSMS($booking));
     }
     
     public function render()

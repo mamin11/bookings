@@ -117,11 +117,11 @@
                                                 <div class="form-group">
                                                     <div class="form-check" >
                                                         <label class="form-check-label" for="inform-customer">
-                                                            Inform the customer by sending them an <span>Email </span> and <span>SMS</span>. 
+                                                            Inform the customer by sending them an <span>Email </span> and <span>SMS</span>. ({{$bookingForm['notifyCustomer']}})
                                                         </label>
                                                         <label class="switch">
-                                                            <input type="checkbox" name="notifyCustomer" wire:model="bookingForm.notifyCustomer" id="inform-customer" value="{{  $bookingForm['notifyCustomer'] ? $bookingForm['notifyCustomer'] : 1 }}">
-                                                            <span class="slider round"></span>
+                                                            <input type="checkbox" name="notifyCustomer" wire:model="bookingForm.notifyCustomer" id="inform-customer" value="">
+                                                            {{-- <span class="slider round"></span> --}}
                                                         </label>
                                                     </div>
                                                 </div>
@@ -232,17 +232,19 @@
                                             <button wire:click.prevent="$emit('paynow')"  class="btn btn-success rounded-pill btn-block">{{__('Pay Now') }}</button>
                                         </div>
                                         
-                                        <div wire:loading>Loading ...... </div>
-
-                                            @else
-                                                <p class="badge" style="float:center;">Please fill the previous forms</p><br>
-
-                                            @endif
-
-
+                                        
+                                        @else
+                                        <p class="badge" style="float:center;">Please fill the previous forms</p><br>
+                                        
+                                        @endif
+                                        
+                                        
                                         {{-- ************ end confirmation form  ************* --}}
-                    
+                                        
                                         @endif    
+                                        <div wire:loading>
+                                            <img class="img-fluid text-center" src="{{asset('img/loading.gif')}}"/>
+                                        </div>
                                 </form>
                             </div>
                         </div>

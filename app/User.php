@@ -91,4 +91,12 @@ class User extends Authenticatable implements MustVerifyEmail
         ->orWhere('email', 'like', '%'.$search.'%')
         ->orWhere('user_id', 'like', '%'.$search.'%');
     }
+
+    public function routeNotificationForNexmo($notification)
+    {
+        return '+44 7984 659437';
+
+        //use the users phone number from database
+        // return $this->phone_number;
+    }
 }

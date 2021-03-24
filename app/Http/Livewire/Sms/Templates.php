@@ -2,8 +2,11 @@
 
 namespace App\Http\Livewire\Sms;
 
+use App\User;
+use App\Appointment;
 use App\Sms_template;
 use Livewire\Component;
+use App\Notifications\CustomerBookingSMS;
 
 class Templates extends Component
 {
@@ -52,7 +55,12 @@ class Templates extends Component
         $this->updatingTemplate->heading = $this->templateForm['heading'];
         $this->updatingTemplate->message = $this->templateForm['message'];
 
-        //if current is set to active, deactivate previious
+        //if current is set to active, deactivate previous
+        if( $this->templateForm['active'] == 1 ) {
+            $previousActive = Sms_template::where('active', 1)->first();
+            $previousActive->active = 0;
+            $previousActive->save();
+        }
 
         $this->updatingTemplate->active = $this->templateForm['active'] == 1 ? $this->templateForm['active'] : 0;
 
