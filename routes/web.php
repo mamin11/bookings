@@ -209,3 +209,10 @@ Route::livewire('/templates', 'sms.templates')
 ->layout('layouts.dashboard')
 ->section('content')
 ->middleware(['auth', 'checkIsNotCustomer']);
+
+//sms templates routes
+Route::livewire('/statistics', 'stats.view')
+->name('stats')
+->layout('layouts.dashboard')
+->section('content')
+->middleware(['auth', 'checkIsNotCustomer']);

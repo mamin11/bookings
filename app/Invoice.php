@@ -21,6 +21,6 @@ class Invoice extends Model
     }
 
     public function getBooking() {
-        return Appointment::where('appointment_id', $this->appointment_id)->first();
+        return Appointment::where('appointment_id', $this->booking_id)->first();
     }
 }
