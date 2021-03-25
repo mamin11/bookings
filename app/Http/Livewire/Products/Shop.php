@@ -23,13 +23,17 @@ class Shop extends Component
     public $categories;
     public $materials;
     public $sizes;
-    public $maxPrice;
+    public $maxPrice = 0;
 
     public function mount() {
         $this->categories = Product_category::all();
         $this->materials = Product_material::all();
         $this->sizes = Product_size::all();
-        $this->maxPrice = Product::orderBy('price', 'desc')->first()->price;
+
+        $allProds = Product::all();
+        if($allProds) {
+            $this->maxPrice = Product::orderBy('price', 'desc')->first()->price;
+        }
     }
     
     public function render()
