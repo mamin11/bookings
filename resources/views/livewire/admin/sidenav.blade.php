@@ -52,12 +52,12 @@
                 <a href="/services" class="hideText icon-span">Services</a>
             </div>
 
-            <div class="sidebar-link-item {{checkRoute('viewTemplates')}} ">
+            <div class="sidebar-link-item {{checkRoute('sms')}} ">
                 <i class="fas fa-2x fa-paper-plane pr-4"></i>
                 <a href="/templates" class="hideText icon-span">SMS templates</a>
             </div>
 
-            <div class="sidebar-link-item {{checkRoute('viewStatistics')}} ">
+            <div class="sidebar-link-item {{checkRoute('stats')}} ">
                 <i class="fas fa-2x fa-chart-bar pr-4"></i>
                 <a href="/statistics" class="hideText icon-span">Statistics</a>
             </div>

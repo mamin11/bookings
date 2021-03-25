@@ -22,3 +22,7 @@
 .dark-mode-black {
     background-color: black !important;
 }
+
+.card-hover:hover {
+    width: calc(100% * 1.01);
+}
