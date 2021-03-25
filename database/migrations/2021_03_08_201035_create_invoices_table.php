@@ -20,6 +20,7 @@ class CreateInvoicesTable extends Migration
             $table->integer('order_id')->nullable();
             $table->integer('booking_id')->nullable();
             $table->dateTime('invoice_date');
+            $table->integer('paid')->default(1);
             $table->timestamps();
         });
     }
