@@ -31,7 +31,7 @@ class Shop extends Component
         $this->sizes = Product_size::all();
 
         $allProds = Product::all();
-        if($allProds) {
+        if($allProds->count() > 0) {
             $this->maxPrice = Product::orderBy('price', 'desc')->first()->price;
         }
     }
