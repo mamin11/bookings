@@ -62,7 +62,7 @@
                 <a href="/statistics" class="hideText icon-span">Statistics</a>
             </div>
 
-            <div class="sidebar-link-item {{checkRoute('viewSetting')}} ">
+            <div class="sidebar-link-item {{checkRoute('settings')}} ">
                 <i class="fas fa-2x fa-toolbox pr-4"></i>
                 <a href="/settings" class="hideText icon-span">Settings</a>
             </div>
